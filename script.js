@@ -15,7 +15,7 @@ function animateCounters() {
     if (Number.isNaN(target)) return;
 
     let current = 0;
-    const durationMs = 900;
+    const durationMs = 900; // fast & snappy
     const steps = Math.max(20, Math.min(90, target || 60));
     const stepValue = target / steps;
     const stepTime = Math.floor(durationMs / steps);
@@ -97,71 +97,3 @@ ${name || ''}`.trim();
     form.reset();
   });
 }
-
-// ===== Mobile menu injection =====
-// We add a menu button + dropdown without changing HTML.
-(function setupMobileMenu(){
-  const nav = document.querySelector('.nav');
-  if (!nav) return;
-
-  // Create hamburger button
-  const btn = document.createElement('button');
-  btn.className = 'menu-btn';
-  btn.type = 'button';
-  btn.setAttribute('aria-label', 'Open menu');
-  btn.textContent = 'MENU';
-
-  // Create dropdown menu
-  const menu = document.createElement('div');
-  menu.className = 'mobile-menu';
-
-  // Copy nav links + CTAs if present
-  const links = document.querySelector('.navlinks');
-  const ctas = document.querySelector('.nav-cta');
-
-  const linksHTML = links ? links.innerHTML : '';
-  const ctasHTML = ctas ? ctas.innerHTML : '';
-
-  menu.innerHTML = `
-    ${linksHTML}
-    ${ctasHTML}
-  `;
-
-  // Make copied anchors look right
-  menu.querySelectorAll('a').forEach(a => {
-    // Keep data-scroll behavior if anchor is hash
-    const href = a.getAttribute('href') || '';
-    if (href.startsWith('#')) a.setAttribute('data-scroll', 'true');
-  });
-
-  // Insert into DOM
-  nav.appendChild(btn);
-  document.body.appendChild(menu);
-
-  function closeMenu(){
-    menu.classList.remove('open');
-    btn.setAttribute('aria-label', 'Open menu');
-  }
-  function toggleMenu(){
-    const open = !menu.classList.contains('open');
-    menu.classList.toggle('open', open);
-    btn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-  }
-
-  btn.addEventListener('click', toggleMenu);
-
-  // Close on click
-  menu.addEventListener('click', (e) => {
-    if (e.target && e.target.tagName === 'A') closeMenu();
-  });
-
-  // Close on scroll
-  window.addEventListener('scroll', () => {
-    if (menu.classList.contains('open')) closeMenu();
-  }, { passive: true });
-
-  // Close on resize to desktop
-  window.addEventListener('resize', () => {
-    if (window.innerWidth > 980) closeMenu();
-  });
-})();
