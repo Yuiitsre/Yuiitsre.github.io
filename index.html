@@ -1,121 +1,327 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Yuiitsre Defence & Research</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
+  <meta name="description" content="Yuiitsre Defence & Research — Defence software, simulation, autonomous systems, and student-led R&D collaboration."/>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 
 <body>
+  <!-- Background layers -->
+  <div class="bg-grid"></div>
+  <div class="bg-radar"></div>
+  <div class="bg-noise"></div>
+  <div class="bg-scan"></div>
 
-<!-- BACKGROUND EFFECTS -->
-<div class="hud-grid"></div>
-<div class="radar"></div>
+  <!-- Top bar -->
+  <header class="nav">
+    <a class="logo" href="index.html">YUIITSRE</a>
 
-<!-- NAV -->
-<header class="nav">
-  <div class="logo">YUIITSRE</div>
-  <nav>
-    <a href="#about">About</a>
-    <a href="#solutions">Solutions</a>
-    <a href="#tech">Technology</a>
-    <a href="#ops">Operations</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+    <nav class="navlinks">
+      <a href="index.html" class="active">Home</a>
+      <a href="updates.html">Updates</a>
+      <a href="founder.html">Founder</a>
+      <a href="#contact" data-scroll>Contact</a>
+    </nav>
 
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-left">
-    <h1>
-      DEFENCE<br>
-      SOFTWARE &<br>
-      AUTONOMOUS<br>
-      SYSTEMS
-    </h1>
-    <p>
-      Advanced defence software, autonomous platforms, AI-driven
-      battlefield intelligence, and simulation technologies for
-      next-generation military operations.
-    </p>
-    <button class="cta">REQUEST BRIEFING</button>
+    <div class="nav-cta">
+      <button class="btn ghost" id="openBriefing">Request Briefing</button>
+      <a class="btn primary" href="updates.html">View Updates</a>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-left">
+      <div class="kicker">
+        <span class="pulse-dot"></span>
+        <span>Student-led R&D • MSME Registered • India</span>
+      </div>
+
+      <h1 class="hero-title">
+        DEFENCE SOFTWARE<br/>
+        <span class="accent">RESEARCH</span> & AUTONOMOUS SYSTEMS
+      </h1>
+
+      <p class="hero-sub">
+        Yuiitsre Defence & Research is a research-oriented organization focused on defence software,
+        simulation systems, secure architectures, and emerging autonomous technologies. We are early-stage
+        and building in public with responsibility.
+      </p>
+
+      <div class="hero-actions">
+        <a class="btn primary" href="mailto:contact@yuiitsre.me?subject=Official%20Inquiry%20—%20Yuiitsre%20Defence%20%26%20Research&body=Hello%20Yuiitsre%20Team,%0A%0A(Write%20your%20message%20here)%0A%0ARegards," target="_blank" rel="noopener">
+          Official Contact
+        </a>
+
+        <a class="btn ghost" href="mailto:research@yuiitsre.me?subject=Join%20Research%20Group%20—%20Yuiitsre&body=Hi%20Yuiitsre,%0A%0AI%20want%20to%20join%20the%20research%20group.%0A%0AName:%0AStudent/Professional:%0AInterests:%0ASkills:%0AReason%20to%20join:%0A%0AThanks," target="_blank" rel="noopener">
+          Join Research Group
+        </a>
+
+        <a class="btn link" href="#join" data-scroll>How joining works →</a>
+      </div>
+
+      <div class="hero-ticker" aria-hidden="true">
+        <div class="ticker-track">
+          <span>SIMULATION-FIRST • ETHICS-FIRST • SOFTWARE-FIRST • SECURITY-FIRST • LEARNING-FIRST • </span>
+          <span>SIMULATION-FIRST • ETHICS-FIRST • SOFTWARE-FIRST • SECURITY-FIRST • LEARNING-FIRST • </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hud-panel">
+        <div class="hud-title">STATUS</div>
+        <div class="hud-row"><span>Organization</span><span class="tag ok">Active</span></div>
+        <div class="hud-row"><span>Stage</span><span class="tag warn">Early / Building</span></div>
+        <div class="hud-row"><span>Products</span><span class="tag">In Development</span></div>
+        <div class="hud-row"><span>Updates</span><span class="tag ok">Public</span></div>
+      </div>
+
+      <div class="hud-stats">
+        <div class="stat">
+          <div class="stat-num" data-count="1">0</div>
+          <div class="stat-label">Research Initiative</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-count="0">0</div>
+          <div class="stat-label">Released Products</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num" data-count="100">0</div>
+          <div class="stat-label">Learning Focus %</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section class="section" id="about">
+    <div class="section-head">
+      <h2>About Us</h2>
+      <p>
+        A serious, responsible space for defence-tech learning and early-stage R&D—structured like a company,
+        built like a lab.
+      </p>
+    </div>
+
+    <div class="split">
+      <div class="panel">
+        <h3>What we are</h3>
+        <p>
+          Yuiitsre Defence & Research is an MSME-registered, student-led research initiative.
+          We focus on software-centric defence concepts, simulation environments, secure system design,
+          and responsible exploration of autonomous technologies.
+        </p>
+      </div>
+
+      <div class="panel">
+        <h3>What we are not</h3>
+        <p>
+          We do not manufacture weapons. We do not claim military capability or government contracts.
+          We build knowledge, prototypes, and a learning environment with ethics and safety as the baseline.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Domains -->
+  <section class="section dark" id="domains">
+    <div class="section-head">
+      <h2>Focus Domains</h2>
+      <p>Software-first areas we study and prototype over time.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card reveal">Defence Software Systems</div>
+      <div class="card reveal">Simulation & Training Environments</div>
+      <div class="card reveal">Autonomous Systems (Logic & Control)</div>
+      <div class="card reveal">AI & Data Processing (Research)</div>
+      <div class="card reveal">Secure System Architecture</div>
+      <div class="card reveal">Research & Experimental Development</div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section class="section" id="projects">
+    <div class="section-head">
+      <h2>Ongoing Work</h2>
+      <p>Transparent status tracking. No overclaims.</p>
+    </div>
+
+    <div class="project reveal">
+      <div class="project-top">
+        <h3>Internal Research Project — To Be Decided</h3>
+        <span class="tag warn">Planning</span>
+      </div>
+
+      <p>
+        We are preparing our first internal project. Scope, constraints, ethics review, and learning plan are being defined.
+        The project will appear on the Updates page once finalized.
+      </p>
+
+      <div class="progress" role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">
+        <div class="bar" style="width:15%"></div>
+      </div>
+
+      <div class="project-actions">
+        <a class="btn ghost" href="updates.html">Project Updates</a>
+        <button class="btn primary" id="openBriefing2">Request Briefing</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Join -->
+  <section class="section dark" id="join">
+    <div class="section-head">
+      <h2>Join the Research Group</h2>
+      <p>A learning-focused environment for like-minded people who want to build and grow together.</p>
+    </div>
+
+    <div class="join-grid">
+      <div class="panel reveal">
+        <h3>Who can join</h3>
+        <ul class="list">
+          <li>School students</li>
+          <li>College students</li>
+          <li>Beginners</li>
+          <li>Advanced learners</li>
+          <li>Anyone genuinely interested in defence tech</li>
+        </ul>
+      </div>
+
+      <div class="panel reveal">
+        <h3>How it works</h3>
+        <ul class="list">
+          <li>Send an email introducing yourself.</li>
+          <li>We share a starter path: learning resources + small tasks.</li>
+          <li>Members propose ideas; we evaluate feasibility and ethics.</li>
+          <li>If an idea is solid, we collaborate and publish progress.</li>
+        </ul>
+
+        <div class="inline-cta">
+          <a class="btn primary" href="mailto:research@yuiitsre.me?subject=Join%20Research%20Group%20—%20Yuiitsre&body=Hi%20Yuiitsre,%0A%0AI%20want%20to%20join%20the%20research%20group.%0A%0AName:%0AStudent/Professional:%0AInterests:%0ASkills:%0AReason%20to%20join:%0A%0AThanks," target="_blank" rel="noopener">
+            Email to Join
+          </a>
+          <a class="btn ghost" href="founder.html">Meet the Founder</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Ethics -->
+  <section class="section" id="ethics">
+    <div class="section-head">
+      <h2>Ethics & Responsibility</h2>
+      <p>Defence-tech demands discipline. We work within clear boundaries.</p>
+    </div>
+
+    <div class="cards">
+      <div class="card reveal">Ethical research practices</div>
+      <div class="card reveal">Safety-first development culture</div>
+      <div class="card reveal">Responsible disclosure mindset</div>
+      <div class="card reveal">No harm-oriented development</div>
+      <div class="card reveal">Respect for law and society</div>
+      <div class="card reveal">Transparency on stage & capability</div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section class="section dark" id="contact">
+    <div class="section-head">
+      <h2>Contact</h2>
+      <p>Use the right channel for the right purpose.</p>
+    </div>
+
+    <div class="contact-grid">
+      <div class="panel reveal">
+        <h3>Official Communication</h3>
+        <p class="muted">For institutions, companies, government, and formal inquiries.</p>
+        <a class="contact-link" href="mailto:contact@yuiitsre.me?subject=Official%20Inquiry%20—%20Yuiitsre&body=Hello%20Yuiitsre%20Team,%0A%0A(Write%20your%20message%20here)%0A%0ARegards," target="_blank" rel="noopener">
+          contact@yuiitsre.me →
+        </a>
+      </div>
+
+      <div class="panel reveal">
+        <h3>Research Group</h3>
+        <p class="muted">For students and contributors who want to join and learn.</p>
+        <a class="contact-link" href="mailto:research@yuiitsre.me?subject=Join%20Research%20Group%20—%20Yuiitsre&body=Hi%20Yuiitsre,%0A%0AI%20want%20to%20join%20the%20research%20group.%0A%0AName:%0AStudent/Professional:%0AInterests:%0ASkills:%0AReason%20to%20join:%0A%0AThanks," target="_blank" rel="noopener">
+          research@yuiitsre.me →
+        </a>
+      </div>
+
+      <div class="panel reveal">
+        <h3>Personal</h3>
+        <p class="muted">Founder personal messages (non-official).</p>
+        <a class="contact-link" href="mailto:yuiitsre@proton.me?subject=Personal%20Message%20—%20Yuiitsre&body=Hi,%0A%0A(Write%20your%20message%20here)%0A%0AThanks," target="_blank" rel="noopener">
+          yuiitsre@proton.me →
+        </a>
+      </div>
+    </div>
+
+    <div class="disclaimer">
+      Disclaimer: Yuiitsre Defence & Research is a research-oriented organization. We do not manufacture weapons or supply military hardware.
+      All activities are conducted for research, learning, and experimental purposes only.
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div>© 2026 Yuiitsre Defence & Research • MSME Registered • India</div>
+    <div class="footer-links">
+      <a href="updates.html">Updates</a>
+      <a href="founder.html">Founder</a>
+      <a href="#contact" data-scroll>Contact</a>
+    </div>
+  </footer>
+
+  <!-- Briefing Modal -->
+  <div class="modal" id="briefingModal" aria-hidden="true">
+    <div class="modal-backdrop" data-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-label="Request briefing">
+      <div class="modal-head">
+        <div>
+          <div class="modal-title">Request Briefing</div>
+          <div class="modal-sub">This generates a structured email to contact@yuiitsre.me</div>
+        </div>
+        <button class="icon-btn" data-close aria-label="Close">✕</button>
+      </div>
+
+      <form id="briefingForm" class="form">
+        <div class="form-row">
+          <label>Your Name</label>
+          <input type="text" name="name" placeholder="Full name" required>
+        </div>
+
+        <div class="form-row">
+          <label>Organization</label>
+          <input type="text" name="org" placeholder="Institution / Company / Department">
+        </div>
+
+        <div class="form-row">
+          <label>Purpose</label>
+          <select name="purpose">
+            <option>General inquiry</option>
+            <option>Collaboration proposal</option>
+            <option>Request for briefing</option>
+            <option>Research discussion</option>
+          </select>
+        </div>
+
+        <div class="form-row">
+          <label>Message</label>
+          <textarea name="msg" rows="5" placeholder="Write a short message..."></textarea>
+        </div>
+
+        <div class="form-actions">
+          <button type="button" class="btn ghost" data-close>Cancel</button>
+          <button type="submit" class="btn primary">Generate Email</button>
+        </div>
+      </form>
+    </div>
   </div>
 
-  <div class="hero-right">
-    <div class="stat"><span data-count="12">0</span><label>Active Systems</label></div>
-    <div class="stat"><span data-count="28">0</span><label>Simulations</label></div>
-    <div class="stat"><span data-count="99">0</span><label>Reliability %</label></div>
-  </div>
-</section>
-
-<!-- ABOUT -->
-<section id="about" class="section">
-  <h2>WHO WE ARE</h2>
-  <p class="wide">
-    Yuiitsre Defence & Research is a technology-driven defence solutions
-    organization focused on software-centric warfare systems, autonomous
-    intelligence, and digital battlefield infrastructure.
-  </p>
-</section>
-
-<!-- SOLUTIONS -->
-<section id="solutions" class="section dark">
-  <h2>DEFENCE SOFTWARE SOLUTIONS</h2>
-
-  <div class="cards">
-    <div class="card">Command & Control (C2) Platforms</div>
-    <div class="card">Mission Planning & Execution Software</div>
-    <div class="card">AI-Based Threat Detection Systems</div>
-    <div class="card">Secure Defence Communication Software</div>
-    <div class="card">Surveillance Data Fusion Engines</div>
-    <div class="card">Military Training & Simulation Software</div>
-  </div>
-</section>
-
-<!-- TECHNOLOGY -->
-<section id="tech" class="section">
-  <h2>DEFENCE TECHNOLOGY DOMAINS</h2>
-
-  <div class="timeline">
-    <div class="node">Autonomous Drones & UAV Intelligence</div>
-    <div class="node">Artificial Intelligence for Defence</div>
-    <div class="node">ISR Systems (Intelligence, Surveillance, Recon)</div>
-    <div class="node">Cyber Defence & Secure Architectures</div>
-    <div class="node">Digital Twin & Simulation Environments</div>
-  </div>
-</section>
-
-<!-- OPERATIONS -->
-<section id="ops" class="section dark">
-  <h2>OPERATIONAL APPLICATIONS</h2>
-
-  <ul class="ops">
-    <li>Border Surveillance & Reconnaissance</li>
-    <li>Autonomous Aerial & Ground Operations</li>
-    <li>Threat Monitoring & Early Warning</li>
-    <li>Military Training & Tactical Simulation</li>
-    <li>Secure Battlefield Communications</li>
-  </ul>
-</section>
-
-<!-- CONTACT -->
-<section id="contact" class="section">
-  <h2>COLLABORATION</h2>
-  <p class="wide">
-    We engage with defence institutions, research organizations,
-    and strategic partners on advanced defence programs.
-  </p>
-  <div class="contact">
-    yuiitsre@proton.me<br>
-    www.yuiitsre.me
-  </div>
-</section>
-
-<footer>
-  © 2026 Yuiitsre Defence & Research
-</footer>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
