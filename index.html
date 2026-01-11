@@ -1,79 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Yuiitsre Defence & Research</title>
-  <link rel="stylesheet" href="style.css"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
-  <header class="nav">
-    <div class="logo">YUIITSRE</div>
-    <nav>
-      <a href="#about">About</a>
-      <a href="#domains">Domains</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
-    </nav>
-  </header>
 
-  <section class="hero">
-    <h1>Yuiitsre Defence & Research</h1>
+<!-- BACKGROUND EFFECTS -->
+<div class="hud-grid"></div>
+<div class="radar"></div>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="logo">YUIITSRE</div>
+  <nav>
+    <a href="#about">About</a>
+    <a href="#solutions">Solutions</a>
+    <a href="#tech">Technology</a>
+    <a href="#ops">Operations</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <h1>
+      DEFENCE<br>
+      SOFTWARE &<br>
+      AUTONOMOUS<br>
+      SYSTEMS
+    </h1>
     <p>
-      Advanced Defence Software • Autonomous Systems • AI Research • Tactical Engineering
+      Advanced defence software, autonomous platforms, AI-driven
+      battlefield intelligence, and simulation technologies for
+      next-generation military operations.
     </p>
-    <div class="hero-buttons">
-      <a href="#projects" class="btn primary">View Projects</a>
-      <a href="#contact" class="btn secondary">Collaborate</a>
-    </div>
-  </section>
+    <button class="cta">REQUEST BRIEFING</button>
+  </div>
 
-  <section id="about" class="section">
-    <h2>About</h2>
-    <p>
-      Yuiitsre Defence & Research is an independent R&D initiative focused on
-      next-generation defence software solutions, autonomous platforms, and
-      applied AI systems. Our work bridges theoretical research with real-world
-      defence applications.
-    </p>
-  </section>
+  <div class="hero-right">
+    <div class="stat"><span data-count="12">0</span><label>Active Systems</label></div>
+    <div class="stat"><span data-count="28">0</span><label>Simulations</label></div>
+    <div class="stat"><span data-count="99">0</span><label>Reliability %</label></div>
+  </div>
+</section>
 
-  <section id="domains" class="section dark">
-    <h2>Core Domains</h2>
-    <div class="grid">
-      <div class="card">Defence Software Systems</div>
-      <div class="card">Autonomous Drones & UAV Logic</div>
-      <div class="card">AI & Machine Learning for Defence</div>
-      <div class="card">Surveillance & Reconnaissance Tech</div>
-      <div class="card">Secure Communication Protocols</div>
-      <div class="card">Simulation & Tactical Modeling</div>
-    </div>
-  </section>
+<!-- ABOUT -->
+<section id="about" class="section">
+  <h2>WHO WE ARE</h2>
+  <p class="wide">
+    Yuiitsre Defence & Research is a technology-driven defence solutions
+    organization focused on software-centric warfare systems, autonomous
+    intelligence, and digital battlefield infrastructure.
+  </p>
+</section>
 
-  <section id="projects" class="section">
-    <h2>Research & Projects</h2>
-    <ul class="project-list">
-      <li>Autonomous Drone Navigation Stack (Simulation-First)</li>
-      <li>Threat Classification using Lightweight AI Models</li>
-      <li>Secure Mission Data Exchange Framework</li>
-      <li>Low-Cost Defence Simulation Environments</li>
-    </ul>
-  </section>
+<!-- SOLUTIONS -->
+<section id="solutions" class="section dark">
+  <h2>DEFENCE SOFTWARE SOLUTIONS</h2>
 
-  <section id="contact" class="section dark">
-    <h2>Contact & Collaboration</h2>
-    <p>
-      For research collaboration, academic evaluation, or defence-aligned projects:
-    </p>
-    <p class="contact">
-      📧 yuiitsre@proton.me<br/>
-      🌐 yuiitsre.me
-    </p>
-  </section>
+  <div class="cards">
+    <div class="card">Command & Control (C2) Platforms</div>
+    <div class="card">Mission Planning & Execution Software</div>
+    <div class="card">AI-Based Threat Detection Systems</div>
+    <div class="card">Secure Defence Communication Software</div>
+    <div class="card">Surveillance Data Fusion Engines</div>
+    <div class="card">Military Training & Simulation Software</div>
+  </div>
+</section>
 
-  <footer>
-    <p>© 2026 Yuiitsre Defence & Research. All Rights Reserved.</p>
-  </footer>
+<!-- TECHNOLOGY -->
+<section id="tech" class="section">
+  <h2>DEFENCE TECHNOLOGY DOMAINS</h2>
+
+  <div class="timeline">
+    <div class="node">Autonomous Drones & UAV Intelligence</div>
+    <div class="node">Artificial Intelligence for Defence</div>
+    <div class="node">ISR Systems (Intelligence, Surveillance, Recon)</div>
+    <div class="node">Cyber Defence & Secure Architectures</div>
+    <div class="node">Digital Twin & Simulation Environments</div>
+  </div>
+</section>
+
+<!-- OPERATIONS -->
+<section id="ops" class="section dark">
+  <h2>OPERATIONAL APPLICATIONS</h2>
+
+  <ul class="ops">
+    <li>Border Surveillance & Reconnaissance</li>
+    <li>Autonomous Aerial & Ground Operations</li>
+    <li>Threat Monitoring & Early Warning</li>
+    <li>Military Training & Tactical Simulation</li>
+    <li>Secure Battlefield Communications</li>
+  </ul>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <h2>COLLABORATION</h2>
+  <p class="wide">
+    We engage with defence institutions, research organizations,
+    and strategic partners on advanced defence programs.
+  </p>
+  <div class="contact">
+    yuiitsre@proton.me<br>
+    www.yuiitsre.me
+  </div>
+</section>
+
+<footer>
+  © 2026 Yuiitsre Defence & Research
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
