@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1D6FE8" />
+<title>My Products — IndustrialLink Seller</title>
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/mobile.css" />
+<style>
+.product-list-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px; border-bottom: 1px solid var(--border); min-height: 76px;
+}
+.product-list-item:last-child { border-bottom: none; }
+.product-list-item:active { background: var(--surface-2); }
+.pli-img { width: 52px; height: 52px; border-radius: var(--radius); background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; flex-shrink: 0; }
+.pli-info { flex: 1; min-width: 0; }
+.pli-name { font-weight: 700; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pli-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 2px; }
+.pli-price { font-weight: 800; font-size: 0.92rem; color: var(--primary); }
+.pli-actions { display: flex; flex-direction: column; gap: 5px; flex-shrink: 0; }
+
+.fab {
+  position: fixed; bottom: calc(64px + 16px + env(safe-area-inset-bottom, 0px));
+  right: 16px; width: 56px; height: 56px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-light));
+  color: #fff; font-size: 1.6rem;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: var(--shadow-primary); z-index: 99; cursor: pointer;
+  transition: var(--transition-bounce); border: none;
+}
+.fab:active { transform: scale(0.88); }
+@media(min-width: 768px) { .fab { display: none; } }
+</style>
+</head>
+<body>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+        <div class="logo-icon">📦</div>
+        <div><div class="logo-text">IndustrialLink</div><div class="logo-sub">Seller Portal</div></div>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main Menu</div>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="listings.html" class="nav-item active"><span class="nav-icon">📋</span> My Products <span class="nav-badge">24</span></a>
+      <a href="orders.html" class="nav-item"><span class="nav-icon">📦</span> Orders <span class="nav-badge">5</span></a>
+      <a href="analytics.html" class="nav-item"><span class="nav-icon">📊</span> Analytics</a>
+      <div class="sidebar-section-label">Finance</div>
+      <a href="#" class="nav-item"><span class="nav-icon">💰</span> Payouts</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar avatar-md avatar-blue sidebar-user-initials">AS</div>
+      <div><div class="user-name sidebar-user-name">Anil Sharma</div><div class="user-role sidebar-user-role">Supplier Account</div></div>
+      <span class="logout-btn" onclick="logout()">🚪</span>
+    </div>
+  </aside>
+
+  <main class="portal-main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="openSidebar()">☰</button>
+      <div>
+        <div class="topbar-title">📋 My Products</div>
+        <div class="topbar-subtitle">24 listings · 3 out of stock</div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-notif" onclick="openModal('addProductModal')">➕</button>
+      </div>
+    </header>
+
+    <div class="portal-content">
+
+      <!-- Search bar -->
+      <div class="search-bar">
+        <input type="text" id="listingSearch" placeholder="🔍 Search your products..." oninput="searchProducts()" />
+        <button onclick="searchProducts()">Search</button>
+      </div>
+
+      <!-- Category chips -->
+      <div class="chips-row">
+        <button class="chip active" onclick="filterListing('all',this)">All (24)</button>
+        <button class="chip" onclick="filterListing('power',this)">🔌 Power Tools</button>
+        <button class="chip" onclick="filterListing('welding',this)">🔥 Welding</button>
+        <button class="chip" onclick="filterListing('safety',this)">🦺 Safety</button>
+        <button class="chip" onclick="filterListing('hand',this)">🔧 Hand Tools</button>
+        <button class="chip badge-red" onclick="filterListing('outofstock',this)">⚠️ Out of Stock (3)</button>
+      </div>
+
+      <!-- Product List -->
+      <div class="card fade-in">
+        <div class="card-header">
+          <span style="font-size:0.88rem;font-weight:800">Products (<span id="productCount">24</span>)</span>
+          <select class="form-control" style="width:auto;padding:6px 12px;font-size:0.78rem;min-height:auto">
+            <option>All Status</option><option>In Stock</option><option>Out of Stock</option>
+          </select>
+        </div>
+        <div id="productList"></div>
+        <div style="padding:12px 14px;border-top:1px solid var(--border)">
+          <button class="btn btn-primary btn-sm btn-full" onclick="openModal('addProductModal')">+ Add New Product</button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- FAB -->
+<button class="fab" onclick="openModal('addProductModal')" title="Add Product">＋</button>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="bottom-nav-item"><span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Home</span></a>
+  <a href="listings.html" class="bottom-nav-item active"><span class="bottom-nav-icon">📋</span><span class="bottom-nav-label">Products</span><span class="bottom-nav-badge">24</span></a>
+  <a href="orders.html" class="bottom-nav-item"><span class="bottom-nav-icon">📦</span><span class="bottom-nav-label">Orders</span><span class="bottom-nav-badge">5</span></a>
+  <a href="analytics.html" class="bottom-nav-item"><span class="bottom-nav-icon">📊</span><span class="bottom-nav-label">Analytics</span></a>
+  <a href="#" class="bottom-nav-item" onclick="showToast('Payouts','info')"><span class="bottom-nav-icon">💰</span><span class="bottom-nav-label">Payouts</span></a>
+</nav>
+
+<!-- Add Product Modal -->
+<div class="modal-overlay" id="addProductModal">
+  <div class="modal">
+    <div class="modal-header"><h3>➕ Add New Product</h3><button class="modal-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Product Name <span>*</span></label><input class="form-control" id="pName" placeholder="e.g. Bosch GSB 550 Power Drill" /></div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Category</label>
+          <select class="form-control" id="pCat"><option>Power Tools</option><option>Welding</option><option>Safety & PPE</option><option>Hand Tools</option><option>Electrical</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Brand</label><input class="form-control" id="pBrand" placeholder="Bosch, 3M..." /></div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Your Price (₹) <span>*</span></label><input class="form-control" id="pPrice" type="number" placeholder="3400" /></div>
+        <div class="form-group"><label class="form-label">MRP (₹)</label><input class="form-control" id="pMrp" type="number" placeholder="4200" /></div>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Stock Quantity <span>*</span></label><input class="form-control" id="pStock" type="number" placeholder="100" /></div>
+        <div class="form-group"><label class="form-label">Unit</label>
+          <select class="form-control" id="pUnit"><option>Piece</option><option>Pack</option><option>Kg</option><option>Box</option><option>Meter</option></select>
+        </div>
+      </div>
+      <div class="form-group"><label class="form-label">Product Description</label>
+        <textarea class="form-control" id="pDesc" rows="3" placeholder="Describe key features, specs, and use cases..."></textarea>
+      </div>
+      <div class="form-group"><label class="form-label">GST Rate</label>
+        <select class="form-control" id="pGst"><option>12% GST</option><option>18% GST</option><option>28% GST</option><option>0% (Exempt)</option></select>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('addProductModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addProduct()">✅ List Product</button>
+    </div>
+  </div>
+</div>
+
+<!-- Edit Product Modal -->
+<div class="modal-overlay" id="editProductModal">
+  <div class="modal">
+    <div class="modal-header"><h3>✏️ Edit Product</h3><button class="modal-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Product Name</label><input class="form-control" id="eName" /></div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Price (₹)</label><input class="form-control" id="ePrice" type="number" /></div>
+        <div class="form-group"><label class="form-label">Stock</label><input class="form-control" id="eStock" type="number" /></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('editProductModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveEdit()">✅ Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/global.js"></script>
+<script>
+const user = getCurrentUser(); if(user) populateUserInSidebar(user);
+
+const EMOJIS = { 'Power Tools':'🔌', 'Welding':'🔥', 'Safety & PPE':'⛑️', 'Hand Tools':'🔧', 'Electrical':'⚡', 'Lifting':'🏗️' };
+let PRODUCTS = [
+  { id:1, name:'GSB 550 Power Drill', brand:'Bosch', cat:'power', price:3400, mrp:4200, stock:48, unit:'Piece', active:true },
+  { id:2, name:'MIG Welder 200A Professional', brand:'Esab', cat:'welding', price:18500, mrp:22000, stock:12, unit:'Piece', active:true },
+  { id:3, name:'Hard Hat Safety Helmet EN397', brand:'3M', cat:'safety', price:850, mrp:1100, stock:120, unit:'Piece', active:true },
+  { id:4, name:'20-Piece Socket Wrench Set', brand:'Stanley', cat:'hand', price:2100, mrp:2800, stock:35, unit:'Set', active:true },
+  { id:5, name:'Angle Grinder 4.5" 850W', brand:'Bosch', cat:'power', price:3900, mrp:4800, stock:0, unit:'Piece', active:true },
+  { id:6, name:'TIG Welding Wire 5kg Spool', brand:'Esab', cat:'welding', price:4500, mrp:5500, stock:200, unit:'Spool', active:true },
+  { id:7, name:'Safety Gloves Cut-Resistant', brand:'Honeywell', cat:'safety', price:320, mrp:450, stock:12, unit:'Piece', active:true },
+  { id:8, name:'Cordless Screwdriver 12V', brand:'Dewalt', cat:'power', price:4200, mrp:5000, stock:0, unit:'Piece', active:true },
+  { id:9, name:'Safety Goggles Anti-Fog', brand:'3M', cat:'safety', price:420, mrp:600, stock:85, unit:'Piece', active:true },
+  { id:10, name:'Diamond Cutting Disc 10pk', brand:'Bosch', cat:'hand', price:980, mrp:1300, stock:0, unit:'Pack', active:true },
+];
+let filtered = [...PRODUCTS];
+
+function getCatKey(cat) {
+  const m = { power:'🔌', welding:'🔥', safety:'⛑️', hand:'🔧' };
+  return m[cat] || '📦';
+}
+
+function renderList(items) {
+  document.getElementById('productCount').textContent = items.length;
+  document.getElementById('productList').innerHTML = items.length === 0
+    ? '<div class="empty-state"><div class="empty-icon">📦</div><h3>No products found</h3><p>Adjust your search or filters</p></div>'
+    : items.map(p => `
+      <div class="product-list-item">
+        <div class="pli-img">${getCatKey(p.cat)}</div>
+        <div class="pli-info">
+          <div class="pli-name">${p.name}</div>
+          <div class="pli-meta">${p.brand} · ${p.unit}</div>
+          <div class="pli-price">₹${p.price.toLocaleString('en-IN')}</div>
+        </div>
+        <div style="text-align:right;flex-shrink:0;margin-right:8px">
+          ${p.stock === 0 ? '<span class="badge badge-red">Out of Stock</span>' : p.stock <= 15 ? `<span class="badge badge-amber">Low: ${p.stock}</span>` : `<span class="badge badge-green">${p.stock} in stock</span>`}
+        </div>
+        <div class="pli-actions">
+          <button class="btn btn-ghost btn-sm" onclick="editProduct(${p.id})">✏️</button>
+          <button class="btn btn-ghost btn-sm" style="color:var(--red)" onclick="deleteProduct(${p.id})">🗑️</button>
+        </div>
+      </div>
+    `).join('');
+}
+
+function filterListing(cat, btn) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); btn.classList.add('active');
+  if (cat === 'all') filtered = [...PRODUCTS];
+  else if (cat === 'outofstock') filtered = PRODUCTS.filter(p => p.stock === 0);
+  else filtered = PRODUCTS.filter(p => p.cat === cat);
+  renderList(filtered);
+}
+function searchProducts() {
+  const q = document.getElementById('listingSearch').value.toLowerCase();
+  renderList(q ? PRODUCTS.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q)) : PRODUCTS);
+}
+function editProduct(id) {
+  const p = PRODUCTS.find(x => x.id === id);
+  if (!p) return;
+  document.getElementById('eName').value = p.name;
+  document.getElementById('ePrice').value = p.price;
+  document.getElementById('eStock').value = p.stock;
+  openModal('editProductModal');
+}
+function saveEdit() { closeModal('editProductModal'); showToast('Product updated!','success'); }
+function deleteProduct(id) {
+  PRODUCTS = PRODUCTS.filter(p => p.id !== id);
+  filtered = filtered.filter(p => p.id !== id);
+  renderList(filtered);
+  showToast('Product removed from listings','info');
+}
+function addProduct() {
+  const name = document.getElementById('pName').value;
+  if (!name) { showToast('Please enter a product name','error'); return; }
+  const newP = { id: Date.now(), name, brand: document.getElementById('pBrand').value || 'My Brand', cat: 'power', price: parseInt(document.getElementById('pPrice').value)||0, mrp: parseInt(document.getElementById('pMrp').value)||0, stock: parseInt(document.getElementById('pStock').value)||0, unit: document.getElementById('pUnit').value, active: true };
+  PRODUCTS.unshift(newP); filtered = [...PRODUCTS];
+  renderList(filtered);
+  closeModal('addProductModal');
+  showToast(name + ' is now live on IndustrialLink! 🎉','success', 4000);
+}
+renderList(PRODUCTS);
+</script>
+</body>
+</html>

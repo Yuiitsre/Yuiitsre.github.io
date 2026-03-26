@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#8B5CF6" />
+<title>HR Dashboard — IndustrialLink</title>
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/mobile.css" />
+<style>
+.hr-banner {
+  background: linear-gradient(135deg, #8B5CF6 0%, #6D28D9 60%, #4C1D95 100%);
+  border-radius: var(--radius-lg); padding: var(--space-md); color: #fff;
+  position: relative; overflow: hidden;
+}
+.hr-banner::before {
+  content: '👥'; position: absolute; right: -10px; top: -10px;
+  font-size: 8rem; opacity: 0.08; transform: rotate(15deg);
+}
+.hr-actions { display: flex; gap: 8px; margin-top: 12px; position: relative; z-index: 1; flex-wrap: wrap; }
+.hr-actions .btn { background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); color: #fff; font-size: 0.8rem; }
+.hr-actions .btn:active { background: rgba(255,255,255,0.25); }
+
+.worker-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 13px 14px; border-bottom: 1px solid var(--border); min-height: 70px;
+}
+.worker-row:last-child { border-bottom: none; }
+.worker-row:active { background: var(--surface-2); }
+.wr-info { flex: 1; min-width: 0; }
+.wr-name { font-weight: 700; font-size: 0.88rem; }
+.wr-trade { font-size: 0.75rem; color: var(--text-muted); }
+.wr-site { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
+
+.site-card {
+  background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: var(--radius); padding: 14px;
+}
+.site-card-header { font-weight: 800; font-size: 0.92rem; margin-bottom: 8px; }
+.site-progress { background: var(--border); border-radius: var(--radius-full); height: 6px; margin-top: 8px; overflow: hidden; }
+.site-progress-fill { height: 100%; background: linear-gradient(to right, #8B5CF6, #4C1D95); border-radius: var(--radius-full); }
+</style>
+</head>
+<body>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+        <div class="logo-icon">👥</div>
+        <div><div class="logo-text">IndustrialLink</div><div class="logo-sub">HR Manager Portal</div></div>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Workforce</div>
+      <a href="dashboard.html" class="nav-item active"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="team.html" class="nav-item"><span class="nav-icon">👥</span> My Team <span class="nav-badge">47</span></a>
+      <a href="#" class="nav-item"><span class="nav-icon">💼</span> Job Postings <span class="nav-badge">5</span></a>
+      <a href="#" class="nav-item"><span class="nav-icon">📅</span> Attendance</a>
+      <div class="sidebar-section-label">Finance</div>
+      <a href="#" class="nav-item"><span class="nav-icon">💳</span> Payroll</a>
+      <a href="#" class="nav-item"><span class="nav-icon">📊</span> Reports</a>
+      <div class="sidebar-section-label">Account</div>
+      <a href="#" class="nav-item"><span class="nav-icon">🔔</span> Notifications <span class="nav-badge">4</span></a>
+      <a href="#" class="nav-item"><span class="nav-icon">❓</span> Help</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar avatar-md avatar-purple sidebar-user-initials">VR</div>
+      <div><div class="user-name sidebar-user-name">Vikram Rao</div><div class="user-role sidebar-user-role">HR Manager</div></div>
+      <span class="logout-btn" onclick="logout()">🚪</span>
+    </div>
+  </aside>
+
+  <main class="portal-main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="openSidebar()">☰</button>
+      <div>
+        <div class="topbar-title">👥 HR Dashboard</div>
+        <div class="topbar-subtitle sidebar-user-name">Vikram Rao · HR Manager</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-notif" onclick="showToast('4 new notifications','info')">🔔<div class="notif-dot"></div></div>
+      </div>
+    </header>
+
+    <div class="portal-content">
+
+      <!-- HR Banner -->
+      <div class="hr-banner fade-in">
+        <div style="position:relative;z-index:1">
+          <div style="font-size:0.78rem;opacity:0.75;margin-bottom:5px">👋 Good afternoon, Vikram</div>
+          <div style="font-size:1.3rem;font-weight:800;font-family:'Sora',sans-serif">Workforce Manager</div>
+          <div style="font-size:0.8rem;opacity:0.8;margin-top:4px">47 workers deployed · 5 sites active</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:10px">
+            <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:var(--radius-full);padding:4px 12px;font-size:0.72rem;font-weight:700">💼 5 open positions</span>
+            <span style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.25);border-radius:var(--radius-full);padding:4px 12px;font-size:0.72rem;font-weight:700">💰 ₹4.2L monthly payroll</span>
+          </div>
+        </div>
+        <div class="hr-actions">
+          <a href="team.html" class="btn btn-sm">👥 My Team</a>
+          <button class="btn btn-sm" onclick="openModal('addWorkerModal')">➕ Add Worker</button>
+          <button class="btn btn-sm" onclick="openModal('postJobModal')">📋 Post Job</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid fade-in-delay-1">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#F3E8FF">👥</div>
+          <div class="stat-value">47</div>
+          <div class="stat-label">Total Workers</div>
+          <div class="stat-change up">↑ 5 new this month</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#E8F9F0">✅</div>
+          <div class="stat-value">41</div>
+          <div class="stat-label">On-Site Today</div>
+          <div class="stat-change up">87% attendance</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#EEF4FF">💼</div>
+          <div class="stat-value">5</div>
+          <div class="stat-label">Open Positions</div>
+          <div class="stat-change" style="color:var(--primary)">3 urgent</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#FFF8E1">💰</div>
+          <div class="stat-value">₹4.2L</div>
+          <div class="stat-label">Monthly Payroll</div>
+          <div class="stat-change" style="color:var(--text-muted)">Settled on time</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="fade-in-delay-1">
+        <div class="section-header">
+          <span style="font-size:0.88rem;font-weight:800">⚡ Quick Actions</span>
+        </div>
+        <div class="quick-actions-grid">
+          <a href="team.html" class="quick-action-card"><div class="qa-icon">👥</div><div class="qa-label">View Team</div></a>
+          <button class="quick-action-card" onclick="openModal('addWorkerModal')"><div class="qa-icon">➕</div><div class="qa-label">Add Worker</div></button>
+          <button class="quick-action-card" onclick="openModal('postJobModal')"><div class="qa-icon">📋</div><div class="qa-label">Post Job</div></button>
+          <button class="quick-action-card" onclick="showToast('Payroll: ₹4.2L for 47 workers · Due 31 Mar','info',4000)"><div class="qa-icon">💳</div><div class="qa-label">Run Payroll</div></button>
+          <button class="quick-action-card" onclick="showToast('Today: 41 present · 6 absent','info')"><div class="qa-icon">📅</div><div class="qa-label">Attendance</div></button>
+          <button class="quick-action-card" onclick="showToast('Compliance report generated','success')"><div class="qa-icon">📄</div><div class="qa-label">PF/ESI Report</div></button>
+          <button class="quick-action-card" onclick="showToast('3 Aadhaar verifications pending','info')"><div class="qa-icon">🔏</div><div class="qa-label">KYC Pending</div></button>
+          <button class="quick-action-card" onclick="showToast('4 incidents reported this month','info')"><div class="qa-icon">🛡️</div><div class="qa-label">Safety Log</div></button>
+        </div>
+      </div>
+
+      <!-- Active Workers -->
+      <div class="card fade-in-delay-2">
+        <div class="card-header">
+          <span style="font-size:0.88rem;font-weight:800">👷 Workers On-Site Today</span>
+          <a href="team.html" style="font-size:0.8rem;color:var(--blue);font-weight:700">All 47 →</a>
+        </div>
+        <div>
+          <div class="worker-row">
+            <div class="avatar avatar-md avatar-green">RK</div>
+            <div class="wr-info">
+              <div class="wr-name">Rajesh Kumar</div>
+              <div class="wr-trade">TIG Welder · 8 yrs</div>
+              <div class="wr-site">📍 Site A-4, Ahmedabad</div>
+            </div>
+            <div style="text-align:right">
+              <span class="badge badge-green">🟢 Present</span>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">₹850/day</div>
+            </div>
+          </div>
+          <div class="worker-row">
+            <div class="avatar avatar-md avatar-blue">PS</div>
+            <div class="wr-info">
+              <div class="wr-name">Priya Sharma</div>
+              <div class="wr-trade">Electrician · 5 yrs</div>
+              <div class="wr-site">📍 Main Plant, Pune</div>
+            </div>
+            <div style="text-align:right">
+              <span class="badge badge-green">🟢 Present</span>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">₹750/day</div>
+            </div>
+          </div>
+          <div class="worker-row">
+            <div class="avatar avatar-md avatar-orange">MA</div>
+            <div class="wr-info">
+              <div class="wr-name">Mohammed Aslam</div>
+              <div class="wr-trade">Mason · 12 yrs</div>
+              <div class="wr-site">📍 Housing Project, Hyderabad</div>
+            </div>
+            <div style="text-align:right">
+              <span class="badge badge-red">🔴 Absent</span>
+              <div style="font-size:0.72rem;color:var(--text-muted);margin-top:4px">₹900/day</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:12px 14px;border-top:1px solid var(--border)">
+          <a href="team.html" class="btn btn-ghost btn-sm btn-full">View Full Team of 47</a>
+        </div>
+      </div>
+
+      <!-- Active Sites -->
+      <div class="fade-in-delay-2">
+        <div class="section-header">
+          <span style="font-size:0.88rem;font-weight:800">🏗️ Active Project Sites</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div class="site-card">
+            <div class="site-card-header">🏢 Ahmedabad Steel Factory — Site A-4</div>
+            <div style="font-size:0.78rem;color:var(--text-muted)">12 workers · TIG Welding · Ends 5 Apr</div>
+            <div style="display:flex;justify-content:space-between;font-size:0.72rem;margin-top:8px">
+              <span style="color:var(--text-muted)">Progress</span>
+              <span style="font-weight:700">Day 6 of 17 (35%)</span>
+            </div>
+            <div class="site-progress"><div class="site-progress-fill" style="width:35%"></div></div>
+          </div>
+          <div class="site-card">
+            <div class="site-card-header">🏭 Pune Main Plant — Block 3</div>
+            <div style="font-size:0.78rem;color:var(--text-muted)">8 workers · Electrical + Welding · Ends 15 Apr</div>
+            <div style="display:flex;justify-content:space-between;font-size:0.72rem;margin-top:8px">
+              <span style="color:var(--text-muted)">Progress</span>
+              <span style="font-weight:700">Day 3 of 20 (15%)</span>
+            </div>
+            <div class="site-progress"><div class="site-progress-fill" style="width:15%"></div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- Add Worker Modal -->
+<div class="modal-overlay" id="addWorkerModal">
+  <div class="modal">
+    <div class="modal-header"><h3>➕ Add Worker to Team</h3><button class="modal-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Full Name <span>*</span></label><input class="form-control" id="wName" placeholder="Worker's full name" /></div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Trade / Skill <span>*</span></label>
+          <select class="form-control" id="wTrade"><option>Welder (TIG)</option><option>Welder (MIG)</option><option>Electrician</option><option>Mason</option><option>Plumber</option><option>Rigger</option><option>Carpenter</option></select>
+        </div>
+        <div class="form-group"><label class="form-label">Experience (years)</label><input class="form-control" id="wExp" type="number" placeholder="5" /></div>
+      </div>
+      <div class="form-group"><label class="form-label">Assigned Site <span>*</span></label>
+        <select class="form-control" id="wSite"><option>Site A-4, Ahmedabad</option><option>Pune Main Plant</option><option>Hyderabad Housing Project</option><option>Mumbai Bridge Project</option></select>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Daily Rate (₹) <span>*</span></label><input class="form-control" id="wRate" type="number" placeholder="850" /></div>
+        <div class="form-group"><label class="form-label">Aadhaar Number</label><input class="form-control" id="wAadhaar" placeholder="XXXX XXXX XXXX" maxlength="14" /></div>
+      </div>
+      <div class="form-group"><label class="form-label">Phone Number</label><input class="form-control" id="wPhone" type="tel" placeholder="+91 XXXXX XXXXX" /></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('addWorkerModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="addWorkerToTeam()">✅ Add to Team</button>
+    </div>
+  </div>
+</div>
+
+<!-- Post Job Modal -->
+<div class="modal-overlay" id="postJobModal">
+  <div class="modal">
+    <div class="modal-header"><h3>📋 Post a Job Opening</h3><button class="modal-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Trade Required <span>*</span></label>
+        <select class="form-control"><option>Welder (TIG)</option><option>Welder (MIG)</option><option>Electrician</option><option>Mason</option><option>Rigger</option></select>
+      </div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Workers Needed</label><input class="form-control" type="number" placeholder="3" /></div>
+        <div class="form-group"><label class="form-label">Daily Rate (₹)</label><input class="form-control" type="number" placeholder="850" /></div>
+      </div>
+      <div class="form-group"><label class="form-label">Site Location <span>*</span></label><input class="form-control" placeholder="City, area, site name" /></div>
+      <div class="form-grid-2">
+        <div class="form-group"><label class="form-label">Start Date</label><input class="form-control" type="date" /></div>
+        <div class="form-group"><label class="form-label">Duration (days)</label><input class="form-control" type="number" placeholder="30" /></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('postJobModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="postJob()">📢 Post Job</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="bottom-nav-item active"><span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Home</span></a>
+  <a href="team.html" class="bottom-nav-item"><span class="bottom-nav-icon">👥</span><span class="bottom-nav-label">Team</span><span class="bottom-nav-badge">47</span></a>
+  <button class="bottom-nav-item" onclick="openModal('addWorkerModal')"><span class="bottom-nav-icon">➕</span><span class="bottom-nav-label">Add Worker</span></button>
+  <button class="bottom-nav-item" onclick="showToast('Attending: 41/47','info')"><span class="bottom-nav-icon">📅</span><span class="bottom-nav-label">Attendance</span></button>
+  <button class="bottom-nav-item" onclick="showToast('Payroll: ₹4.2L due 31 Mar','info')"><span class="bottom-nav-icon">💳</span><span class="bottom-nav-label">Payroll</span></button>
+</nav>
+
+<div id="toast-container"></div>
+<script src="../js/global.js"></script>
+<script>
+const user = getCurrentUser(); if(user) populateUserInSidebar(user);
+function addWorkerToTeam() {
+  const name = document.getElementById('wName').value;
+  if (!name) { showToast('Please enter the worker\'s name','error'); return; }
+  closeModal('addWorkerModal');
+  showToast(name + ' added to your team! ✅ Verification SMS sent.', 'success', 4000);
+}
+function postJob() { closeModal('postJobModal'); showToast('Job posted! Matching workers will be notified 🎯','success',4000); }
+</script>
+</body>
+</html>

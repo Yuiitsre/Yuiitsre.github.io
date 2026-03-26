@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Login / Register — IndustrialLink India</title>
+<link rel="stylesheet" href="css/global.css" />
+<link rel="stylesheet" href="css/auth.css" />
+</head>
+<body class="auth-body">
+
+<div class="auth-layout">
+  <!-- Left Panel -->
+  <div class="auth-left">
+    <a href="index.html" class="auth-back">← Back to Home</a>
+    <div class="auth-brand">
+      <div class="auth-logo">⚙️</div>
+      <div class="brand-name">IndustrialLink India</div>
+      <p class="auth-tagline">India's #1 Platform for Industrial Tools & Skilled Workers</p>
+    </div>
+    <div class="auth-features">
+      <div class="af-item"><span class="af-icon">🛒</span><div><strong>Buy 5L+ Products</strong><p>Power tools, welding machines, safety gear & more</p></div></div>
+      <div class="af-item"><span class="af-icon">👷</span><div><strong>Hire Verified Workers</strong><p>Welders, electricians, masons — background checked</p></div></div>
+      <div class="af-item"><span class="af-icon">💰</span><div><strong>30-day Credit Available</strong><p>Buy now, pay later for verified businesses</p></div></div>
+      <div class="af-item"><span class="af-icon">🔒</span><div><strong>100% Safe & Secure</strong><p>Aadhaar verified, GST compliant, insured</p></div></div>
+    </div>
+    <div class="auth-stats">
+      <div class="as-item"><div class="as-num">10,000+</div><div class="as-label">Businesses</div></div>
+      <div class="as-item"><div class="as-num">75,000+</div><div class="as-label">Workers</div></div>
+      <div class="as-item"><div class="as-num">5L+</div><div class="as-label">Products</div></div>
+    </div>
+  </div>
+
+  <!-- Right Panel -->
+  <div class="auth-right">
+    <div class="auth-card">
+      <!-- Tab Switch -->
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="loginTab" onclick="switchAuthTab('login')">Log In</button>
+        <button class="auth-tab" id="registerTab" onclick="switchAuthTab('register')">Register Free</button>
+      </div>
+
+      <!-- LOGIN FORM -->
+      <div id="loginForm">
+        <div class="auth-header">
+          <h2>Welcome back! 👋</h2>
+          <p>Log in to your IndustrialLink account</p>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Mobile Number or Email</label>
+          <div class="input-group">
+            <span class="input-icon">📱</span>
+            <input type="text" id="loginId" class="form-control" placeholder="Enter your mobile or email" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="input-group">
+            <span class="input-icon">🔑</span>
+            <input type="password" id="loginPwd" class="form-control" placeholder="Enter your password" />
+          </div>
+          <a href="#" class="form-hint" style="color:var(--blue);text-align:right;display:block;margin-top:4px">Forgot Password?</a>
+        </div>
+        <!-- Quick demo buttons -->
+        <div class="demo-accounts">
+          <p class="demo-title">🚀 Quick Demo — Log in as:</p>
+          <div class="demo-grid">
+            <button class="demo-btn" onclick="demoLogin('buyer')">🛒 Buyer</button>
+            <button class="demo-btn" onclick="demoLogin('seller')">📦 Seller</button>
+            <button class="demo-btn" onclick="demoLogin('worker')">🔧 Worker</button>
+            <button class="demo-btn" onclick="demoLogin('hr')">👥 HR Manager</button>
+          </div>
+        </div>
+        <button class="btn btn-blue" style="width:100%;margin-top:8px" onclick="doLogin()">Log In to My Account</button>
+        <p class="auth-switch">Don't have an account? <a href="#" onclick="switchAuthTab('register')">Register Free</a></p>
+      </div>
+
+      <!-- REGISTER FORM -->
+      <div id="registerForm" style="display:none">
+        <div class="auth-header">
+          <h2>Create Your Account 🎉</h2>
+          <p>Join 10,000+ businesses on IndustrialLink</p>
+        </div>
+
+        <!-- Step 1: Role selector -->
+        <div id="step1">
+          <p class="step-label-text"><strong>Step 1 of 3</strong> — Who are you?</p>
+          <div class="role-selector">
+            <div class="role-card" id="role-buyer" onclick="selectRole('buyer')">
+              <div class="role-icon">🛒</div>
+              <h4>Buyer</h4>
+              <p>I want to purchase tools & hire workers</p>
+            </div>
+            <div class="role-card" id="role-seller" onclick="selectRole('seller')">
+              <div class="role-icon">📦</div>
+              <h4>Seller / Supplier</h4>
+              <p>I sell industrial products to businesses</p>
+            </div>
+            <div class="role-card" id="role-worker" onclick="selectRole('worker')">
+              <div class="role-icon">🔧</div>
+              <h4>Skilled Worker</h4>
+              <p>I'm a welder, electrician, mason, etc.</p>
+            </div>
+            <div class="role-card" id="role-hr" onclick="selectRole('hr')">
+              <div class="role-icon">👥</div>
+              <h4>HR Manager / Contractor</h4>
+              <p>I manage a team of workers</p>
+            </div>
+          </div>
+          <button class="btn btn-blue" style="width:100%;margin-top:16px" onclick="goStep2()" id="step1Next" disabled>Continue →</button>
+        </div>
+
+        <!-- Step 2: Details -->
+        <div id="step2" style="display:none">
+          <p class="step-label-text"><strong>Step 2 of 3</strong> — Your Details</p>
+          <div id="buyerFields" class="role-fields" style="display:none">
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Full Name <span>*</span></label><input class="form-control" id="b-name" placeholder="Ramesh Kumar" /></div>
+              <div class="form-group"><label class="form-label">Company Name <span>*</span></label><input class="form-control" id="b-company" placeholder="Your Company Pvt. Ltd." /></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Mobile Number <span>*</span></label><input class="form-control" id="b-mobile" placeholder="9876543210" /></div>
+              <div class="form-group"><label class="form-label">GST Number</label><input class="form-control" id="b-gst" placeholder="29AABCC1234K1ZA" /></div>
+            </div>
+            <div class="form-group"><label class="form-label">Business Type <span>*</span></label>
+              <select class="form-control" id="b-btype"><option value="">Select type...</option><option>Manufacturing Company</option><option>Construction Contractor</option><option>MSME / Small Business</option><option>Government Project</option><option>Other</option></select>
+            </div>
+            <div class="form-group"><label class="form-label">City / Location <span>*</span></label><input class="form-control" id="b-city" placeholder="Mumbai, Gujarat..." /></div>
+          </div>
+          <div id="sellerFields" class="role-fields" style="display:none">
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Your Name <span>*</span></label><input class="form-control" id="s-name" placeholder="Anil Sharma" /></div>
+              <div class="form-group"><label class="form-label">Business Name <span>*</span></label><input class="form-control" id="s-company" placeholder="Sharma Tools Pvt. Ltd." /></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Mobile <span>*</span></label><input class="form-control" id="s-mobile" placeholder="9876543210" /></div>
+              <div class="form-group"><label class="form-label">GST Number <span>*</span></label><input class="form-control" id="s-gst" placeholder="Required for selling" /></div>
+            </div>
+            <div class="form-group"><label class="form-label">What do you sell?</label>
+              <select class="form-control" id="s-cat"><option value="">Select category...</option><option>Power Tools</option><option>Welding Equipment</option><option>Safety & PPE</option><option>Electrical Supplies</option><option>Hand Tools</option><option>Heavy Machinery</option><option>Other</option></select>
+            </div>
+            <div class="form-group"><label class="form-label">Your City <span>*</span></label><input class="form-control" id="s-city" placeholder="Ludhiana, Chennai..." /></div>
+          </div>
+          <div id="workerFields" class="role-fields" style="display:none">
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Full Name <span>*</span></label><input class="form-control" id="w-name" placeholder="Ramesh Singh" /></div>
+              <div class="form-group"><label class="form-label">Mobile Number <span>*</span></label><input class="form-control" id="w-mobile" placeholder="9876543210" /></div>
+            </div>
+            <div class="form-group"><label class="form-label">Your Trade / Skill <span>*</span></label>
+              <select class="form-control" id="w-trade"><option value="">Select your skill...</option><option>Welder (MIG)</option><option>Welder (TIG)</option><option>Welder (Arc)</option><option>Electrician</option><option>Mason / Bricklayer</option><option>Plumber</option><option>Rigger / Crane Operator</option><option>Carpenter</option><option>Painter</option><option>Fitter</option><option>Other</option></select>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Years of Experience <span>*</span></label><input class="form-control" id="w-exp" type="number" placeholder="5" /></div>
+              <div class="form-group"><label class="form-label">Current City <span>*</span></label><input class="form-control" id="w-city" placeholder="Ahmedabad" /></div>
+            </div>
+            <div class="form-group"><label class="form-label">Aadhaar Number <span>*</span></label><input class="form-control" id="w-aadhaar" placeholder="Used for verification only" /></div>
+          </div>
+          <div id="hrFields" class="role-fields" style="display:none">
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Your Name <span>*</span></label><input class="form-control" id="h-name" placeholder="Mohammed Rafi" /></div>
+              <div class="form-group"><label class="form-label">Company / Agency Name</label><input class="form-control" id="h-company" placeholder="Rafi Labour Contractors" /></div>
+            </div>
+            <div class="form-grid-2">
+              <div class="form-group"><label class="form-label">Mobile <span>*</span></label><input class="form-control" id="h-mobile" placeholder="9876543210" /></div>
+              <div class="form-group"><label class="form-label">How many workers do you manage?</label><input class="form-control" id="h-count" type="number" placeholder="20" /></div>
+            </div>
+            <div class="form-group"><label class="form-label">Your City <span>*</span></label><input class="form-control" id="h-city" placeholder="Surat, Gujarat" /></div>
+            <p class="form-hint">💡 After registering, you'll be able to add each worker's profile individually.</p>
+          </div>
+          <div class="form-group" style="margin-top:8px"><label class="form-label">Create Password <span>*</span></label><input type="password" class="form-control" id="reg-pwd" placeholder="Min 8 characters" /></div>
+          <div style="display:flex;gap:8px;margin-top:16px">
+            <button class="btn btn-ghost" style="flex:1" onclick="goStep1()">← Back</button>
+            <button class="btn btn-blue" style="flex:2" onclick="goStep3()">Continue →</button>
+          </div>
+        </div>
+
+        <!-- Step 3: Verify -->
+        <div id="step3" style="display:none">
+          <p class="step-label-text"><strong>Step 3 of 3</strong> — Verify & Start</p>
+          <div class="verify-box">
+            <div class="verify-icon">📱</div>
+            <h3>We sent an OTP!</h3>
+            <p>Enter the 6-digit code sent to your mobile number</p>
+            <div class="otp-inputs">
+              <input class="otp-box" maxlength="1" id="otp1" />
+              <input class="otp-box" maxlength="1" id="otp2" />
+              <input class="otp-box" maxlength="1" id="otp3" />
+              <input class="otp-box" maxlength="1" id="otp4" />
+              <input class="otp-box" maxlength="1" id="otp5" />
+              <input class="otp-box" maxlength="1" id="otp6" />
+            </div>
+            <p class="form-hint" style="text-align:center;margin-top:8px">Demo: Enter any 6 digits → <strong>123456</strong></p>
+          </div>
+          <button class="btn btn-green" style="width:100%;margin-top:16px" onclick="completeRegistration()">✅ Verify & Create Account</button>
+          <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="goStep2()">← Change Details</button>
+        </div>
+
+        <p class="auth-switch">Already have an account? <a href="#" onclick="switchAuthTab('login')">Log In</a></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="js/global.js"></script>
+<script src="js/auth.js"></script>
+</body>
+</html>

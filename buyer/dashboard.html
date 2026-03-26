@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="theme-color" content="#1D6FE8" />
+<title>Buyer Dashboard — IndustrialLink India</title>
+<link rel="stylesheet" href="../css/global.css" />
+<style>
+/* ===== PAGE-SPECIFIC ===== */
+.greeting-banner {
+  background: linear-gradient(135deg, #1D6FE8 0%, #1253B5 60%, #0D3F8F 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.greeting-banner::before {
+  content: '⚙️';
+  position: absolute;
+  right: -10px;
+  top: -10px;
+  font-size: 8rem;
+  opacity: 0.08;
+  transform: rotate(15deg);
+}
+.greeting-name { font-size: 1.2rem; font-weight: 800; font-family: 'Sora', sans-serif; }
+.greeting-sub { font-size: 0.8rem; opacity: 0.75; margin-top: 2px; }
+.credit-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-full);
+  padding: 5px 12px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-top: 12px;
+  backdrop-filter: blur(4px);
+}
+.banner-actions { display: flex; gap: 8px; margin-top: 14px; }
+.banner-actions .btn { background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3); color: #fff; backdrop-filter: blur(4px); font-size: 0.8rem; }
+.banner-actions .btn:active { background: rgba(255,255,255,0.25); }
+
+.section-title { font-size: 0.88rem; font-weight: 800; color: var(--text-primary); }
+.section-link { font-size: 0.8rem; color: var(--blue); font-weight: 700; }
+
+/* Order row */
+.order-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.order-row:last-child { border-bottom: none; }
+.order-row:active { background: var(--surface-2); }
+.or-icon { font-size: 1.8rem; width: 44px; height: 44px; background: var(--bg); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.or-info { flex: 1; min-width: 0; }
+.or-name { font-weight: 700; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.or-meta { font-size: 0.75rem; color: var(--text-muted); margin-top: 1px; }
+.or-price { text-align: right; flex-shrink: 0; }
+.or-amount { font-weight: 800; font-size: 0.92rem; color: var(--text-primary); }
+
+/* Worker row */
+.worker-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border);
+}
+.worker-row:last-child { border-bottom: none; }
+.worker-row:active { background: var(--surface-2); }
+.wr-info { flex: 1; min-width: 0; }
+.wr-name { font-weight: 700; font-size: 0.88rem; }
+.wr-trade { font-size: 0.75rem; color: var(--text-muted); }
+.wr-site { font-size: 0.72rem; color: var(--text-muted); }
+
+/* Product quick card */
+.product-mini {
+  background: var(--surface);
+  border-radius: var(--radius);
+  border: 1.5px solid var(--border);
+  width: 140px;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+.product-mini .pm-img { height: 90px; background: var(--bg); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; }
+.product-mini .pm-body { padding: 10px; }
+.product-mini .pm-name { font-size: 0.75rem; font-weight: 700; line-height: 1.3; margin-bottom: 4px; }
+.product-mini .pm-price { font-size: 0.85rem; font-weight: 800; color: var(--primary); }
+</style>
+</head>
+<body>
+
+<!-- Sidebar Overlay -->
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="portal-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="portalSidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+        <div class="logo-icon">⚙️</div>
+        <div><div class="logo-text">IndustrialLink</div><div class="logo-sub">Buyer Portal</div></div>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main Menu</div>
+      <a href="dashboard.html" class="nav-item active"><span class="nav-icon">🏠</span> Home</a>
+      <a href="catalog.html" class="nav-item"><span class="nav-icon">🛒</span> Browse Products</a>
+      <a href="labor.html" class="nav-item"><span class="nav-icon">👷</span> Find Workers</a>
+      <a href="orders.html" class="nav-item"><span class="nav-icon">📦</span> My Orders</a>
+      <a href="cart.html" class="nav-item"><span class="nav-icon">🛍️</span> My Cart <span class="nav-badge" id="cartBadgeSidebar">0</span></a>
+      <div class="sidebar-section-label">Account</div>
+      <a href="#" class="nav-item"><span class="nav-icon">🏢</span> Company Profile</a>
+      <a href="#" class="nav-item"><span class="nav-icon">💳</span> Payments</a>
+      <a href="#" class="nav-item"><span class="nav-icon">🔔</span> Notifications <span class="nav-badge">3</span></a>
+      <a href="#" class="nav-item"><span class="nav-icon">❓</span> Help & Support</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar avatar-md avatar-orange sidebar-user-initials">RK</div>
+      <div>
+        <div class="user-name sidebar-user-name">Ramesh Kumar</div>
+        <div class="user-role sidebar-user-role">Buyer Account</div>
+      </div>
+      <span class="logout-btn" onclick="logout()">🚪</span>
+    </div>
+  </aside>
+
+  <main class="portal-main">
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="openSidebar()">☰</button>
+      <div>
+        <div class="topbar-title">IndustrialLink</div>
+        <div class="topbar-subtitle">Buyer Dashboard</div>
+      </div>
+      <div class="topbar-right">
+        <a href="cart.html" class="topbar-notif">
+          🛍️
+          <div class="notif-dot" id="cartDot" style="display:none"></div>
+        </a>
+        <div class="topbar-notif" onclick="showToast('3 new notifications!','info')">
+          🔔
+          <div class="notif-dot"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="portal-content">
+
+      <!-- Greeting Banner -->
+      <div class="greeting-banner fade-in">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div style="font-size:0.78rem;opacity:0.7;margin-bottom:3px">Good afternoon 👋</div>
+            <div class="greeting-name sidebar-user-name">Ramesh Kumar</div>
+            <div class="greeting-sub">Ramesh Industries Pvt. Ltd.</div>
+          </div>
+          <div class="badge badge-green" style="margin-top:2px;font-size:0.7rem">✓ GST Verified</div>
+        </div>
+        <div class="credit-chip">💳 Business Credit: ₹2,50,000 available</div>
+        <div class="banner-actions">
+          <a href="catalog.html" class="btn btn-sm">🛒 Shop Products</a>
+          <a href="labor.html" class="btn btn-sm">👷 Hire Workers</a>
+        </div>
+      </div>
+
+      <!-- Stats Grid -->
+      <div class="stats-grid fade-in-delay-1">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#EEF4FF">📦</div>
+          <div class="stat-value" data-count="12">12</div>
+          <div class="stat-label">Active Orders</div>
+          <div class="stat-change up">↑ 3 new today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#E8F9F0">👷</div>
+          <div class="stat-value" data-count="5">5</div>
+          <div class="stat-label">Hired Workers</div>
+          <div class="stat-change up">All on-site</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#FFF3ED">💰</div>
+          <div class="stat-value">₹4.8L</div>
+          <div class="stat-label">Spent This Month</div>
+          <div class="stat-change down">↑ 12% vs last</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#FFF8E1">⭐</div>
+          <div class="stat-value" data-count="4.9" data-prefix="">4.9</div>
+          <div class="stat-label">Supplier Rating</div>
+          <div class="stat-change up">Top buyer</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="fade-in-delay-2">
+        <div class="section-header">
+          <span class="section-title">⚡ Quick Actions</span>
+        </div>
+        <div class="quick-actions-grid">
+          <a href="catalog.html" class="quick-action-card">
+            <div class="qa-icon">🔌</div>
+            <div class="qa-label">Power Tools</div>
+          </a>
+          <a href="catalog.html" class="quick-action-card">
+            <div class="qa-icon">🔥</div>
+            <div class="qa-label">Welding</div>
+          </a>
+          <a href="labor.html" class="quick-action-card">
+            <div class="qa-icon">👷</div>
+            <div class="qa-label">Find Workers</div>
+          </a>
+          <a href="cart.html" class="quick-action-card">
+            <div class="qa-icon">🛍️</div>
+            <div class="qa-label">My Cart</div>
+          </a>
+          <a href="orders.html" class="quick-action-card">
+            <div class="qa-icon">📦</div>
+            <div class="qa-label">Track Orders</div>
+          </a>
+          <a href="#" class="quick-action-card" onclick="showToast('RFQ feature coming soon!','info')">
+            <div class="qa-icon">📩</div>
+            <div class="qa-label">Get Quotes</div>
+          </a>
+          <a href="#" class="quick-action-card" onclick="showToast('Invoice downloaded!','success')">
+            <div class="qa-icon">🧾</div>
+            <div class="qa-label">Invoices</div>
+          </a>
+          <a href="#" class="quick-action-card" onclick="openModal('supportModal')">
+            <div class="qa-icon">💬</div>
+            <div class="qa-label">Support</div>
+          </a>
+        </div>
+      </div>
+
+      <!-- Recent Orders -->
+      <div class="card fade-in-delay-2">
+        <div class="card-header">
+          <span class="section-title">📦 Recent Orders</span>
+          <a href="orders.html" class="section-link">See all →</a>
+        </div>
+        <div>
+          <div class="order-row">
+            <div class="or-icon">🔌</div>
+            <div class="or-info">
+              <div class="or-name">Bosch GSB 550 Power Drill ×2</div>
+              <div class="or-meta">Order #IL-2421 · <span style="color:var(--blue)">🚚 Out for Delivery</span></div>
+            </div>
+            <div class="or-price">
+              <div class="or-amount">₹6,800</div>
+              <div style="font-size:0.68rem;color:var(--text-muted)">22 Mar</div>
+            </div>
+          </div>
+          <div class="order-row">
+            <div class="or-icon">⛑️</div>
+            <div class="or-info">
+              <div class="or-name">Safety Helmets ×5</div>
+              <div class="or-meta">Order #IL-2418 · <span style="color:var(--green)">✅ Delivered</span></div>
+            </div>
+            <div class="or-price">
+              <div class="or-amount">₹4,500</div>
+              <div style="font-size:0.68rem;color:var(--text-muted)">20 Mar</div>
+            </div>
+          </div>
+          <div class="order-row">
+            <div class="or-icon">🧤</div>
+            <div class="or-info">
+              <div class="or-name">Cut-Resistant Gloves ×50</div>
+              <div class="or-meta">Order #IL-2411 · <span style="color:var(--green)">✅ Delivered</span></div>
+            </div>
+            <div class="or-price">
+              <div class="or-amount">₹3,200</div>
+              <div style="font-size:0.68rem;color:var(--text-muted)">18 Mar</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:12px 14px;border-top:1px solid var(--border)">
+          <a href="orders.html" class="btn btn-ghost btn-sm btn-full">View All Orders</a>
+        </div>
+      </div>
+
+      <!-- Active Workers -->
+      <div class="card fade-in-delay-3">
+        <div class="card-header">
+          <span class="section-title">👷 Active Workers</span>
+          <a href="labor.html" class="section-link">Hire more →</a>
+        </div>
+        <div>
+          <div class="worker-row">
+            <div class="avatar avatar-md avatar-green">RK</div>
+            <div class="wr-info">
+              <div class="wr-name">Rajesh Kumar</div>
+              <div class="wr-trade">TIG Welder · Day 6/15</div>
+              <div class="wr-site">📍 Site A-4, Ahmedabad</div>
+            </div>
+            <div>
+              <span class="badge badge-green">🟢 Active</span>
+              <div style="font-size:0.72rem;color:var(--text-muted);text-align:right;margin-top:4px">₹850/day</div>
+            </div>
+          </div>
+          <div class="worker-row">
+            <div class="avatar avatar-md avatar-blue">PS</div>
+            <div class="wr-info">
+              <div class="wr-name">Priya Sharma</div>
+              <div class="wr-trade">Electrician · Day 3/10</div>
+              <div class="wr-site">📍 Main Plant, Pune</div>
+            </div>
+            <div>
+              <span class="badge badge-green">🟢 Active</span>
+              <div style="font-size:0.72rem;color:var(--text-muted);text-align:right;margin-top:4px">₹750/day</div>
+            </div>
+          </div>
+        </div>
+        <div style="padding:12px 14px;border-top:1px solid var(--border)">
+          <a href="labor.html" class="btn btn-green btn-sm btn-full">+ Hire More Workers</a>
+        </div>
+      </div>
+
+      <!-- Recommended Products -->
+      <div class="fade-in-delay-3">
+        <div class="section-header">
+          <span class="section-title">🏆 Top Products for You</span>
+          <a href="catalog.html" class="section-link">View all →</a>
+        </div>
+        <div class="h-scroll">
+          <div class="product-mini" onclick="location.href='product.html'">
+            <div class="pm-img">🔌</div>
+            <div class="pm-body">
+              <div class="pm-name">Bosch GSB 550 Drill</div>
+              <div class="pm-price">₹3,400</div>
+            </div>
+          </div>
+          <div class="product-mini" onclick="location.href='catalog.html'">
+            <div class="pm-img">🔥</div>
+            <div class="pm-body">
+              <div class="pm-name">Esab MIG Welder 200A</div>
+              <div class="pm-price">₹18,500</div>
+            </div>
+          </div>
+          <div class="product-mini" onclick="location.href='catalog.html'">
+            <div class="pm-img">⛑️</div>
+            <div class="pm-body">
+              <div class="pm-name">3M Safety Helmet</div>
+              <div class="pm-price">₹850</div>
+            </div>
+          </div>
+          <div class="product-mini" onclick="location.href='catalog.html'">
+            <div class="pm-img">🧤</div>
+            <div class="pm-body">
+              <div class="pm-name">Cut Gloves 50-pk</div>
+              <div class="pm-price">₹320</div>
+            </div>
+          </div>
+          <div class="product-mini" onclick="location.href='catalog.html'">
+            <div class="pm-img">⚙️</div>
+            <div class="pm-body">
+              <div class="pm-name">Angle Grinder 850W</div>
+              <div class="pm-price">₹3,900</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end portal-content -->
+  </main>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="bottom-nav-item active">
+    <span class="bottom-nav-icon">🏠</span>
+    <span class="bottom-nav-label">Home</span>
+  </a>
+  <a href="catalog.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🛒</span>
+    <span class="bottom-nav-label">Shop</span>
+  </a>
+  <a href="labor.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">👷</span>
+    <span class="bottom-nav-label">Workers</span>
+  </a>
+  <a href="orders.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📦</span>
+    <span class="bottom-nav-label">Orders</span>
+  </a>
+  <a href="cart.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">🛍️</span>
+    <span class="bottom-nav-label">Cart</span>
+    <span class="bottom-nav-badge" id="cartBadgeBottom">0</span>
+  </a>
+</nav>
+
+<!-- Support Modal -->
+<div class="modal-overlay" id="supportModal">
+  <div class="modal">
+    <div class="modal-header"><h3>💬 Help & Support</h3><button class="modal-close">✕</button></div>
+    <div class="modal-body">
+      <div style="display:grid;gap:12px">
+        <div class="list-item" style="border:1.5px solid var(--border);border-radius:var(--radius);padding:14px" onclick="showToast('Calling support: 1800-123-WORK','info')">
+          <span style="font-size:1.8rem">📞</span>
+          <div><strong>Call Us</strong><p style="font-size:0.8rem;margin:2px 0 0">1800-123-WORK · Mon–Sat, 9AM–7PM</p></div>
+        </div>
+        <div class="list-item" style="border:1.5px solid var(--border);border-radius:var(--radius);padding:14px" onclick="showToast('WhatsApp chat opening...','info')">
+          <span style="font-size:1.8rem">💬</span>
+          <div><strong>WhatsApp Chat</strong><p style="font-size:0.8rem;margin:2px 0 0">Usually replies in under 5 minutes</p></div>
+        </div>
+        <div class="list-item" style="border:1.5px solid var(--border);border-radius:var(--radius);padding:14px" onclick="showToast('Email sent to support@industriallink.in','success')">
+          <span style="font-size:1.8rem">📧</span>
+          <div><strong>Email Support</strong><p style="font-size:0.8rem;margin:2px 0 0">support@industriallink.in</p></div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('supportModal')">Close</button></div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<script src="../js/global.js"></script>
+<script>
+const user = getCurrentUser();
+if (user) populateUserInSidebar(user);
+// Cart badge
+const cart = JSON.parse(localStorage.getItem('il_cart') || '[]');
+const cartCount = cart.length;
+document.getElementById('cartBadgeSidebar').textContent = cartCount;
+document.getElementById('cartBadgeBottom').textContent = cartCount;
+document.getElementById('cartDot').style.display = cartCount > 0 ? 'block' : 'none';
+</script>
+</body>
+</html>

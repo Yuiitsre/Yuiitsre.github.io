@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1D6FE8" />
+<title>Incoming Orders — IndustrialLink Seller</title>
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/mobile.css" />
+<style>
+.order-full-card {
+  background: var(--surface); border-radius: var(--radius-lg);
+  border: 1.5px solid var(--border); overflow: hidden;
+  transition: var(--transition);
+}
+.order-full-card:active { border-color: var(--primary); }
+.ofc-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px; border-bottom: 1px solid var(--border);
+}
+.ofc-id { font-weight: 800; font-size: 0.88rem; }
+.ofc-time { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
+.ofc-body { padding: 12px 14px; display: flex; flex-direction: column; gap: 6px; }
+.ofc-row { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: var(--text-secondary); }
+.ofc-footer { padding: 10px 14px; border-top: 1px solid var(--border); display: flex; gap: 8px; align-items: center; }
+.ofc-amount { font-weight: 800; font-size: 1rem; flex: 1; }
+</style>
+</head>
+<body>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+        <div class="logo-icon">📦</div>
+        <div><div class="logo-text">IndustrialLink</div><div class="logo-sub">Seller Portal</div></div>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="listings.html" class="nav-item"><span class="nav-icon">📋</span> My Products <span class="nav-badge">24</span></a>
+      <a href="orders.html" class="nav-item active"><span class="nav-icon">📦</span> Orders <span class="nav-badge">5</span></a>
+      <a href="analytics.html" class="nav-item"><span class="nav-icon">📊</span> Analytics</a>
+      <a href="#" class="nav-item"><span class="nav-icon">💰</span> Payouts</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar avatar-md avatar-blue sidebar-user-initials">AS</div>
+      <div><div class="user-name sidebar-user-name">Anil Sharma</div><div class="user-role sidebar-user-role">Supplier</div></div>
+      <span class="logout-btn" onclick="logout()">🚪</span>
+    </div>
+  </aside>
+
+  <main class="portal-main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="openSidebar()">☰</button>
+      <div>
+        <div class="topbar-title">📦 Incoming Orders</div>
+        <div class="topbar-subtitle">5 orders need your action</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-notif" onclick="showToast('5 orders pending action','info')">🔔<div class="notif-dot"></div></div>
+      </div>
+    </header>
+
+    <div class="portal-content">
+      <!-- Stats row for orders -->
+      <div class="stats-grid" style="grid-template-columns:repeat(2,1fr)">
+        <div class="stat-card" style="text-align:left">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="stat-icon" style="background:#FFF3ED">⏰</div>
+            <div><div class="stat-value" style="color:var(--orange)">5</div><div class="stat-label">Need Action</div></div>
+          </div>
+        </div>
+        <div class="stat-card" style="text-align:left">
+          <div style="display:flex;align-items:center;gap:8px">
+            <div class="stat-icon" style="background:#EEF4FF">🚚</div>
+            <div><div class="stat-value" style="color:var(--blue)">3</div><div class="stat-label">Shipped</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chips -->
+      <div class="chips-row">
+        <button class="chip active" onclick="filterOrders('all',this)">All Orders</button>
+        <button class="chip" onclick="filterOrders('pending',this)">⏳ Pending (5)</button>
+        <button class="chip" onclick="filterOrders('shipped',this)">🚚 Shipped (3)</button>
+        <button class="chip" onclick="filterOrders('delivered',this)">✅ Delivered</button>
+      </div>
+
+      <!-- Order count -->
+      <div style="font-size:0.78rem;color:var(--text-muted);margin-bottom:8px">
+        Showing <strong id="orderCount">8</strong> orders
+      </div>
+
+      <!-- Orders list -->
+      <div id="ordersContainer" style="display:flex;flex-direction:column;gap:12px"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Shipment Modal -->
+<div class="modal-overlay" id="shipModal">
+  <div class="modal">
+    <div class="modal-header"><h3>🚚 Mark as Shipped</h3><button class="modal-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Courier / Transport Partner</label>
+        <select class="form-control" id="courier"><option>BlueDart Express</option><option>DTDC</option><option>Delhivery</option><option>Own Vehicle</option><option>Buyer Pickup</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Tracking Number (optional)</label><input class="form-control" id="trackingNum" placeholder="AWB / tracking ID" /></div>
+      <div class="form-group"><label class="form-label">Expected Delivery Date</label><input class="form-control" type="date" id="deliveryDate" /></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('shipModal')">Cancel</button>
+      <button class="btn btn-blue" onclick="confirmShip()">🚚 Confirm Shipment</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="bottom-nav-item"><span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Home</span></a>
+  <a href="listings.html" class="bottom-nav-item"><span class="bottom-nav-icon">📋</span><span class="bottom-nav-label">Products</span><span class="bottom-nav-badge">24</span></a>
+  <a href="orders.html" class="bottom-nav-item active"><span class="bottom-nav-icon">📦</span><span class="bottom-nav-label">Orders</span><span class="bottom-nav-badge">5</span></a>
+  <a href="analytics.html" class="bottom-nav-item"><span class="bottom-nav-icon">📊</span><span class="bottom-nav-label">Analytics</span></a>
+  <a href="#" class="bottom-nav-item" onclick="showToast('Payouts','info')"><span class="bottom-nav-icon">💰</span><span class="bottom-nav-label">Payouts</span></a>
+</nav>
+
+<div id="toast-container"></div>
+<script src="../js/global.js"></script>
+<script>
+const user = getCurrentUser(); if(user) populateUserInSidebar(user);
+
+let ORDERS = [
+  { id:'IL-2425', buyer:'Tata Projects Ltd.', item:'Angle Grinder 850W', qty:5, amount:19500, emoji:'⚙️', status:'pending', time:'Just now', city:'Mumbai' },
+  { id:'IL-2423', buyer:'Kumar Construction', item:'Safety Helmets EN397', qty:20, amount:17000, emoji:'⛑️', status:'pending', time:'1 hr ago', city:'Pune' },
+  { id:'IL-2422', buyer:'Laxmi Industries', item:'Power Drill GSB 550', qty:10, amount:34000, emoji:'🔌', status:'pending', time:'2 hrs ago', city:'Ahmedabad' },
+  { id:'IL-2421', buyer:'AMS Fabworks', item:'Welding Wire 5kg Spool ×50', qty:50, amount:22500, emoji:'🔥', status:'pending', time:'Yesterday', city:'Surat' },
+  { id:'IL-2420', buyer:'Nova Metals', item:'Diamond Cutting Disc ×100', qty:100, amount:8000, emoji:'✂️', status:'pending', time:'Yesterday', city:'Rajkot' },
+  { id:'IL-2415', buyer:'Godrej Properties', item:'Safety Gloves ×200', qty:200, amount:6400, emoji:'🧤', status:'shipped', time:'3 days ago', city:'Mumbai' },
+  { id:'IL-2410', buyer:'L&T Construction', item:'Socket Wrench Set ×30', qty:30, amount:6300, emoji:'🔧', status:'shipped', time:'5 days ago', city:'Chennai' },
+  { id:'IL-2405', buyer:'ONGC Gujarat', item:'Safety Goggles ×50', qty:50, amount:2100, emoji:'🥽', status:'delivered', time:'1 week ago', city:'Vadodara' },
+];
+
+function statusBadge(s) {
+  if (s === 'pending') return '<span class="badge badge-amber">⏳ Pending</span>';
+  if (s === 'shipped') return '<span class="badge badge-blue">🚚 Shipped</span>';
+  if (s === 'delivered') return '<span class="badge badge-green">✅ Delivered</span>';
+  return '';
+}
+
+function renderOrders(orders) {
+  document.getElementById('orderCount').textContent = orders.length;
+  const c = document.getElementById('ordersContainer');
+  if (!orders.length) { c.innerHTML = '<div class="empty-state"><div class="empty-icon">📦</div><h3>No orders</h3><p>Orders will appear here</p></div>'; return; }
+  c.innerHTML = orders.map(o => `
+    <div class="order-full-card">
+      <div class="ofc-header">
+        <div style="font-size:2rem;width:44px;height:44px;background:var(--bg);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0">${o.emoji}</div>
+        <div style="flex:1;min-width:0">
+          <div class="ofc-id">#${o.id} · ${o.buyer}</div>
+          <div class="ofc-time">${o.time} · 📍 ${o.city}</div>
+        </div>
+        ${statusBadge(o.status)}
+      </div>
+      <div class="ofc-body">
+        <div class="ofc-row"><span>📦</span><span>${o.item} × ${o.qty}</span></div>
+        <div class="ofc-row"><span>💳</span><span>Payment: UPI · Secure</span></div>
+        <div class="ofc-row"><span>🚚</span><span>Delivery to buyer's site</span></div>
+      </div>
+      <div class="ofc-footer">
+        <div class="ofc-amount">₹${o.amount.toLocaleString('en-IN')}</div>
+        ${o.status === 'pending' ? `
+          <button class="btn btn-ghost btn-sm" onclick="showToast('Order #${o.id} declined','error')">Decline</button>
+          <button class="btn btn-green btn-sm" onclick="acceptOrder('${o.id}')">✅ Accept</button>
+        ` : o.status === 'shipped' ? `
+          <button class="btn btn-blue btn-sm" onclick="markDelivered('${o.id}')">✅ Mark Delivered</button>
+        ` : `
+          <span class="badge badge-green">✅ Done · Payment Received</span>
+        `}
+      </div>
+    </div>
+  `).join('');
+}
+
+function filterOrders(status, btn) {
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active')); btn.classList.add('active');
+  renderOrders(status === 'all' ? ORDERS : ORDERS.filter(o => o.status === status));
+}
+function acceptOrder(id) {
+  const o = ORDERS.find(x => x.id === id);
+  openModal('shipModal');
+  document.getElementById('shipModal').dataset.orderId = id;
+}
+function confirmShip() {
+  const id = document.getElementById('shipModal').dataset.orderId;
+  const o = ORDERS.find(x => x.id === id);
+  if (o) { o.status = 'shipped'; }
+  closeModal('shipModal');
+  renderOrders(ORDERS);
+  showToast(`Order #${id} accepted and marked shipped! 🚚`, 'success', 4000);
+}
+function markDelivered(id) {
+  const o = ORDERS.find(x => x.id === id);
+  if (o) { o.status = 'delivered'; }
+  renderOrders(ORDERS);
+  showToast(`Order #${id} marked delivered! Payment will be settled within 3 days. 💰`, 'success', 4000);
+}
+renderOrders(ORDERS);
+</script>
+</body>
+</html>

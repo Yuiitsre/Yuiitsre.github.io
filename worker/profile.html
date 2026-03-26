@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#12A454" />
+<title>My Profile — IndustrialLink Worker</title>
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/mobile.css" />
+<style>
+.profile-hero {
+  background: linear-gradient(135deg, #12A454 0%, #0A6030 100%);
+  border-radius: var(--radius-lg); padding: var(--space-md); color: #fff;
+  text-align: center; position: relative; overflow: hidden;
+}
+.profile-hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.ph-avatar { position: relative; display: inline-block; margin-bottom: 12px; }
+.ph-avatar-ring { width: 80px; height: 80px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.5); overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; font-weight: 800; background: rgba(255,255,255,0.15); }
+.ph-name { font-size: 1.2rem; font-weight: 800; font-family: 'Sora', sans-serif; }
+.ph-trade { font-size: 0.82rem; opacity: 0.82; margin-top: 3px; }
+.ph-badges { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-top: 10px; }
+.ph-badge { background: rgba(255,255,255,0.18); border: 1px solid rgba(255,255,255,0.3); border-radius: var(--radius-full); padding: 4px 10px; font-size: 0.72rem; font-weight: 700; }
+
+.completeness-bar-wrap { background: rgba(255,255,255,0.2); border-radius: var(--radius-full); height: 6px; margin: 10px 0 4px; overflow: hidden; }
+.completeness-bar-fill { height: 100%; background: #fff; border-radius: var(--radius-full); }
+
+.profile-section { background: var(--surface); border-radius: var(--radius-lg); border: 1.5px solid var(--border); overflow: hidden; }
+.ps-header { display: flex; align-items: center; justify-content: space-between; padding: 14px; border-bottom: 1px solid var(--border); }
+.ps-title { font-weight: 800; font-size: 0.88rem; }
+.ps-edit { font-size: 0.8rem; color: var(--blue); font-weight: 700; cursor: pointer; }
+
+.info-row { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.info-row:last-child { border-bottom: none; }
+.info-icon { font-size: 1.3rem; width: 36px; text-align: center; flex-shrink: 0; }
+.info-label { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 1px; }
+.info-value { font-size: 0.88rem; font-weight: 600; }
+
+.doc-item { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--border); }
+.doc-item:last-child { border-bottom: none; }
+.doc-icon { font-size: 1.5rem; width: 36px; text-align: center; flex-shrink: 0; }
+</style>
+</head>
+<body>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+        <div class="logo-icon">🔧</div>
+        <div><div class="logo-text">IndustrialLink</div><div class="logo-sub">Worker Portal</div></div>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span> My Dashboard</a>
+      <a href="jobs.html" class="nav-item"><span class="nav-icon">💼</span> Find Jobs <span class="nav-badge">8</span></a>
+      <a href="profile.html" class="nav-item active"><span class="nav-icon">👤</span> My Profile</a>
+      <a href="#" class="nav-item"><span class="nav-icon">💰</span> My Earnings</a>
+      <a href="#" class="nav-item"><span class="nav-icon">🔔</span> Job Alerts <span class="nav-badge">3</span></a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar avatar-md avatar-green sidebar-user-initials">RK</div>
+      <div><div class="user-name sidebar-user-name">Rajesh Kumar</div><div class="user-role sidebar-user-role">Worker Account</div></div>
+      <span class="logout-btn" onclick="logout()">🚪</span>
+    </div>
+  </aside>
+
+  <main class="portal-main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="openSidebar()">☰</button>
+      <div>
+        <div class="topbar-title">👤 My Profile</div>
+        <div class="topbar-subtitle">85% complete — keep improving</div>
+      </div>
+      <div class="topbar-right">
+        <button class="topbar-notif" onclick="openModal('editProfileModal')">✏️</button>
+      </div>
+    </header>
+
+    <div class="portal-content">
+
+      <!-- Profile Hero -->
+      <div class="profile-hero fade-in">
+        <div class="ph-avatar">
+          <div class="ph-avatar-ring">RK</div>
+        </div>
+        <div class="ph-name">Rajesh Kumar</div>
+        <div class="ph-trade">TIG Welder · 8 years · 📍 Ahmedabad, Gujarat</div>
+        <div class="ph-badges">
+          <span class="ph-badge">✅ Aadhaar Verified</span>
+          <span class="ph-badge">🔧 Trade Certified</span>
+          <span class="ph-badge">🏆 Top Worker</span>
+        </div>
+        <div style="margin-top:12px">
+          <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.75rem;opacity:0.85;margin-bottom:4px">
+            <span>Profile Strength</span><span style="font-weight:800">85%</span>
+          </div>
+          <div class="completeness-bar-wrap">
+            <div class="completeness-bar-fill" style="width:85%"></div>
+          </div>
+          <div style="font-size:0.68rem;opacity:0.7">Add bank details to reach 100%</div>
+        </div>
+        <button class="btn" style="margin-top:12px;background:rgba(255,255,255,0.15);border:1.5px solid rgba(255,255,255,0.3);color:#fff;font-size:0.8rem;width:100%" onclick="openModal('editProfileModal')">✏️ Edit My Profile</button>
+      </div>
+
+      <!-- Personal Info -->
+      <div class="profile-section fade-in-delay-1">
+        <div class="ps-header">
+          <span class="ps-title">👤 Personal Information</span>
+          <span class="ps-edit" onclick="openModal('editProfileModal')">Edit</span>
+        </div>
+        <div class="info-row"><div class="info-icon">📛</div><div><div class="info-label">Full Name</div><div class="info-value">Rajesh Kumar</div></div></div>
+        <div class="info-row"><div class="info-icon">📞</div><div><div class="info-label">Phone</div><div class="info-value">+91 98765 43210</div></div></div>
+        <div class="info-row"><div class="info-icon">📍</div><div><div class="info-label">Home City</div><div class="info-value">Ahmedabad, Gujarat</div></div></div>
+        <div class="info-row"><div class="info-icon">🎂</div><div><div class="info-label">Date of Birth</div><div class="info-value">15 June 1990 (34 yrs)</div></div></div>
+        <div class="info-row"><div class="info-icon">🆔</div><div><div class="info-label">Aadhaar</div><div class="info-value">XXXX XXXX 4567 ✅ Verified</div></div></div>
+      </div>
+
+      <!-- Work Details -->
+      <div class="profile-section fade-in-delay-1">
+        <div class="ps-header">
+          <span class="ps-title">💼 Work Details</span>
+          <span class="ps-edit" onclick="openModal('editTradeModal')">Edit</span>
+        </div>
+        <div class="info-row"><div class="info-icon">🔧</div><div><div class="info-label">Primary Trade</div><div class="info-value">TIG Welder (GTAW)</div></div></div>
+        <div class="info-row"><div class="info-icon">📅</div><div><div class="info-label">Experience</div><div class="info-value">8 years</div></div></div>
+        <div class="info-row"><div class="info-icon">💰</div><div><div class="info-label">Expected Daily Rate</div><div class="info-value">₹850/day</div></div></div>
+        <div class="info-row">
+          <div class="info-icon">🛠️</div>
+          <div>
+            <div class="info-label">Skills</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;margin-top:5px">
+              <span class="chip" style="cursor:default;font-size:0.7rem;padding:4px 10px;min-height:auto">TIG Welding</span>
+              <span class="chip" style="cursor:default;font-size:0.7rem;padding:4px 10px;min-height:auto">MIG Welding</span>
+              <span class="chip" style="cursor:default;font-size:0.7rem;padding:4px 10px;min-height:auto">Argon Welding</span>
+              <span class="chip" style="cursor:default;font-size:0.7rem;padding:4px 10px;min-height:auto">Structural Steel</span>
+            </div>
+          </div>
+        </div>
+        <div class="info-row"><div class="info-icon">🚗</div><div><div class="info-label">Willing to Travel</div><div class="info-value">Yes — up to 500 km</div></div></div>
+        <div class="info-row">
+          <div class="info-icon">📅</div>
+          <div>
+            <div class="info-label">Availability</div>
+            <div class="info-value">Currently Working · Free from 6 Apr</div>
+          </div>
+          <button class="btn btn-ghost btn-sm" onclick="showToast('Availability updated!','success')" style="margin-left:auto;flex-shrink:0">Update</button>
+        </div>
+      </div>
+
+      <!-- Documents -->
+      <div class="profile-section fade-in-delay-2">
+        <div class="ps-header">
+          <span class="ps-title">📄 Documents & Certificates</span>
+          <button class="btn btn-primary btn-sm" onclick="openModal('uploadDocModal')">+ Upload</button>
+        </div>
+        <div class="doc-item">
+          <div class="doc-icon">🪪</div>
+          <div style="flex:1"><div style="font-weight:700;font-size:0.85rem">Aadhaar Card</div><div style="font-size:0.72rem;color:var(--text-muted)">Uploaded · 2 Jan 2025</div></div>
+          <span class="badge badge-green">✓ Verified</span>
+        </div>
+        <div class="doc-item">
+          <div class="doc-icon">📜</div>
+          <div style="flex:1"><div style="font-weight:700;font-size:0.85rem">Trade Certificate (TIG Welding)</div><div style="font-size:0.72rem;color:var(--text-muted)">ITI Ahmedabad · Uploaded</div></div>
+          <span class="badge badge-green">✓ Verified</span>
+        </div>
+        <div class="doc-item">
+          <div class="doc-icon">🏦</div>
+          <div style="flex:1"><div style="font-weight:700;font-size:0.85rem">Bank Account (for payments)</div><div style="font-size:0.72rem;color:var(--text-muted)">SBI · XXXX1234</div></div>
+          <span class="badge badge-green">✓ Linked</span>
+        </div>
+        <div class="doc-item">
+          <div class="doc-icon">🛡️</div>
+          <div style="flex:1"><div style="font-weight:700;font-size:0.85rem">Work Insurance Certificate</div><div style="font-size:0.72rem;color:var(--text-muted)">Not uploaded yet</div></div>
+          <button class="btn btn-outline btn-sm" onclick="openModal('uploadDocModal')">Upload</button>
+        </div>
+      </div>
+
+      <!-- Rating Section -->
+      <div class="profile-section fade-in-delay-2">
+        <div class="ps-header"><span class="ps-title">⭐ My Ratings & Reviews</span></div>
+        <div style="padding:16px;text-align:center;border-bottom:1px solid var(--border)">
+          <div style="font-size:2.5rem;font-weight:900;color:var(--green)">4.9</div>
+          <div style="font-size:0.82rem;color:var(--text-muted)">Based on 47 contractor reviews</div>
+          <div style="font-size:1.3rem;margin-top:4px">⭐⭐⭐⭐⭐</div>
+        </div>
+        <div class="info-row" style="padding:14px">
+          <div class="info-icon">🏆</div>
+          <div>
+            <div style="font-weight:700;font-size:0.85rem">Kumar Construction Pvt. Ltd.</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px">"Excellent TIG welder. Very professional, zero rework needed."</div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:4px">⭐⭐⭐⭐⭐ · March 2025</div>
+          </div>
+        </div>
+        <div class="info-row" style="padding:14px">
+          <div class="info-icon">🏢</div>
+          <div>
+            <div style="font-weight:700;font-size:0.85rem">L&T Pipelines Gujarat</div>
+            <div style="font-size:0.78rem;color:var(--text-muted);margin-top:2px">"Always on time, great pipe welding skills. Recommended!"</div>
+            <div style="font-size:0.7rem;color:var(--text-muted);margin-top:4px">⭐⭐⭐⭐⭐ · Feb 2025</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="height:8px"></div>
+    </div>
+  </main>
+</div>
+
+<!-- Edit Profile Modal -->
+<div class="modal-overlay" id="editProfileModal">
+  <div class="modal">
+    <div class="modal-header"><h3>✏️ Edit Profile</h3><button class="modal-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Full Name</label><input class="form-control" value="Rajesh Kumar" /></div>
+      <div class="form-group"><label class="form-label">Phone</label><input class="form-control" type="tel" value="+91 98765 43210" /></div>
+      <div class="form-group"><label class="form-label">City</label><input class="form-control" value="Ahmedabad, Gujarat" /></div>
+      <div class="form-group"><label class="form-label">Expected Daily Rate (₹)</label><input class="form-control" type="number" value="850" /></div>
+      <div class="form-group"><label class="form-label">Travel Limit (km)</label><input class="form-control" type="number" value="500" /></div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('editProfileModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="saveProfile()">✅ Save Changes</button>
+    </div>
+  </div>
+</div>
+
+<!-- Upload Document Modal -->
+<div class="modal-overlay" id="uploadDocModal">
+  <div class="modal">
+    <div class="modal-header"><h3>📤 Upload Document</h3><button class="modal-close">✕</button></div>
+    <div class="modal-body">
+      <div class="form-group"><label class="form-label">Document Type</label>
+        <select class="form-control"><option>Work Insurance Certificate</option><option>PAN Card</option><option>Skill Certificate</option><option>Medical Fitness</option></select>
+      </div>
+      <div class="form-group"><label class="form-label">Document File</label>
+        <div style="border:2px dashed var(--border);border-radius:var(--radius);padding:24px;text-align:center;color:var(--text-muted);font-size:0.85rem;cursor:pointer" onclick="showToast('File picker: tap to select PDF/JPG','info')">
+          📎 Tap to select file (PDF or JPG)
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost" onclick="closeModal('uploadDocModal')">Cancel</button>
+      <button class="btn btn-primary" onclick="uploadDoc()">📤 Upload</button>
+    </div>
+  </div>
+</div>
+
+<!-- Bottom Nav -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="bottom-nav-item"><span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Home</span></a>
+  <a href="jobs.html" class="bottom-nav-item"><span class="bottom-nav-icon">💼</span><span class="bottom-nav-label">Find Jobs</span><span class="bottom-nav-badge">8</span></a>
+  <a href="profile.html" class="bottom-nav-item active"><span class="bottom-nav-icon">👤</span><span class="bottom-nav-label">Profile</span></a>
+  <a href="#" class="bottom-nav-item" onclick="showToast('₹24,500 this month!','success')"><span class="bottom-nav-icon">💰</span><span class="bottom-nav-label">Earnings</span></a>
+  <a href="#" class="bottom-nav-item" onclick="showToast('3 new job alerts nearby!','info')"><span class="bottom-nav-icon">🔔</span><span class="bottom-nav-label">Alerts</span><span class="bottom-nav-badge">3</span></a>
+</nav>
+
+<div id="toast-container"></div>
+<script src="../js/global.js"></script>
+<script>
+const user = getCurrentUser(); if(user) populateUserInSidebar(user);
+function saveProfile() { closeModal('editProfileModal'); showToast('Profile updated! 🎉','success'); }
+function uploadDoc() { closeModal('uploadDocModal'); showToast('Document uploaded for verification ✅','success'); }
+</script>
+</body>
+</html>

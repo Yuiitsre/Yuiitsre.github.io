@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#12A454" />
+<meta name="mobile-web-app-capable" content="yes" />
+<title>Seller Dashboard — IndustrialLink India</title>
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/mobile.css" />
+<style>
+/* ===== SELLER DASHBOARD SPECIFIC ===== */
+.earnings-banner {
+  background: linear-gradient(135deg, #12A454 0%, #0D8040 55%, #0A6030 100%);
+  border-radius: var(--radius-lg);
+  padding: var(--space-md);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.earnings-banner::before {
+  content: '₹';
+  position: absolute;
+  right: -15px;
+  top: -20px;
+  font-size: 10rem;
+  opacity: 0.07;
+  font-weight: 900;
+}
+.earnings-amount { font-size: 2rem; font-weight: 900; font-family: 'Sora', sans-serif; line-height: 1; }
+.earnings-label { font-size: 0.78rem; opacity: 0.75; margin-bottom: 6px; }
+.earnings-change { font-size: 0.8rem; opacity: 0.85; margin-top: 4px; }
+.earnings-chips { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.earnings-chip {
+  display: inline-flex; align-items: center; gap: 5px;
+  background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+  border-radius: var(--radius-full); padding: 5px 12px;
+  font-size: 0.75rem; font-weight: 700; backdrop-filter: blur(4px);
+}
+.earnings-actions { display: flex; gap: 8px; margin-top: 14px; }
+.earnings-actions .btn {
+  background: rgba(255,255,255,0.15); border: 1.5px solid rgba(255,255,255,0.3);
+  color: #fff; font-size: 0.8rem; backdrop-filter: blur(4px);
+}
+.earnings-actions .btn:active { background: rgba(255,255,255,0.25); }
+
+/* Pending order card */
+.order-card {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px; border-bottom: 1px solid var(--border);
+}
+.order-card:last-child { border-bottom: none; }
+.order-card:active { background: var(--surface-2); }
+.oc-emoji { font-size: 2rem; width: 48px; height: 48px; background: var(--bg); border-radius: var(--radius); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.oc-info { flex: 1; min-width: 0; }
+.oc-id { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); margin-bottom: 1px; }
+.oc-item { font-weight: 700; font-size: 0.88rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.oc-buyer { font-size: 0.75rem; color: var(--text-muted); margin-top: 1px; }
+
+/* Top product row */
+.top-product-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 14px; border-bottom: 1px solid var(--border);
+  min-height: 56px;
+}
+.top-product-row:last-child { border-bottom: none; }
+.top-product-row:active { background: var(--surface-2); }
+.tp-icon { font-size: 1.8rem; width: 40px; text-align: center; flex-shrink: 0; }
+.tp-info { flex: 1; min-width: 0; }
+.tp-name { font-weight: 700; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.tp-meta { font-size: 0.72rem; color: var(--text-muted); margin-top: 1px; }
+</style>
+</head>
+<body>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+<div class="portal-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="portalSidebar">
+    <div class="sidebar-logo">
+      <a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none">
+        <div class="logo-icon">📦</div>
+        <div><div class="logo-text">IndustrialLink</div><div class="logo-sub">Seller Portal</div></div>
+      </a>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main Menu</div>
+      <a href="dashboard.html" class="nav-item active"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="listings.html" class="nav-item"><span class="nav-icon">📋</span> My Products <span class="nav-badge">24</span></a>
+      <a href="orders.html" class="nav-item"><span class="nav-icon">📦</span> Incoming Orders <span class="nav-badge">5</span></a>
+      <a href="analytics.html" class="nav-item"><span class="nav-icon">📊</span> Analytics</a>
+      <div class="sidebar-section-label">Finance</div>
+      <a href="#" class="nav-item"><span class="nav-icon">💰</span> Payouts</a>
+      <a href="#" class="nav-item"><span class="nav-icon">📄</span> GST Reports</a>
+      <div class="sidebar-section-label">Account</div>
+      <a href="#" class="nav-item"><span class="nav-icon">🏢</span> Business Profile</a>
+      <a href="#" class="nav-item"><span class="nav-icon">🔔</span> Notifications <span class="nav-badge">5</span></a>
+      <a href="#" class="nav-item"><span class="nav-icon">❓</span> Seller Help</a>
+    </nav>
+    <div class="sidebar-user">
+      <div class="avatar avatar-md avatar-blue sidebar-user-initials">AS</div>
+      <div>
+        <div class="user-name sidebar-user-name">Anil Sharma</div>
+        <div class="user-role sidebar-user-role">Supplier Account</div>
+      </div>
+      <span class="logout-btn" onclick="logout()">🚪</span>
+    </div>
+  </aside>
+
+  <main class="portal-main">
+    <!-- TOP BAR -->
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="openSidebar()">☰</button>
+      <div>
+        <div class="topbar-title">📊 Seller Dashboard</div>
+        <div class="topbar-subtitle">Anil Sharma Tools</div>
+      </div>
+      <div class="topbar-right">
+        <div class="topbar-notif" onclick="showToast('5 new orders need action!','info')">
+          🔔<div class="notif-dot"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- CONTENT -->
+    <div class="portal-content">
+
+      <!-- Earnings Banner -->
+      <div class="earnings-banner fade-in">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start">
+          <div>
+            <div class="earnings-label">💰 Earnings This Month</div>
+            <div class="earnings-amount">₹1,24,800</div>
+            <div class="earnings-change">↑ 18% vs last month · Next payout: 28 Mar</div>
+          </div>
+          <div style="text-align:right">
+            <div style="font-size:0.72rem;opacity:0.7;margin-bottom:4px">Pending</div>
+            <div style="font-size:1.4rem;font-weight:800">₹36,200</div>
+          </div>
+        </div>
+        <div class="earnings-chips">
+          <span class="earnings-chip">🧾 GST: 27AABCS1234K1ZA</span>
+          <span class="earnings-chip badge-green" style="background:rgba(255,255,255,0.2)">✓ KYC Verified</span>
+        </div>
+        <div class="earnings-actions">
+          <a href="listings.html" class="btn btn-sm">+ Add Product</a>
+          <a href="orders.html" class="btn btn-sm">📦 View Orders</a>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-grid fade-in-delay-1">
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#FFF3ED">📦</div>
+          <div class="stat-value">5</div>
+          <div class="stat-label">Need Action</div>
+          <div class="stat-change" style="color:var(--primary)">Act now!</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#E8F9F0">📋</div>
+          <div class="stat-value">24</div>
+          <div class="stat-label">Products Live</div>
+          <div class="stat-change" style="color:var(--text-muted)">3 out of stock</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#EEF4FF">👁️</div>
+          <div class="stat-value">8.4K</div>
+          <div class="stat-label">Views This Month</div>
+          <div class="stat-change up">↑ 32%</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon" style="background:#FFF8E1">⭐</div>
+          <div class="stat-value">4.8</div>
+          <div class="stat-label">Seller Rating</div>
+          <div class="stat-change up">Top 10%</div>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="fade-in-delay-1">
+        <div class="section-header">
+          <span style="font-size:0.88rem;font-weight:800">⚡ Quick Actions</span>
+        </div>
+        <div class="quick-actions-grid">
+          <a href="listings.html" class="quick-action-card"><div class="qa-icon">➕</div><div class="qa-label">Add Product</div></a>
+          <a href="orders.html" class="quick-action-card"><div class="qa-icon">📦</div><div class="qa-label">View Orders</div></a>
+          <a href="analytics.html" class="quick-action-card"><div class="qa-icon">📊</div><div class="qa-label">Analytics</div></a>
+          <a href="#" class="quick-action-card" onclick="showToast('Payout schedule','info')"><div class="qa-icon">💰</div><div class="qa-label">Payouts</div></a>
+          <a href="#" class="quick-action-card" onclick="showToast('GST report','info')"><div class="qa-icon">🧾</div><div class="qa-label">GST Report</div></a>
+          <a href="#" class="quick-action-card" onclick="showToast('Inventory updated','success')"><div class="qa-icon">📦</div><div class="qa-label">Stock Alert</div></a>
+          <a href="#" class="quick-action-card" onclick="showToast('Promo active!','success')"><div class="qa-icon">📢</div><div class="qa-label">Run Promo</div></a>
+          <a href="#" class="quick-action-card" onclick="showToast('Support ticket created','info')"><div class="qa-icon">💬</div><div class="qa-label">Support</div></a>
+        </div>
+      </div>
+
+      <!-- Orders Needing Action -->
+      <div class="card fade-in-delay-2">
+        <div class="card-header">
+          <span style="font-size:0.88rem;font-weight:800">📦 Orders Need Your Action</span>
+          <a href="orders.html" style="font-size:0.8rem;color:var(--blue);font-weight:700">See all →</a>
+        </div>
+        <div>
+          <div class="order-card">
+            <div class="oc-emoji">⚙️</div>
+            <div class="oc-info">
+              <div class="oc-id">#IL-2425 · Just now</div>
+              <div class="oc-item">Angle Grinder 850W × 5</div>
+              <div class="oc-buyer">Tata Projects Ltd.</div>
+            </div>
+            <div style="flex-shrink:0;text-align:right">
+              <div style="font-weight:800;font-size:0.9rem">₹19,500</div>
+              <button class="btn btn-green btn-sm" style="margin-top:6px" onclick="showToast('Order #IL-2425 accepted! 🎉','success')">Accept</button>
+            </div>
+          </div>
+          <div class="order-card">
+            <div class="oc-emoji">⛑️</div>
+            <div class="oc-info">
+              <div class="oc-id">#IL-2423 · 1 hr ago</div>
+              <div class="oc-item">Safety Helmets × 20</div>
+              <div class="oc-buyer">Kumar Construction</div>
+            </div>
+            <div style="flex-shrink:0;text-align:right">
+              <div style="font-weight:800;font-size:0.9rem">₹17,000</div>
+              <button class="btn btn-green btn-sm" style="margin-top:6px" onclick="showToast('Order accepted!','success')">Accept</button>
+            </div>
+          </div>
+          <div class="order-card">
+            <div class="oc-emoji">🔌</div>
+            <div class="oc-info">
+              <div class="oc-id">#IL-2420 · 3 hrs ago</div>
+              <div class="oc-item">Power Drill × 10</div>
+              <div class="oc-buyer">Laxmi Industries</div>
+            </div>
+            <div style="flex-shrink:0;text-align:right">
+              <div style="font-weight:800;font-size:0.9rem">₹34,000</div>
+              <button class="btn btn-blue btn-sm" style="margin-top:6px" onclick="showToast('Marked as shipped! 🚚','success')">Ship</button>
+            </div>
+          </div>
+        </div>
+        <div style="padding:12px 14px;border-top:1px solid var(--border)">
+          <a href="orders.html" class="btn btn-ghost btn-sm btn-full">View All Incoming Orders</a>
+        </div>
+      </div>
+
+      <!-- Top Products -->
+      <div class="card fade-in-delay-2">
+        <div class="card-header">
+          <span style="font-size:0.88rem;font-weight:800">🏆 Your Best-Selling Products</span>
+          <a href="listings.html" style="font-size:0.8rem;color:var(--blue);font-weight:700">Manage →</a>
+        </div>
+        <div>
+          <div class="top-product-row">
+            <div class="tp-icon">🔌</div>
+            <div class="tp-info"><div class="tp-name">Bosch GSB 550 Power Drill</div><div class="tp-meta">243 orders · ₹8.2L earned</div></div>
+            <span class="badge badge-green">48 in stock</span>
+          </div>
+          <div class="top-product-row">
+            <div class="tp-icon">⛑️</div>
+            <div class="tp-info"><div class="tp-name">3M Safety Helmet EN397</div><div class="tp-meta">189 orders · ₹3.2L earned</div></div>
+            <span class="badge badge-green">120 in stock</span>
+          </div>
+          <div class="top-product-row">
+            <div class="tp-icon">🧤</div>
+            <div class="tp-info"><div class="tp-name">Cut-Resistant Gloves 50pk</div><div class="tp-meta">156 orders · ₹1.8L earned</div></div>
+            <span class="badge badge-amber">12 left</span>
+          </div>
+          <div class="top-product-row">
+            <div class="tp-icon">⚙️</div>
+            <div class="tp-info"><div class="tp-name">Angle Grinder 850W</div><div class="tp-meta">98 orders · ₹3.8L earned</div></div>
+            <span class="badge badge-red">Out of stock</span>
+          </div>
+        </div>
+        <div style="padding:12px 14px;border-top:1px solid var(--border)">
+          <a href="listings.html" class="btn btn-primary btn-sm btn-full">+ Add New Product</a>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="bottom-nav-item active">
+    <span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Home</span>
+  </a>
+  <a href="listings.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📋</span><span class="bottom-nav-label">Products</span>
+    <span class="bottom-nav-badge">24</span>
+  </a>
+  <a href="orders.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📦</span><span class="bottom-nav-label">Orders</span>
+    <span class="bottom-nav-badge">5</span>
+  </a>
+  <a href="analytics.html" class="bottom-nav-item">
+    <span class="bottom-nav-icon">📊</span><span class="bottom-nav-label">Analytics</span>
+  </a>
+  <a href="#" class="bottom-nav-item" onclick="showToast('Payout: ₹36,200 pending','info')">
+    <span class="bottom-nav-icon">💰</span><span class="bottom-nav-label">Payouts</span>
+  </a>
+</nav>
+
+<div id="toast-container"></div>
+<script src="../js/global.js"></script>
+<script>
+const user = getCurrentUser(); if(user) populateUserInSidebar(user);
+</script>
+</body>
+</html>

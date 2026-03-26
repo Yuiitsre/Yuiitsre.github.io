@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Cart & Checkout — IndustrialLink India</title>
+<link rel="stylesheet" href="../css/global.css" />
+</head>
+<body>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none"><div class="logo-icon">⚙️</div><div><div class="logo-text">IndustrialLink</div><div class="logo-sub">Buyer Portal</div></div></a></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="catalog.html" class="nav-item"><span class="nav-icon">🛒</span> Browse Products</a>
+      <a href="labor.html" class="nav-item"><span class="nav-icon">👷</span> Find Workers</a>
+      <a href="orders.html" class="nav-item"><span class="nav-icon">📦</span> My Orders</a>
+      <a href="cart.html" class="nav-item active"><span class="nav-icon">🛍️</span> My Cart</a>
+    </nav>
+    <div class="sidebar-user"><div class="avatar avatar-md avatar-orange sidebar-user-initials">RK</div><div><div class="user-name sidebar-user-name">Ramesh Kumar</div><div class="user-role">Buyer Account</div></div><span class="logout-btn" onclick="logout()">🚪</span></div>
+  </aside>
+  <main class="portal-main">
+    <header class="topbar">
+      <div><div class="topbar-title">🛍️ My Cart</div><div class="topbar-subtitle">Review and checkout your items</div></div>
+    </header>
+    <div class="portal-content">
+      <div class="cart-layout">
+        <!-- Cart Items -->
+        <div>
+          <div class="card" id="cartCard">
+            <div class="card-header"><h3>Items in Cart (<span id="cartItemCount">0</span>)</h3><button class="btn btn-ghost btn-sm" onclick="clearCart()">🗑️ Clear Cart</button></div>
+            <div id="cartItemsContainer"></div>
+            <div id="emptyCartMsg" class="empty-state" style="display:none"><div class="empty-icon">🛒</div><h3>Your cart is empty</h3><p>Browse products and add items to cart</p><a href="catalog.html" class="btn btn-primary" style="margin-top:16px">Browse Products</a></div>
+          </div>
+          <!-- Add worker block -->
+          <div class="card" style="margin-top:16px">
+            <div class="card-header"><h3>👷 Also Hire Workers?</h3></div>
+            <div class="card-body">
+              <p style="font-size:0.88rem;color:var(--text-muted);margin-bottom:14px">Bundle your tool purchase with skilled workers to operate them at your site.</p>
+              <a href="labor.html" class="btn btn-green">Find Verified Workers →</a>
+            </div>
+          </div>
+        </div>
+        <!-- Summary -->
+        <div>
+          <div class="card cart-summary">
+            <div class="card-header"><h3>Order Summary</h3></div>
+            <div class="card-body">
+              <div class="summary-row"><span>Subtotal</span><span id="subtotal">₹0</span></div>
+              <div class="summary-row"><span>Delivery Charges</span><span style="color:var(--green)">FREE</span></div>
+              <div class="summary-row"><span>GST (18%)</span><span id="gstAmt">₹0</span></div>
+              <div class="divider"></div>
+              <div class="summary-row total-row"><span>Total Amount</span><span id="totalAmt">₹0</span></div>
+              <div class="payment-opts">
+                <p style="font-size:0.82rem;font-weight:700;color:var(--text-primary);margin-bottom:10px">💳 Payment Method</p>
+                <label class="pay-opt"><input type="radio" name="payment" value="upi" checked /> <span>📱 UPI (GPay / PhonePe / Paytm)</span></label>
+                <label class="pay-opt"><input type="radio" name="payment" value="netbank" /> <span>🏦 Net Banking / NEFT</span></label>
+                <label class="pay-opt"><input type="radio" name="payment" value="card" /> <span>💳 Debit / Credit Card</span></label>
+                <label class="pay-opt"><input type="radio" name="payment" value="credit" /> <span>📄 Pay in 30 Days (Business Credit)</span></label>
+              </div>
+              <button class="btn btn-primary btn-lg" style="width:100%;margin-top:16px" onclick="placeOrder()">✅ Place Order Securely</button>
+              <p style="font-size:0.75rem;color:var(--text-muted);text-align:center;margin-top:8px">🔒 Secured by 256-bit SSL encryption · GST Invoice included</p>
+            </div>
+          </div>
+          <div class="card" style="margin-top:12px">
+            <div class="card-body">
+              <div style="display:flex;gap:8px;margin-bottom:8px"><input class="form-control" placeholder="Enter promo code" /><button class="btn btn-outline btn-sm" onclick="showToast('Promo code applied! 10% off','success')">Apply</button></div>
+              <p class="form-hint">Have a promo code? Enter above to get discount.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<div id="toast-container"></div>
+<style>
+.cart-layout { display:grid;grid-template-columns:1fr 380px;gap:var(--space-lg);align-items:start; }
+.cart-item { display:flex;align-items:center;gap:14px;padding:16px 20px;border-bottom:1px solid var(--border); }
+.cart-item:last-child { border-bottom:none; }
+.ci-icon { font-size:2.5rem;width:64px;height:64px;background:var(--bg);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;flex-shrink:0; }
+.ci-info { flex:1; }
+.ci-name { font-weight:700;margin-bottom:3px; }
+.ci-meta { font-size:0.8rem;color:var(--text-muted); }
+.ci-price { font-weight:800;color:var(--primary);font-size:1.05rem; }
+.ci-qty { display:flex;align-items:center;gap:6px;margin-top:8px; }
+.ci-qty button { width:28px;height:28px;border-radius:6px;border:1.5px solid var(--border);background:var(--bg);font-weight:700;cursor:pointer; }
+.ci-qty input { width:40px;text-align:center;border:1.5px solid var(--border);border-radius:6px;height:28px;font-weight:700;outline:none; }
+.ci-remove { color:var(--red);cursor:pointer;font-size:1.1rem; }
+.summary-row { display:flex;justify-content:space-between;padding:8px 0;font-size:0.9rem;color:var(--text-secondary); }
+.total-row { font-weight:800;font-size:1.1rem;color:var(--text-primary); }
+.payment-opts { display:flex;flex-direction:column;gap:8px;margin-top:14px; }
+.pay-opt { display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:var(--radius);border:1.5px solid var(--border);cursor:pointer;font-size:0.88rem;transition:var(--transition); }
+.pay-opt:has(input:checked) { border-color:var(--blue);background:var(--blue-light); }
+@media(max-width:900px) { .cart-layout { grid-template-columns:1fr; } }
+</style>
+<script src="../js/global.js"></script>
+<script>
+const user=getCurrentUser(); if(user) populateUserInSidebar(user);
+// Populate with demo cart items
+let cartItems = JSON.parse(localStorage.getItem('il_cart')||'[]');
+if (!cartItems.length) {
+  cartItems = [
+    {name:'Bosch GSB 550 Power Drill',price:3400,icon:'🔌',qty:2},
+    {name:'3M Safety Helmet',price:850,icon:'⛑️',qty:5},
+    {name:'Esab MIG Welder 200A',price:18500,icon:'🔥',qty:1},
+  ];
+  localStorage.setItem('il_cart',JSON.stringify(cartItems));
+}
+function renderCart() {
+  const container=document.getElementById('cartItemsContainer');
+  const empty=document.getElementById('emptyCartMsg');
+  document.getElementById('cartItemCount').textContent=cartItems.length;
+  if(!cartItems.length) { container.innerHTML=''; empty.style.display='block'; updateSummary(); return; }
+  empty.style.display='none';
+  container.innerHTML=cartItems.map((item,i)=>`
+    <div class="cart-item">
+      <div class="ci-icon">${item.icon||'📦'}</div>
+      <div class="ci-info">
+        <div class="ci-name">${item.name}</div>
+        <div class="ci-qty">
+          <button onclick="changeItemQty(${i},-1)">−</button>
+          <input type="number" value="${item.qty||1}" min="1" onchange="setItemQty(${i},this.value)" />
+          <button onclick="changeItemQty(${i},1)">+</button>
+          <span class="ci-meta" style="margin-left:4px">× ₹${item.price.toLocaleString('en-IN')}</span>
+        </div>
+      </div>
+      <div style="text-align:right">
+        <div class="ci-price">₹${((item.qty||1)*item.price).toLocaleString('en-IN')}</div>
+        <button class="ci-remove" onclick="removeItem(${i})" style="margin-top:8px">🗑️</button>
+      </div>
+    </div>
+  `).join('');
+  updateSummary();
+}
+function updateSummary() {
+  const sub=cartItems.reduce((s,i)=>s+(i.price*(i.qty||1)),0);
+  const gst=Math.round(sub*0.18);
+  document.getElementById('subtotal').textContent='₹'+sub.toLocaleString('en-IN');
+  document.getElementById('gstAmt').textContent='₹'+gst.toLocaleString('en-IN');
+  document.getElementById('totalAmt').textContent='₹'+(sub+gst).toLocaleString('en-IN');
+}
+function changeItemQty(i,d) { cartItems[i].qty=Math.max(1,(cartItems[i].qty||1)+d); save(); }
+function setItemQty(i,v) { cartItems[i].qty=Math.max(1,parseInt(v)||1); save(); }
+function removeItem(i) { cartItems.splice(i,1); save(); showToast('Item removed','info'); }
+function clearCart() { cartItems=[]; save(); showToast('Cart cleared','info'); }
+function save() { localStorage.setItem('il_cart',JSON.stringify(cartItems)); renderCart(); }
+function placeOrder() {
+  if(!cartItems.length) { showToast('Your cart is empty!','error'); return; }
+  localStorage.removeItem('il_cart'); cartItems=[];
+  showToast('🎉 Order placed successfully! You\'ll get a confirmation SMS.','success',4000);
+  setTimeout(()=>{ window.location.href='orders.html'; },1500);
+}
+renderCart();
+</script>
+</body>
+</html>

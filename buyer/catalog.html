@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#1D6FE8" />
+<title>Browse Products — IndustrialLink India</title>
+<link rel="stylesheet" href="../css/global.css" />
+<link rel="stylesheet" href="../css/mobile.css" />
+</head>
+<body>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none"><div class="logo-icon">⚙️</div><div><div class="logo-text">IndustrialLink</div><div class="logo-sub">Buyer Portal</div></div></a></div>
+    <nav class="sidebar-nav">
+      <div class="sidebar-section-label">Main</div>
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="catalog.html" class="nav-item active"><span class="nav-icon">🛒</span> Browse Products</a>
+      <a href="labor.html" class="nav-item"><span class="nav-icon">👷</span> Find Workers</a>
+      <a href="orders.html" class="nav-item"><span class="nav-icon">📦</span> My Orders</a>
+      <a href="cart.html" class="nav-item"><span class="nav-icon">🛍️</span> My Cart <span class="nav-badge" id="cartBadge">0</span></a>
+      <div class="sidebar-section-label">Account</div>
+      <a href="#" class="nav-item"><span class="nav-icon">🏢</span> Company Profile</a>
+      <a href="#" class="nav-item"><span class="nav-icon">💳</span> Payments & Credit</a>
+      <a href="#" class="nav-item"><span class="nav-icon">🔔</span> Notifications <span class="nav-badge">3</span></a>
+    </nav>
+    <div class="sidebar-user"><div class="avatar avatar-md avatar-orange sidebar-user-initials">RK</div><div><div class="user-name sidebar-user-name">Ramesh Kumar</div><div class="user-role sidebar-user-role">Buyer Account</div></div><span class="logout-btn" onclick="logout()">🚪</span></div>
+  </aside>
+
+  <main class="portal-main">
+    <header class="topbar">
+      <button class="topbar-menu-btn" onclick="openSidebar()">☰</button>
+      <div><div class="topbar-title">🛒 Browse Products</div><div class="topbar-subtitle">5 lakh+ verified industrial products</div></div>
+      <div class="topbar-right">
+        <a href="cart.html" class="topbar-notif">🛍️<div class="notif-dot" id="cartDot"></div></a>
+      </div>
+    </header>
+
+    <div class="portal-content">
+      <!-- Search -->
+      <div class="search-bar" style="margin-bottom:var(--space-lg)">
+        <input type="text" id="catalogSearch" placeholder="🔍 Search products (e.g. Bosch drill, welding helmet, safety gloves...)" />
+        <button onclick="doSearch()">Search</button>
+      </div>
+
+      <!-- Category chips -->
+      <div class="chips-row" style="margin-bottom:var(--space-md)">
+        <button class="chip active" onclick="filterCat('all',this)">All Products</button>
+        <button class="chip" onclick="filterCat('power',this)">🔌 Power Tools</button>
+        <button class="chip" onclick="filterCat('welding',this)">🔥 Welding</button>
+        <button class="chip" onclick="filterCat('safety',this)">🦺 Safety & PPE</button>
+        <button class="chip" onclick="filterCat('hand',this)">🔧 Hand Tools</button>
+        <button class="chip" onclick="filterCat('electrical',this)">⚡ Electrical</button>
+        <button class="chip" onclick="filterCat('cutting',this)">✂️ Cutting Tools</button>
+        <button class="chip" onclick="filterCat('lifting',this)">🏗️ Lifting</button>
+      </div>
+
+      <div class="catalog-layout">
+        <!-- SIDEBAR FILTERS -->
+        <aside class="filter-panel">
+          <div class="filter-section">
+            <div class="filter-title">💰 Price Range</div>
+            <div class="price-inputs">
+              <div class="form-group"><label class="form-label">Min (₹)</label><input class="form-control" id="minPrice" type="number" placeholder="0" /></div>
+              <div class="form-label" style="margin:0;padding-top:24px">to</div>
+              <div class="form-group"><label class="form-label">Max (₹)</label><input class="form-control" id="maxPrice" type="number" placeholder="50000" /></div>
+            </div>
+          </div>
+          <div class="filter-section">
+            <div class="filter-title">⭐ Minimum Rating</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <label class="filter-check"><input type="radio" name="rating" value="4"> ⭐⭐⭐⭐ & above</label>
+              <label class="filter-check"><input type="radio" name="rating" value="3"> ⭐⭐⭐ & above</label>
+              <label class="filter-check"><input type="radio" name="rating" value="0" checked> All Ratings</label>
+            </div>
+          </div>
+          <div class="filter-section">
+            <div class="filter-title">🏭 Brand</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <label class="filter-check"><input type="checkbox" checked> Bosch</label>
+              <label class="filter-check"><input type="checkbox" checked> Stanley</label>
+              <label class="filter-check"><input type="checkbox" checked> 3M</label>
+              <label class="filter-check"><input type="checkbox" checked> Esab</label>
+              <label class="filter-check"><input type="checkbox" checked> Dewalt</label>
+              <label class="filter-check"><input type="checkbox" checked> Honeywell</label>
+            </div>
+          </div>
+          <div class="filter-section">
+            <div class="filter-title">🚚 Delivery</div>
+            <div style="display:flex;flex-direction:column;gap:6px">
+              <label class="filter-check"><input type="checkbox"> Same Day</label>
+              <label class="filter-check"><input type="checkbox"> Within 2 Days</label>
+              <label class="filter-check"><input type="checkbox"> Within 1 Week</label>
+            </div>
+          </div>
+          <button class="btn btn-primary" style="width:100%" onclick="showToast('Filters applied!','success')">Apply Filters</button>
+          <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="showToast('Filters cleared!','info')">Clear All</button>
+        </aside>
+
+        <!-- PRODUCTS GRID -->
+        <div class="catalog-products">
+          <div class="catalog-header">
+            <span class="text-muted" style="font-size:0.85rem">Showing <strong id="productCount">24</strong> products</span>
+            <select class="form-control" style="width:auto;padding:6px 12px;font-size:0.85rem">
+              <option>Sort: Relevance</option><option>Price: Low to High</option><option>Price: High to Low</option><option>Best Rated</option><option>Newest First</option>
+            </select>
+          </div>
+          <div class="products-grid" id="productsGrid">
+            <!-- Products injected by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+</div>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <a href="dashboard.html" class="bottom-nav-item"><span class="bottom-nav-icon">🏠</span><span class="bottom-nav-label">Home</span></a>
+  <a href="catalog.html" class="bottom-nav-item active"><span class="bottom-nav-icon">🛒</span><span class="bottom-nav-label">Shop</span></a>
+  <a href="labor.html" class="bottom-nav-item"><span class="bottom-nav-icon">👷</span><span class="bottom-nav-label">Workers</span></a>
+  <a href="orders.html" class="bottom-nav-item"><span class="bottom-nav-icon">📦</span><span class="bottom-nav-label">Orders</span></a>
+  <a href="cart.html" class="bottom-nav-item"><span class="bottom-nav-icon">🛍️</span><span class="bottom-nav-label">Cart</span><span class="bottom-nav-badge" id="cartBadgeBottom">0</span></a>
+</nav>
+
+<div id="toast-container"></div>
+<style>
+.catalog-layout { display: grid; grid-template-columns: 260px 1fr; gap: var(--space-lg); }
+.filter-panel { background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: var(--space-lg); height: fit-content; }
+.filter-section { margin-bottom: var(--space-lg); padding-bottom: var(--space-lg); border-bottom: 1px solid var(--border); }
+.filter-section:last-of-type { border-bottom: none; }
+.filter-title { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-bottom: 10px; }
+.filter-check { display: flex; align-items: center; gap: 8px; font-size: 0.85rem; color: var(--text-secondary); cursor: pointer; }
+.price-inputs { display: flex; gap: 8px; align-items: flex-end; }
+.catalog-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md); }
+.products-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-md); }
+@media(max-width:1200px) { .products-grid { grid-template-columns: repeat(2,1fr); } }
+@media(max-width:900px) { .catalog-layout { grid-template-columns: 1fr; } .filter-panel { display:none; } }
+</style>
+<script src="../js/global.js"></script>
+<script>
+const user = getCurrentUser(); if (user) populateUserInSidebar(user);
+const cart = JSON.parse(localStorage.getItem('il_cart') || '[]');
+document.getElementById('cartBadge').textContent = cart.length;
+document.getElementById('cartBadgeBottom').textContent = cart.length;
+
+const PRODUCTS = [
+  { id:1, name:'GSB 550 Power Drill', brand:'Bosch', cat:'power', price:3400, mrp:4200, rating:4.8, reviews:243, emoji:'🔌', inStock:true },
+  { id:2, name:'MIG Welder 200A Professional', brand:'Esab', cat:'welding', price:18500, mrp:22000, rating:4.7, reviews:87, emoji:'🔥', inStock:true },
+  { id:3, name:'Hard Hat Safety Helmet EN397', brand:'3M', cat:'safety', price:850, mrp:1100, rating:4.9, reviews:512, emoji:'⛑️', inStock:true },
+  { id:4, name:'20-Piece Socket Wrench Set', brand:'Stanley', cat:'hand', price:2100, mrp:2800, rating:4.6, reviews:189, emoji:'🔩', inStock:true },
+  { id:5, name:'Angle Grinder 4.5" 850W', brand:'Bosch', cat:'cutting', price:3900, mrp:4800, rating:4.7, reviews:341, emoji:'⚙️', inStock:true },
+  { id:6, name:'TIG Welder 160A Inverter', brand:'Lincoln Electric', cat:'welding', price:24000, mrp:28500, rating:4.6, reviews:64, emoji:'🔥', inStock:true },
+  { id:7, name:'Safety Gloves Cut-Resistant L', brand:'Honeywell', cat:'safety', price:320, mrp:450, rating:4.5, reviews:728, emoji:'🧤', inStock:true },
+  { id:8, name:'Cordless Screwdriver 12V', brand:'Dewalt', cat:'power', price:4200, mrp:5000, rating:4.8, reviews:210, emoji:'🔌', inStock:true },
+  { id:9, name:'Safety Goggles Anti-Fog', brand:'3M', cat:'safety', price:420, mrp:600, rating:4.7, reviews:390, emoji:'🥽', inStock:true },
+  { id:10, name:'4" Diamond Cutting Disc (10pk)', brand:'Bosch', cat:'cutting', price:980, mrp:1300, rating:4.6, reviews:156, emoji:'✂️', inStock:true },
+  { id:11, name:'Cable Tester Digital', brand:'Fluke', cat:'electrical', price:5600, mrp:7000, rating:4.9, reviews:98, emoji:'⚡', inStock:false },
+  { id:12, name:'Chain Hoist 3 Ton', brand:'Tolly', cat:'lifting', price:14500, mrp:18000, rating:4.5, reviews:43, emoji:'🏗️', inStock:true },
+];
+
+let currentCat = 'all';
+
+function renderProducts(prods) {
+  const grid = document.getElementById('productsGrid');
+  document.getElementById('productCount').textContent = prods.length;
+  if (!prods.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🔍</div><h3>No products found</h3><p>Try different search terms or filters</p></div>';
+    return;
+  }
+  grid.innerHTML = prods.map(p => `
+    <div class="product-card" data-cat="${p.cat}">
+      <div class="product-img">${p.emoji}
+        ${!p.inStock ? '<div style="position:absolute;inset:0;background:rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--red)">Out of Stock</div>' : ''}
+      </div>
+      <div class="product-body">
+        <div class="product-brand">${p.brand}</div>
+        <div class="product-name">${p.name}</div>
+        <div class="stars">★★★★${p.rating >= 4.5 ? '★' : '☆'}</div>
+        <div style="font-size:0.75rem;color:var(--text-muted);margin-bottom:6px">${p.rating} (${p.reviews} reviews)</div>
+        <div class="product-price">₹${p.price.toLocaleString('en-IN')} <span>₹${p.mrp.toLocaleString('en-IN')}</span></div>
+        <div class="badge badge-green" style="margin-top:6px;font-size:0.7rem">🚚 Free Delivery</div>
+      </div>
+      <div class="product-foot">
+        <a href="product.html?id=${p.id}" class="btn btn-outline btn-sm" style="flex:1">Details</a>
+        <button class="btn btn-primary btn-sm" ${!p.inStock?'disabled':''} onclick="addToCart('${p.name}',${p.price})">+ Cart</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function addToCart(name, price) {
+  const cart = JSON.parse(localStorage.getItem('il_cart') || '[]');
+  cart.push({ name, price, qty: 1 });
+  localStorage.setItem('il_cart', JSON.stringify(cart));
+  const n = cart.length;
+  document.getElementById('cartBadge').textContent = n;
+  document.getElementById('cartCount').textContent = n;
+  showToast(name + ' added to cart! 🛒', 'success');
+}
+
+function filterCat(cat, btn) {
+  currentCat = cat;
+  document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  const filtered = cat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === cat);
+  renderProducts(filtered);
+}
+
+function doSearch() {
+  const q = document.getElementById('catalogSearch').value.toLowerCase().trim();
+  const filtered = PRODUCTS.filter(p => p.name.toLowerCase().includes(q) || p.brand.toLowerCase().includes(q));
+  renderProducts(filtered);
+}
+
+document.getElementById('catalogSearch').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+renderProducts(PRODUCTS);
+</script>
+</body>
+</html>

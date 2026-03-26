@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>My Orders — IndustrialLink India</title>
+<link rel="stylesheet" href="../css/global.css" />
+</head>
+<body>
+<div class="portal-layout">
+  <aside class="sidebar">
+    <div class="sidebar-logo"><a href="../index.html" style="display:flex;align-items:center;gap:10px;text-decoration:none"><div class="logo-icon">⚙️</div><div><div class="logo-text">IndustrialLink</div><div class="logo-sub">Buyer Portal</div></div></a></div>
+    <nav class="sidebar-nav">
+      <a href="dashboard.html" class="nav-item"><span class="nav-icon">🏠</span> Dashboard</a>
+      <a href="catalog.html" class="nav-item"><span class="nav-icon">🛒</span> Browse Products</a>
+      <a href="labor.html" class="nav-item"><span class="nav-icon">👷</span> Find Workers</a>
+      <a href="orders.html" class="nav-item active"><span class="nav-icon">📦</span> My Orders</a>
+      <a href="cart.html" class="nav-item"><span class="nav-icon">🛍️</span> My Cart</a>
+    </nav>
+    <div class="sidebar-user"><div class="avatar avatar-md avatar-orange sidebar-user-initials">RK</div><div><div class="user-name sidebar-user-name">Ramesh Kumar</div><div class="user-role">Buyer Account</div></div><span class="logout-btn" onclick="logout()">🚪</span></div>
+  </aside>
+  <main class="portal-main">
+    <header class="topbar">
+      <div><div class="topbar-title">📦 My Orders</div><div class="topbar-subtitle">Track your product orders and worker hires</div></div>
+      <div class="topbar-right"><a href="catalog.html" class="btn btn-primary btn-sm">+ New Order</a></div>
+    </header>
+    <div class="portal-content">
+      <div class="tabs" style="margin-bottom:var(--space-lg)">
+        <button class="tab-btn active" onclick="showOrderTab('products',this)">📦 Product Orders</button>
+        <button class="tab-btn" onclick="showOrderTab('labor',this)">👷 Worker Hires</button>
+      </div>
+
+      <!-- Product Orders -->
+      <div id="orders-products">
+        <div class="orders-list">
+          <div class="order-card">
+            <div class="order-head">
+              <div><div class="order-id">#IL-2421</div><div class="order-date">Placed: 22 Mar 2025</div></div>
+              <span class="badge badge-blue">🚚 Out for Delivery</span>
+            </div>
+            <div class="order-items">
+              <div class="oi-row"><span class="oi-icon">🔌</span><div class="oi-info"><strong>Bosch GSB 550 Power Drill</strong><p>Qty: 2 · ₹3,400 each</p></div><div class="oi-total">₹6,800</div></div>
+            </div>
+            <div class="order-track">
+              <div class="track-step done"><div class="ts-dot">✓</div><div class="ts-label">Order Placed</div><div class="ts-date">22 Mar, 10:00 AM</div></div>
+              <div class="track-line done"></div>
+              <div class="track-step done"><div class="ts-dot">✓</div><div class="ts-label">Confirmed</div><div class="ts-date">22 Mar, 11:30 AM</div></div>
+              <div class="track-line done"></div>
+              <div class="track-step done"><div class="ts-dot">✓</div><div class="ts-label">Shipped</div><div class="ts-date">23 Mar, 3:00 PM</div></div>
+              <div class="track-line active"></div>
+              <div class="track-step active"><div class="ts-dot">🚚</div><div class="ts-label">Out for Delivery</div><div class="ts-date">Today</div></div>
+              <div class="track-line"></div>
+              <div class="track-step"><div class="ts-dot">📦</div><div class="ts-label">Delivered</div><div class="ts-date">Expected 26 Mar</div></div>
+            </div>
+            <div class="order-foot"><button class="btn btn-ghost btn-sm" onclick="showToast('GST Invoice downloaded!','success')">🧾 Download Invoice</button><button class="btn btn-outline btn-sm">Track on Map →</button></div>
+          </div>
+
+          <div class="order-card">
+            <div class="order-head">
+              <div><div class="order-id">#IL-2418</div><div class="order-date">Placed: 20 Mar 2025</div></div>
+              <span class="badge badge-green">✅ Delivered</span>
+            </div>
+            <div class="order-items">
+              <div class="oi-row"><span class="oi-icon">⛑️</span><div class="oi-info"><strong>Welding Helmet EN387</strong><p>Qty: 5 · ₹900 each</p></div><div class="oi-total">₹4,500</div></div>
+            </div>
+            <div class="order-foot"><button class="btn btn-ghost btn-sm" onclick="showToast('Invoice downloaded!','success')">🧾 Invoice</button><button class="btn btn-outline btn-sm" onclick="openModal('reviewModal')">⭐ Write Review</button><button class="btn btn-ghost btn-sm">🔄 Reorder</button></div>
+          </div>
+
+          <div class="order-card">
+            <div class="order-head">
+              <div><div class="order-id">#IL-2411</div><div class="order-date">Placed: 18 Mar 2025</div></div>
+              <span class="badge badge-green">✅ Delivered</span>
+            </div>
+            <div class="order-items">
+              <div class="oi-row"><span class="oi-icon">🧤</span><div class="oi-info"><strong>Safety Gloves Cut-Resistant (50 pairs)</strong><p>Qty: 50 · ₹64 each</p></div><div class="oi-total">₹3,200</div></div>
+            </div>
+            <div class="order-foot"><button class="btn btn-ghost btn-sm" onclick="showToast('Invoice downloaded!','success')">🧾 Invoice</button><button class="btn btn-ghost btn-sm">🔄 Reorder</button></div>
+          </div>
+
+          <div class="order-card">
+            <div class="order-head">
+              <div><div class="order-id">#IL-2405</div><div class="order-date">Placed: 15 Mar 2025</div></div>
+              <span class="badge badge-amber">⏳ Processing</span>
+            </div>
+            <div class="order-items">
+              <div class="oi-row"><span class="oi-icon">⚙️</span><div class="oi-info"><strong>Bosch Angle Grinder 850W</strong><p>Qty: 3 · ₹3,900 each</p></div><div class="oi-total">₹11,700</div></div>
+            </div>
+            <div class="order-foot"><button class="btn btn-ghost btn-sm" onclick="showToast('Invoice downloaded!','success')">🧾 Invoice</button><button class="btn btn-outline-blue btn-sm">📞 Contact Support</button></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Labor Hires -->
+      <div id="orders-labor" style="display:none">
+        <div class="orders-list">
+          <div class="order-card">
+            <div class="order-head">
+              <div><div class="order-id">#WH-1041</div><div class="order-date">Hired: 20 Mar 2025 · 15 days</div></div>
+              <span class="badge badge-green">✅ Active</span>
+            </div>
+            <div class="order-items">
+              <div class="oi-row"><div class="avatar avatar-md avatar-green" style="flex-shrink:0">RK</div><div class="oi-info"><strong>Rajesh Kumar</strong><p>TIG Welder · Site A-4, Ahmedabad · ₹850/day</p></div><div class="oi-total">₹12,750 total</div></div>
+            </div>
+            <div class="worker-attendance">
+              <div class="wa-day present" title="Present">P</div><div class="wa-day present" title="Present">P</div><div class="wa-day present" title="Present">P</div><div class="wa-day present" title="Present">P</div><div class="wa-day absent" title="Absent">A</div><div class="wa-day present" title="Present">P</div><div class="wa-day today" title="Today">T</div>
+              <span style="margin-left:8px;font-size:0.78rem;color:var(--text-muted)">Last 7 days attendance</span>
+            </div>
+            <div class="order-foot"><button class="btn btn-ghost btn-sm">📊 Full Attendance</button><button class="btn btn-outline btn-sm" onclick="showToast('Payment sent via UPI! ✅','success')">💳 Release Payment</button></div>
+          </div>
+          <div class="order-card">
+            <div class="order-head">
+              <div><div class="order-id">#WH-1038</div><div class="order-date">Hired: 18 Mar 2025 · 10 days</div></div>
+              <span class="badge badge-green">✅ Active</span>
+            </div>
+            <div class="order-items">
+              <div class="oi-row"><div class="avatar avatar-md avatar-blue" style="flex-shrink:0">PS</div><div class="oi-info"><strong>Priya Sharma</strong><p>Electrician · Main Plant, Pune · ₹750/day</p></div><div class="oi-total">₹7,500 total</div></div>
+            </div>
+            <div class="order-foot"><button class="btn btn-ghost btn-sm">📊 Full Attendance</button><button class="btn btn-outline btn-sm" onclick="showToast('Payment sent! ✅','success')">💳 Release Payment</button></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div class="modal-overlay" id="reviewModal">
+  <div class="modal">
+    <div class="modal-header"><h3>⭐ Write a Review</h3><button class="modal-close" onclick="closeModal('reviewModal')">✕</button></div>
+    <div class="modal-body">
+      <p>How was your experience with <strong>Welding Helmet EN387</strong>?</p>
+      <div style="font-size:2rem;letter-spacing:4px;cursor:pointer;margin:12px 0" id="starRating">☆☆☆☆☆</div>
+      <div class="form-group"><label class="form-label">Your Review</label><textarea class="form-control" rows="4" placeholder="Tell other buyers about the product quality, delivery, etc."></textarea></div>
+    </div>
+    <div class="modal-footer"><button class="btn btn-ghost" onclick="closeModal('reviewModal')">Cancel</button><button class="btn btn-primary" onclick="submitReview()">Post Review</button></div>
+  </div>
+</div>
+
+<div id="toast-container"></div>
+<style>
+.order-card { background:var(--surface);border-radius:var(--radius-lg);border:1.5px solid var(--border);margin-bottom:var(--space-md);overflow:hidden; }
+.order-head { display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:var(--bg);border-bottom:1px solid var(--border); }
+.order-id { font-weight:800;font-size:1rem; }
+.order-date { font-size:0.78rem;color:var(--text-muted); }
+.order-items { padding:16px 20px;border-bottom:1px solid var(--border); }
+.oi-row { display:flex;align-items:center;gap:14px; }
+.oi-icon { font-size:2rem; }
+.oi-info { flex:1; }
+.oi-info strong { font-size:0.95rem; }
+.oi-info p { font-size:0.8rem;color:var(--text-muted);margin:3px 0 0; }
+.oi-total { font-weight:800;color:var(--primary); }
+.order-track { display:flex;align-items:center;padding:16px 20px;gap:0;border-bottom:1px solid var(--border);overflow-x:auto; }
+.track-step { display:flex;flex-direction:column;align-items:center;gap:4px;min-width:80px; }
+.ts-dot { width:32px;height:32px;border-radius:50%;background:var(--bg);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:0.85rem;font-weight:700;color:var(--text-muted); }
+.track-step.done .ts-dot { background:var(--green);border-color:var(--green);color:#fff; }
+.track-step.active .ts-dot { background:var(--blue);border-color:var(--blue);color:#fff;animation:pulse 1.5s infinite; }
+.ts-label { font-size:0.7rem;font-weight:600;color:var(--text-muted);text-align:center; }
+.ts-date { font-size:0.65rem;color:var(--text-muted);text-align:center; }
+.track-step.done .ts-label,.track-step.done .ts-date { color:var(--green); }
+.track-step.active .ts-label { color:var(--blue); }
+.track-line { flex:1;height:2px;background:var(--border);min-width:30px; }
+.track-line.done { background:var(--green); }
+.track-line.active { background:linear-gradient(90deg,var(--green),var(--blue)); }
+.order-foot { display:flex;gap:8px;padding:12px 20px; }
+.worker-attendance { display:flex;align-items:center;gap:6px;padding:12px 20px;border-bottom:1px solid var(--border); }
+.wa-day { width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800; }
+.wa-day.present { background:var(--green-light);color:var(--green); }
+.wa-day.absent { background:var(--red-light);color:var(--red); }
+.wa-day.today { background:var(--blue-light);color:var(--blue); }
+</style>
+<script src="../js/global.js"></script>
+<script>
+const user=getCurrentUser(); if(user) populateUserInSidebar(user);
+function showOrderTab(tab,btn) {
+  document.getElementById('orders-products').style.display=tab==='products'?'block':'none';
+  document.getElementById('orders-labor').style.display=tab==='labor'?'block':'none';
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+}
+function submitReview() { closeModal('reviewModal'); showToast('Review posted! Thank you 🙏','success'); }
+</script>
+</body>
+</html>
