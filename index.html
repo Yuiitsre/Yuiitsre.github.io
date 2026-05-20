@@ -1,533 +1,423 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>IndustrialLink India — Tools & Talent for Bharat's Industries</title>
-<meta name="description" content="India's #1 B2B marketplace connecting industrial buyers with tools suppliers and skilled workers. Buy tools, hire welders, electricians, masons — all in one place." />
-<link rel="stylesheet" href="css/global.css" />
-<link rel="stylesheet" href="css/landing.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VPS Control Center · 45.155.125.240</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2236;
+    --border: rgba(99,179,237,0.12);
+    --border-glow: rgba(99,179,237,0.3);
+    --text-primary: #e2e8f0;
+    --text-muted: #7a8ba0;
+    --accent-blue: #63b3ed;
+    --accent-cyan: #4fd1c5;
+    --accent-green: #68d391;
+    --radius: 16px;
+    --radius-sm: 10px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    font-family: 'DM Sans', sans-serif;
+    color: var(--text-primary);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Background grid pattern */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(99,179,237,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99,179,237,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  @keyframes fadeSlideUp  { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
+  @keyframes pulse-ring   { 0%{ box-shadow:0 0 0 0 rgba(99,179,237,.25); } 70%{ box-shadow:0 0 0 10px rgba(99,179,237,0); } 100%{ box-shadow:0 0 0 0 rgba(99,179,237,0); } }
+  @keyframes blink        { 0%,100%{ opacity:1 } 50%{ opacity:.3 } }
+  @keyframes float        { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-5px); } }
+  @keyframes scanline     { 0%{ transform:translateY(-100%); } 100%{ transform:translateY(100vh); } }
+
+  /* Scanline effect */
+  .scanline {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(transparent, rgba(99,179,237,0.05), transparent);
+    animation: scanline 6s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .dashboard {
+    position: relative;
+    z-index: 2;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 24px 16px 48px;
+  }
+
+  /* ── HEADER ── */
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 14px;
+    margin-bottom: 28px;
+    animation: fadeSlideUp .5s ease both;
+  }
+  .header-left { display: flex; align-items: center; gap: 14px; }
+  .server-icon {
+    width: 50px; height: 50px;
+    background: linear-gradient(135deg, #1e3a5f, #1a2236);
+    border: 1px solid var(--border-glow);
+    border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    animation: pulse-ring 2.5s infinite;
+    flex-shrink: 0;
+  }
+  .server-title { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; color:var(--accent-blue); letter-spacing:-.3px; }
+  .server-sub   { font-size:12px; color:var(--text-muted); margin-top:3px; }
+
+  .status-pill {
+    display:flex; align-items:center; gap:7px;
+    background:rgba(104,211,145,.1);
+    border:1px solid rgba(104,211,145,.25);
+    border-radius:20px;
+    padding:7px 16px;
+    font-size:12px; font-weight:500; color:var(--accent-green);
+    font-family:'Space Mono',monospace;
+    white-space:nowrap;
+  }
+  .status-dot { width:7px; height:7px; background:var(--accent-green); border-radius:50%; animation:blink 1.8s ease-in-out infinite; }
+
+  /* ── IP BANNER ── */
+  .ip-banner {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:14px 20px;
+    display:flex; align-items:center; gap:14px;
+    flex-wrap:wrap;
+    margin-bottom:24px;
+    animation:fadeSlideUp .5s ease .1s both;
+  }
+  .ip-label { font-size:11px; color:var(--text-muted); font-family:'Space Mono',monospace; white-space:nowrap; text-transform:uppercase; letter-spacing:.5px; }
+  .ip-value {
+    font-family:'Space Mono',monospace; font-size:14px; font-weight:700; color:var(--accent-cyan);
+    background:rgba(79,209,197,.08); border:1px solid rgba(79,209,197,.2); border-radius:6px; padding:3px 10px;
+  }
+  .ip-divider { width:1px; height:20px; background:var(--border); flex-shrink:0; }
+
+  /* ── GRID ── */
+  .tools-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
+    gap:18px;
+  }
+
+  /* ── TOOL CARD ── */
+  .tool-card {
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:var(--radius);
+    padding:24px 22px 20px;
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
+    text-decoration:none;
+    display:block;
+    animation:fadeSlideUp .5s ease both;
+  }
+  .tool-card:hover {
+    transform:translateY(-5px);
+    border-color:var(--card-accent);
+    box-shadow:0 16px 48px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.04);
+  }
+  .tool-card::before {
+    content:'';
+    position:absolute;
+    top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, transparent, var(--card-accent), transparent);
+    opacity:0; transition:opacity .3s;
+  }
+  .tool-card:hover::before { opacity:1; }
+
+  .card-glow {
+    position:absolute; top:-40px; right:-40px;
+    width:140px; height:140px; border-radius:50%;
+    background:var(--card-accent);
+    opacity:.05; filter:blur(35px);
+    pointer-events:none; transition:opacity .3s;
+  }
+  .tool-card:hover .card-glow { opacity:.14; }
+
+  .card-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px; }
+
+  .card-icon-wrap {
+    width:48px; height:48px; border-radius:13px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:22px;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    flex-shrink:0;
+    transition:transform .25s;
+  }
+  .tool-card:hover .card-icon-wrap { animation:float 2s ease-in-out infinite; }
+
+  .open-arrow {
+    width:30px; height:30px;
+    border:1px solid var(--border);
+    border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    color:var(--text-muted); font-size:14px;
+    transition:background .2s, color .2s, border-color .2s, transform .2s;
+    flex-shrink:0;
+  }
+  .tool-card:hover .open-arrow {
+    background:var(--card-accent); border-color:var(--card-accent); color:#000; transform:rotate(45deg);
+  }
+
+  .card-title { font-size:17px; font-weight:600; color:var(--text-primary); margin-bottom:5px; }
+  .card-desc  { font-size:13px; color:var(--text-muted); line-height:1.55; margin-bottom:16px; }
+
+  .card-url-row {
+    display:flex; align-items:center; gap:8px;
+    background:rgba(255,255,255,.03);
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    padding:9px 13px;
+  }
+  .url-dot { width:6px; height:6px; border-radius:50%; background:var(--card-accent); flex-shrink:0; }
+  .url-text {
+    font-family:'Space Mono',monospace; font-size:11px; color:var(--text-muted);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;
+  }
+  .copy-btn {
+    background:none; border:none; cursor:pointer;
+    color:var(--text-muted); font-size:13px;
+    padding:2px 5px; border-radius:4px;
+    transition:color .2s, background .2s; flex-shrink:0;
+  }
+  .copy-btn:hover { color:var(--text-primary); background:rgba(255,255,255,.07); }
+
+  .card-tags { display:flex; gap:6px; margin-top:13px; flex-wrap:wrap; }
+  .tag {
+    font-size:10px; font-weight:500;
+    padding:3px 9px; border-radius:20px;
+    border:1px solid; font-family:'Space Mono',monospace;
+    text-transform:uppercase; letter-spacing:.4px;
+  }
+  .port-badge {
+    display:inline-flex; align-items:center; gap:4px;
+    font-family:'Space Mono',monospace; font-size:10px; font-weight:700;
+    color:var(--card-accent);
+    background:rgba(255,255,255,.03);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:6px; padding:3px 9px; margin-top:13px;
+  }
+
+  /* Toast */
+  #toast {
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(60px);
+    background:#1a2236; border:1px solid rgba(79,209,197,.3); border-radius:10px;
+    padding:10px 20px; font-size:13px; color:var(--accent-cyan);
+    font-family:'Space Mono',monospace;
+    transition:transform .3s ease, opacity .3s ease;
+    opacity:0; pointer-events:none; z-index:999; white-space:nowrap;
+  }
+  #toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+
+  /* ── FOOTER ── */
+  .footer {
+    margin-top:32px; text-align:center;
+    font-size:11px; color:var(--text-muted);
+    font-family:'Space Mono',monospace;
+    animation:fadeSlideUp .5s ease .6s both;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 480px) {
+    .dashboard { padding:16px 12px 40px; }
+    .server-title { font-size:15px; }
+    .header-left { gap:10px; }
+    .server-icon { width:42px; height:42px; font-size:20px; }
+    .ip-divider  { display:none; }
+    .tools-grid  { grid-template-columns:1fr; gap:14px; }
+    .tool-card   { padding:18px 16px 16px; }
+  }
+</style>
 </head>
 <body>
 
-<!-- ===== NAVBAR ===== -->
-<nav class="navbar" id="navbar">
-  <div class="nav-container">
-    <a href="index.html" class="nav-brand">
-      <div class="brand-icon">⚙️</div>
+<div class="scanline"></div>
+
+<div class="dashboard">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="server-icon">🖥</div>
       <div>
-        <div class="brand-name">IndustrialLink</div>
-        <div class="brand-tag">India</div>
+        <div class="server-title">VPS CONTROL CENTER</div>
+        <div class="server-sub">Ubuntu Server 24.04 LTS &nbsp;·&nbsp; Self-Hosted Tools</div>
       </div>
+    </div>
+    <div class="status-pill">
+      <div class="status-dot"></div>
+      ALL SERVICES ONLINE
+    </div>
+  </div>
+
+  <div class="ip-banner">
+    <span class="ip-label">Host</span>
+    <span class="ip-value">45.155.125.240</span>
+    <div class="ip-divider"></div>
+    <span class="ip-label">Platform</span>
+    <span style="font-size:13px;color:var(--text-muted);">Ubuntu 24.04 LTS</span>
+    <div class="ip-divider"></div>
+    <span class="ip-label">Active Services</span>
+    <span style="font-size:13px;color:var(--accent-green);font-weight:600;">4</span>
+    <div class="ip-divider"></div>
+    <span class="ip-label">Network</span>
+    <span style="font-size:13px;color:var(--accent-cyan);">Public IPv4</span>
+  </div>
+
+  <div class="tools-grid">
+
+    <!-- Stirling PDF -->
+    <a class="tool-card" href="http://45.155.125.240:8080" target="_blank" rel="noopener"
+       style="--card-accent:#f6ad55; animation-delay:.15s">
+      <div class="card-glow"></div>
+      <div class="card-header">
+        <div class="card-icon-wrap">📄</div>
+        <div class="open-arrow">↗</div>
+      </div>
+      <div class="card-title">Stirling PDF</div>
+      <div class="card-desc">All-in-one PDF toolkit — merge, split, compress, convert, watermark, OCR and more. Runs entirely on your server, no data leaves your VPS.</div>
+      <div class="card-url-row">
+        <div class="url-dot"></div>
+        <span class="url-text">45.155.125.240:8080</span>
+        <button class="copy-btn" onclick="copyURL(event,'http://45.155.125.240:8080')" title="Copy URL">⧉</button>
+      </div>
+      <div class="card-tags">
+        <span class="tag" style="color:#f6ad55;border-color:rgba(246,173,85,.25);background:rgba(246,173,85,.07)">PDF</span>
+        <span class="tag" style="color:#f6ad55;border-color:rgba(246,173,85,.2);background:rgba(246,173,85,.05)">OCR</span>
+        <span class="tag" style="color:#f6ad55;border-color:rgba(246,173,85,.2);background:rgba(246,173,85,.05)">Convert</span>
+        <span class="tag" style="color:#f6ad55;border-color:rgba(246,173,85,.2);background:rgba(246,173,85,.05)">Merge</span>
+      </div>
+      <div class="port-badge">PORT 8080</div>
     </a>
-    <ul class="nav-links">
-      <li><a href="#how-it-works">How It Works</a></li>
-      <li><a href="#products">Products</a></li>
-      <li><a href="#labor">Find Workers</a></li>
-      <li><a href="#why-us">Why Us</a></li>
-    </ul>
-    <div class="nav-actions">
-      <a href="auth.html?mode=login" class="btn btn-ghost btn-sm">Log In</a>
-      <a href="auth.html?mode=register" class="btn btn-primary btn-sm">Register Free</a>
-    </div>
-    <button class="nav-hamburger" id="hamburger" aria-label="Menu">☰</button>
+
+    <!-- IT-Tools -->
+    <a class="tool-card" href="http://45.155.125.240:8081" target="_blank" rel="noopener"
+       style="--card-accent:#63b3ed; animation-delay:.25s">
+      <div class="card-glow"></div>
+      <div class="card-header">
+        <div class="card-icon-wrap">🔧</div>
+        <div class="open-arrow">↗</div>
+      </div>
+      <div class="card-title">IT-Tools</div>
+      <div class="card-desc">Developer & sysadmin toolbox — encode/decode, hash generators, JSON formatter, network utilities, crypto tools and 100+ more.</div>
+      <div class="card-url-row">
+        <div class="url-dot"></div>
+        <span class="url-text">45.155.125.240:8081</span>
+        <button class="copy-btn" onclick="copyURL(event,'http://45.155.125.240:8081')" title="Copy URL">⧉</button>
+      </div>
+      <div class="card-tags">
+        <span class="tag" style="color:#63b3ed;border-color:rgba(99,179,237,.25);background:rgba(99,179,237,.07)">Dev</span>
+        <span class="tag" style="color:#63b3ed;border-color:rgba(99,179,237,.2);background:rgba(99,179,237,.05)">Network</span>
+        <span class="tag" style="color:#63b3ed;border-color:rgba(99,179,237,.2);background:rgba(99,179,237,.05)">Crypto</span>
+        <span class="tag" style="color:#63b3ed;border-color:rgba(99,179,237,.2);background:rgba(99,179,237,.05)">Encode</span>
+      </div>
+      <div class="port-badge">PORT 8081</div>
+    </a>
+
+    <!-- AList -->
+    <a class="tool-card" href="http://45.155.125.240:5244" target="_blank" rel="noopener"
+       style="--card-accent:#68d391; animation-delay:.35s">
+      <div class="card-glow"></div>
+      <div class="card-header">
+        <div class="card-icon-wrap">📁</div>
+        <div class="open-arrow">↗</div>
+      </div>
+      <div class="card-title">AList</div>
+      <div class="card-desc">Web-based file manager for your VPS. Browse, upload, download, rename and manage files & directories from any browser.</div>
+      <div class="card-url-row">
+        <div class="url-dot"></div>
+        <span class="url-text">45.155.125.240:8082</span>
+        <button class="copy-btn" onclick="copyURL(event,'http://45.155.125.240:8082')" title="Copy URL">⧉</button>
+      </div>
+      <div class="card-tags">
+        <span class="tag" style="color:#68d391;border-color:rgba(104,211,145,.25);background:rgba(104,211,145,.07)">Files</span>
+        <span class="tag" style="color:#68d391;border-color:rgba(104,211,145,.2);background:rgba(104,211,145,.05)">Upload</span>
+        <span class="tag" style="color:#68d391;border-color:rgba(104,211,145,.2);background:rgba(104,211,145,.05)">Manage</span>
+        <span class="tag" style="color:#68d391;border-color:rgba(104,211,145,.2);background:rgba(104,211,145,.05)">Browse</span>
+      </div>
+      <div class="port-badge">PORT 8082</div>
+    </a>
+
+    <!-- Excalidraw -->
+    <a class="tool-card" href="http://45.155.125.240:8084" target="_blank" rel="noopener"
+       style="--card-accent:#b794f4; animation-delay:.45s">
+      <div class="card-glow"></div>
+      <div class="card-header">
+        <div class="card-icon-wrap">🎨</div>
+        <div class="open-arrow">↗</div>
+      </div>
+      <div class="card-title">Excalidraw</div>
+      <div class="card-desc">Virtual whiteboard & diagramming tool. Create hand-drawn style sketches, flowcharts and collaborative diagrams with your team.</div>
+      <div class="card-url-row">
+        <div class="url-dot"></div>
+        <span class="url-text">45.155.125.240:8084</span>
+        <button class="copy-btn" onclick="copyURL(event,'http://45.155.125.240:8084')" title="Copy URL">⧉</button>
+      </div>
+      <div class="card-tags">
+        <span class="tag" style="color:#b794f4;border-color:rgba(183,148,244,.25);background:rgba(183,148,244,.07)">Draw</span>
+        <span class="tag" style="color:#b794f4;border-color:rgba(183,148,244,.2);background:rgba(183,148,244,.05)">Diagrams</span>
+        <span class="tag" style="color:#b794f4;border-color:rgba(183,148,244,.2);background:rgba(183,148,244,.05)">Collab</span>
+        <span class="tag" style="color:#b794f4;border-color:rgba(183,148,244,.2);background:rgba(183,148,244,.05)">Whiteboard</span>
+      </div>
+      <div class="port-badge">PORT 8084</div>
+    </a>
+
   </div>
-  <!-- Mobile menu -->
-  <div class="nav-mobile" id="mobileMenu">
-    <a href="#how-it-works">How It Works</a>
-    <a href="#products">Products</a>
-    <a href="#labor">Find Workers</a>
-    <a href="auth.html?mode=login">Log In</a>
-    <a href="auth.html?mode=register" class="btn btn-primary">Register Free</a>
+
+  <div class="footer">
+    ⚡ Self-hosted &nbsp;·&nbsp; 45.155.125.240 &nbsp;·&nbsp; Ubuntu 24.04 LTS &nbsp;·&nbsp; Click any card to open the tool
   </div>
-</nav>
 
-<!-- ===== HERO ===== -->
-<section class="hero">
-  <div class="hero-bg">
-    <div class="hero-blob hero-blob-1"></div>
-    <div class="hero-blob hero-blob-2"></div>
-    <div class="hero-grid"></div>
-  </div>
-  <div class="hero-container">
-    <div class="hero-badge fade-in">🇮🇳 Made for India's Industries</div>
-    <h1 class="hero-title fade-in-delay-1">
-      One Place for <span class="highlight">Industrial Tools</span><br/>
-      & <span class="highlight-green">Skilled Workers</span>
-    </h1>
-    <p class="hero-subtitle fade-in-delay-2">
-      Buy power tools, welding machines, safety gear — and hire verified welders,<br class="desktop-only"/>
-      electricians & masons. Trusted by <strong>10,000+ businesses</strong> across India.
-    </p>
+</div>
 
-    <!-- Dual CTA -->
-    <div class="hero-cta fade-in-delay-3">
-      <a href="auth.html?role=buyer" class="hero-cta-card buyer-card">
-        <div class="cta-icon">🛒</div>
-        <div>
-          <h3>I want to Buy Tools</h3>
-          <p>Browse 5 lakh+ industrial products</p>
-        </div>
-        <span class="cta-arrow">→</span>
-      </a>
-      <a href="auth.html?role=seller" class="hero-cta-card seller-card">
-        <div class="cta-icon">📦</div>
-        <div>
-          <h3>I want to Sell Products</h3>
-          <p>List your tools & reach lakhs of buyers</p>
-        </div>
-        <span class="cta-arrow">→</span>
-      </a>
-      <a href="auth.html?role=worker" class="hero-cta-card worker-card">
-        <div class="cta-icon">🔧</div>
-        <div>
-          <h3>I am a Skilled Worker</h3>
-          <p>Find jobs near you, get paid same day</p>
-        </div>
-        <span class="cta-arrow">→</span>
-      </a>
-      <a href="auth.html?role=hr" class="hero-cta-card hr-card">
-        <div class="cta-icon">👥</div>
-        <div>
-          <h3>I manage a Workforce</h3>
-          <p>Deploy teams of workers to project sites</p>
-        </div>
-        <span class="cta-arrow">→</span>
-      </a>
-    </div>
+<div id="toast">📋 URL copied!</div>
 
-    <!-- Trust bar -->
-    <div class="hero-trust fade-in-delay-3">
-      <div class="trust-item"><span class="trust-icon">✅</span> KYC Verified</div>
-      <div class="trust-sep">·</div>
-      <div class="trust-item"><span class="trust-icon">🧾</span> GST Invoices</div>
-      <div class="trust-sep">·</div>
-      <div class="trust-item"><span class="trust-icon">⚡</span> Same-day UPI Pay</div>
-      <div class="trust-sep">·</div>
-      <div class="trust-item"><span class="trust-icon">🚚</span> Fast Delivery</div>
-      <div class="trust-sep">·</div>
-      <div class="trust-item"><span class="trust-icon">🔒</span> Secure Payments</div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== LIVE STATS ===== -->
-<section class="stats-section" id="stats">
-  <div class="container">
-    <div class="stats-row">
-      <div class="stat-item">
-        <div class="stat-number" data-target="10000">0</div>
-        <div class="stat-label">Businesses Served</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-target="500000">0</div>
-        <div class="stat-label">Products Listed</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-target="75000">0</div>
-        <div class="stat-label">Verified Workers</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-target="1200">0</div>
-        <div class="stat-label">Cities Covered</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-number" data-target="98">0</div>
-        <div class="stat-label">% Customer Satisfaction</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== HOW IT WORKS ===== -->
-<section class="how-section" id="how-it-works">
-  <div class="container">
-    <div class="section-title">
-      <div class="section-tag">Simple Process</div>
-      <h2>Works in 3 Easy Steps</h2>
-      <p>Whether you're buying tools or hiring workers — it's fast and simple</p>
-    </div>
-
-    <!-- Tab toggle -->
-    <div class="how-tabs">
-      <button class="how-tab active" data-tab="buying">🛒 Buying Tools</button>
-      <button class="how-tab" data-tab="hiring">👷 Hiring Workers</button>
-      <button class="how-tab" data-tab="selling">📦 Selling Products</button>
-      <button class="how-tab" data-tab="working">🔧 Finding Jobs</button>
-    </div>
-
-    <div class="how-content active" id="how-buying">
-      <div class="steps-grid">
-        <div class="how-step">
-          <div class="step-num blue">1</div>
-          <div class="step-icon">🔍</div>
-          <h3>Search & Compare</h3>
-          <p>Browse 5 lakh+ products. Filter by brand, price, and location. See verified supplier ratings.</p>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="how-step">
-          <div class="step-num blue">2</div>
-          <div class="step-icon">🛒</div>
-          <h3>Add to Cart & Pay</h3>
-          <p>Pay via UPI, bank transfer or get 30-day credit. All orders come with GST invoice.</p>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="how-step">
-          <div class="step-num blue">3</div>
-          <div class="step-icon">🚚</div>
-          <h3>Fast Delivery</h3>
-          <p>Track your shipment in real-time. Delivered to your factory, office or worksite.</p>
-        </div>
-      </div>
-    </div>
-    <div class="how-content" id="how-hiring">
-      <div class="steps-grid">
-        <div class="how-step">
-          <div class="step-num green">1</div>
-          <div class="step-icon">📋</div>
-          <h3>Post Your Need</h3>
-          <p>Tell us what trade, how many workers, your location and dates. Takes 2 minutes.</p>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="how-step">
-          <div class="step-num green">2</div>
-          <div class="step-icon">✅</div>
-          <h3>Pick Verified Workers</h3>
-          <p>Review worker profiles with Aadhaar-verified IDs, skill tests and past job reviews.</p>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="how-step">
-          <div class="step-num green">3</div>
-          <div class="step-icon">💳</div>
-          <h3>Auto Pay via UPI</h3>
-          <p>Workers check in via app. Payment releases automatically when job is done.</p>
-        </div>
-      </div>
-    </div>
-    <div class="how-content" id="how-selling">
-      <div class="steps-grid">
-        <div class="how-step">
-          <div class="step-num orange">1</div>
-          <div class="step-icon">📝</div>
-          <h3>Register & KYC</h3>
-          <p>Sign up with your GST number. Get verified in 24 hours. Zero setup fees.</p>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="how-step">
-          <div class="step-num orange">2</div>
-          <div class="step-icon">📷</div>
-          <h3>List Your Products</h3>
-          <p>Upload product photos, prices and stock. Reach lakhs of business buyers instantly.</p>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="how-step">
-          <div class="step-num orange">3</div>
-          <div class="step-icon">💰</div>
-          <h3>Receive Payments</h3>
-          <p>Orders land in your dashboard. Payment is settled to your bank account in 3 days.</p>
-        </div>
-      </div>
-    </div>
-    <div class="how-content" id="how-working">
-      <div class="steps-grid">
-        <div class="how-step">
-          <div class="step-num purple">1</div>
-          <div class="step-icon">📱</div>
-          <h3>Create Your Profile</h3>
-          <p>Upload your Aadhaar, trade certificate and skills. Get a Verified badge.</p>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="how-step">
-          <div class="step-num purple">2</div>
-          <div class="step-icon">🔔</div>
-          <h3>Get Job Alerts</h3>
-          <p>We match you to jobs near you. Accept or decline — you're always in control.</p>
-        </div>
-        <div class="step-arrow">→</div>
-        <div class="how-step">
-          <div class="step-num purple">3</div>
-          <div class="step-icon">💸</div>
-          <h3>Get Paid Same Day</h3>
-          <p>Check in via selfie. When job ends, money goes to your bank by evening.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== PRODUCT CATEGORIES ===== -->
-<section class="categories-section" id="products">
-  <div class="container">
-    <div class="section-title">
-      <div class="section-tag">Products</div>
-      <h2>5 Lakh+ Industrial Products</h2>
-      <p>From hand tools to heavy machines — find everything for your business</p>
-    </div>
-    <div class="categories-grid">
-      <a href="auth.html?role=buyer&cat=power-tools" class="cat-card">
-        <div class="cat-icon" style="background:#EEF4FF">🔌</div>
-        <div class="cat-name">Power Tools</div>
-        <div class="cat-count">48,000+ products</div>
-      </a>
-      <a href="auth.html?role=buyer&cat=welding" class="cat-card">
-        <div class="cat-icon" style="background:#FFF3ED">🔥</div>
-        <div class="cat-name">Welding Equipment</div>
-        <div class="cat-count">12,000+ products</div>
-      </a>
-      <a href="auth.html?role=buyer&cat=safety" class="cat-card">
-        <div class="cat-icon" style="background:#E8F9F0">🦺</div>
-        <div class="cat-name">Safety & PPE</div>
-        <div class="cat-count">35,000+ products</div>
-      </a>
-      <a href="auth.html?role=buyer&cat=drills" class="cat-card">
-        <div class="cat-icon" style="background:#FFF8E1">🔩</div>
-        <div class="cat-name">Drills & Fasteners</div>
-        <div class="cat-count">65,000+ products</div>
-      </a>
-      <a href="auth.html?role=buyer&cat=lifting" class="cat-card">
-        <div class="cat-icon" style="background:#F3E8FF">🏗️</div>
-        <div class="cat-name">Lifting & Cranes</div>
-        <div class="cat-count">8,000+ products</div>
-      </a>
-      <a href="auth.html?role=buyer&cat=electrical" class="cat-card">
-        <div class="cat-icon" style="background:#FEF2F2">⚡</div>
-        <div class="cat-name">Electrical Supplies</div>
-        <div class="cat-count">90,000+ products</div>
-      </a>
-      <a href="auth.html?role=buyer&cat=cutting" class="cat-card">
-        <div class="cat-icon" style="background:#E8F9F0">🔪</div>
-        <div class="cat-name">Cutting Tools</div>
-        <div class="cat-count">28,000+ products</div>
-      </a>
-      <a href="auth.html?role=buyer" class="cat-card cat-more">
-        <div class="cat-icon" style="background:#F5F7FA">📦</div>
-        <div class="cat-name">More Categories</div>
-        <div class="cat-count">1,500+ categories</div>
-      </a>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FIND WORKERS ===== -->
-<section class="labor-section" id="labor">
-  <div class="container">
-    <div class="labor-inner">
-      <div class="labor-text">
-        <div class="section-tag">Skilled Workforce</div>
-        <h2>Hire Verified Workers<br/>in Hours, Not Days</h2>
-        <p>75,000+ background-checked workers. Welders, electricians, masons, riggers — all Aadhaar verified and skill-tested.</p>
-        <div class="labor-features">
-          <div class="labor-feat"><span>✅</span> Aadhaar + trade certificate verified</div>
-          <div class="labor-feat"><span>⭐</span> Ratings from past contractors</div>
-          <div class="labor-feat"><span>📍</span> Available in 1,200+ cities</div>
-          <div class="labor-feat"><span>💰</span> Transparent daily rates (no middleman)</div>
-          <div class="labor-feat"><span>🛡️</span> On-job accident insurance included</div>
-          <div class="labor-feat"><span>📲</span> Auto attendance via selfie check-in</div>
-        </div>
-        <a href="auth.html?role=buyer" class="btn btn-green btn-lg">Find Workers Now →</a>
-      </div>
-      <div class="labor-cards">
-        <div class="lc-worker">
-          <div class="lc-avatar green">RK</div>
-          <div class="lc-info">
-            <div class="lc-name">Rajesh Kumar</div>
-            <div class="lc-trade">TIG Welder · 8 yrs exp</div>
-            <div class="lc-location">📍 Ahmedabad, Gujarat</div>
-          </div>
-          <div class="lc-right">
-            <div class="lc-rate">₹850<span>/day</span></div>
-            <div class="badge badge-green" style="margin-top:4px">✓ Verified</div>
-          </div>
-        </div>
-        <div class="lc-worker">
-          <div class="lc-avatar blue">PS</div>
-          <div class="lc-info">
-            <div class="lc-name">Priya Sharma</div>
-            <div class="lc-trade">Electrician · 5 yrs exp</div>
-            <div class="lc-location">📍 Pune, Maharashtra</div>
-          </div>
-          <div class="lc-right">
-            <div class="lc-rate">₹750<span>/day</span></div>
-            <div class="badge badge-green" style="margin-top:4px">✓ Verified</div>
-          </div>
-        </div>
-        <div class="lc-worker">
-          <div class="lc-avatar orange">MA</div>
-          <div class="lc-info">
-            <div class="lc-name">Mohammed Aslam</div>
-            <div class="lc-trade">Mason · 12 yrs exp</div>
-            <div class="lc-location">📍 Hyderabad, Telangana</div>
-          </div>
-          <div class="lc-right">
-            <div class="lc-rate">₹900<span>/day</span></div>
-            <div class="badge badge-green" style="margin-top:4px">✓ Verified</div>
-          </div>
-        </div>
-        <div class="lc-cta">
-          <strong>+74,997 more verified workers</strong>
-          <a href="auth.html?role=buyer">Browse All →</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== WHY US ===== -->
-<section class="whyus-section" id="why-us">
-  <div class="container">
-    <div class="section-title">
-      <div class="section-tag">Why IndustrialLink?</div>
-      <h2>Built for India's Real Businesses</h2>
-      <p>We understand the ground reality — and we've built features that actually help</p>
-    </div>
-    <div class="whyus-grid">
-      <div class="why-card">
-        <div class="why-icon" style="background:#EEF4FF;color:#1D6FE8">🔍</div>
-        <h3>Price Transparency</h3>
-        <p>No hidden charges. See full price breakdown including GST, delivery charge, and any applicable fees before you pay.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon" style="background:#E8F9F0;color:#12A454">🤝</div>
-        <h3>Buy Now, Pay in 30 Days</h3>
-        <p>Get credit up to ₹5 lakh for verified businesses. No bank visits, instant approval via Aadhaar verification.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon" style="background:#FFF3ED;color:#E8510A">🚚</div>
-        <h3>Delivery to Any Site</h3>
-        <p>We deliver heavy industrial goods directly to your factory, construction site or warehouse — even in Tier-3 cities.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon" style="background:#FFF8E1;color:#F59E0B">🌐</div>
-        <h3>Hindi & Regional Languages</h3>
-        <p>Our platform is available in Hindi, Gujarati, Tamil, Marathi and more — so language is never a barrier.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon" style="background:#FEF2F2;color:#EF4444">🛡️</div>
-        <h3>Money-back Guarantee</h3>
-        <p>If the product quality doesn't match the listing, we refund your money. No questions asked within 7 days.</p>
-      </div>
-      <div class="why-card">
-        <div class="why-icon" style="background:#F3E8FF;color:#8B5CF6">📞</div>
-        <h3>Real Human Support</h3>
-        <p>Talk to our support team on WhatsApp, phone or chat. No chatbots — real people who understand your business.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== TESTIMONIALS ===== -->
-<section class="testimonials-section">
-  <div class="container">
-    <div class="section-title">
-      <div class="section-tag">What People Say</div>
-      <h2>Trusted by Businesses Across India</h2>
-    </div>
-    <div class="testimonials-grid">
-      <div class="testimonial-card">
-        <div class="t-stars">⭐⭐⭐⭐⭐</div>
-        <p>"We found 15 certified welders for our pipeline project in 2 days. Earlier the same used to take 2 weeks through contractors who charged double."</p>
-        <div class="t-author">
-          <div class="avatar avatar-md avatar-orange">SK</div>
-          <div>
-            <div class="t-name">Suresh Kapoor</div>
-            <div class="t-role">Site Manager · L&T Construction, Mumbai</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">⭐⭐⭐⭐⭐</div>
-        <p>"As a small tools manufacturer in Ludhiana, we struggled to reach buyers outside Punjab. After joining IndustrialLink, we now sell to 12 states!"</p>
-        <div class="t-author">
-          <div class="avatar avatar-md avatar-blue">AM</div>
-          <div>
-            <div class="t-name">Amarjeet Singh</div>
-            <div class="t-role">Owner · Amarjeet Tools Pvt. Ltd., Ludhiana</div>
-          </div>
-        </div>
-      </div>
-      <div class="testimonial-card">
-        <div class="t-stars">⭐⭐⭐⭐⭐</div>
-        <p>"I was earning ₹400 a day going through thekedars. On IndustrialLink I get ₹850 per day and the money goes directly to my bank the same evening."</p>
-        <div class="t-author">
-          <div class="avatar avatar-md avatar-green">RK</div>
-          <div>
-            <div class="t-name">Ramesh Kumar</div>
-            <div class="t-role">TIG Welder · Surat, Gujarat</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== CTA BAND ===== -->
-<section class="cta-band">
-  <div class="container">
-    <div class="cta-band-inner">
-      <div>
-        <h2>Ready to grow your business?</h2>
-        <p>Join 10,000+ companies already using IndustrialLink India</p>
-      </div>
-      <div class="cta-band-actions">
-        <a href="auth.html?mode=register" class="btn btn-primary btn-xl">Register Free — It's Easy!</a>
-        <a href="#how-it-works" class="btn btn-outline-blue btn-xl" style="border-color:rgba(255,255,255,0.5);color:#fff">See How It Works</a>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ===== FOOTER ===== -->
-<footer class="footer">
-  <div class="container">
-    <div class="footer-grid">
-      <div class="footer-brand">
-        <div class="footer-logo">⚙️ <span>IndustrialLink India</span></div>
-        <p>India's platform for industrial tools procurement and skilled labor hiring.</p>
-        <div class="footer-social">
-          <a href="#" class="social-btn">in</a>
-          <a href="#" class="social-btn">tw</a>
-          <a href="#" class="social-btn">wa</a>
-        </div>
-      </div>
-      <div class="footer-links">
-        <h4>For Buyers</h4>
-        <a href="auth.html?role=buyer">Register as Buyer</a>
-        <a href="#">Browse Products</a>
-        <a href="#">Find Workers</a>
-        <a href="#">Buyer Credit</a>
-      </div>
-      <div class="footer-links">
-        <h4>For Sellers</h4>
-        <a href="auth.html?role=seller">Become a Seller</a>
-        <a href="#">Seller Dashboard</a>
-        <a href="#">Pricing</a>
-        <a href="#">Seller Guide</a>
-      </div>
-      <div class="footer-links">
-        <h4>For Workers</h4>
-        <a href="auth.html?role=worker">Join as Worker</a>
-        <a href="auth.html?role=hr">Post Your Team</a>
-        <a href="#">Find Jobs</a>
-        <a href="#">About Verification</a>
-      </div>
-      <div class="footer-links">
-        <h4>Company</h4>
-        <a href="#">About Us</a>
-        <a href="#">Contact</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Terms of Service</a>
-      </div>
-    </div>
-    <div class="footer-bottom">
-      <p>© 2025 IndustrialLink India. All rights reserved. | GST Compliant | Made with ❤️ in India 🇮🇳</p>
-    </div>
-  </div>
-</footer>
-
-<!-- Toast -->
-<div id="toast-container"></div>
-
-<script src="js/global.js"></script>
-<script src="js/landing.js"></script>
+<script>
+function copyURL(e, url) {
+  e.preventDefault();
+  e.stopPropagation();
+  navigator.clipboard.writeText(url).then(() => {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2000);
+  });
+}
+</script>
 </body>
 </html>
