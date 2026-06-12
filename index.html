@@ -1,4 +1,4 @@
-```html
+```html id="dd6pfd"
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,9 +11,6 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-<link rel="stylesheet"
-href="https://cdn.plyr.io/3.7.8/plyr.css">
-
 <style>
 
 *{
@@ -24,7 +21,7 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:#050505;
+background:#070707;
 color:white;
 overflow-x:hidden;
 }
@@ -43,13 +40,13 @@ position:fixed;
 top:0;
 left:0;
 width:100%;
-height:80px;
+height:85px;
+padding:0 6%;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:0 70px;
-background:rgba(0,0,0,.4);
-backdrop-filter:blur(30px);
+background:rgba(0,0,0,.35);
+backdrop-filter:blur(25px);
 z-index:1000;
 }
 
@@ -59,31 +56,36 @@ font-weight:800;
 letter-spacing:2px;
 }
 
-.links{
+.menu{
 display:flex;
-gap:40px;
+gap:35px;
 }
 
-.links a{
-color:white;
+.menu a{
 text-decoration:none;
-opacity:.7;
+color:white;
+opacity:.75;
 transition:.3s;
 }
 
-.links a:hover{
+.menu a:hover{
 opacity:1;
 }
 
 .hero{
 height:100vh;
+
+background:
+linear-gradient(to top,#070707 0%,rgba(0,0,0,.2) 45%,transparent),
+url("https://drive.google.com/u/0/drive-viewer/AKGpihaHinYFXl1kvXR--MiUbn08q8LV0U68zn-TQlHmUkMQfxQ-GzRYvdMbj36qk8SGOsDXNM2r8Q3Subr2hdTR5mEVFBPgJ4omfwI=s1600-rw-v1?auditContext=forDisplay");
+
+background-size:cover;
+background-position:center;
+
 display:flex;
 align-items:flex-end;
-padding:100px;
-background:
-linear-gradient(to top,#050505,transparent),
-url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1800")
-center/cover;
+
+padding:0 6% 120px;
 }
 
 .hero-content{
@@ -91,56 +93,57 @@ max-width:700px;
 }
 
 .hero h1{
-font-size:85px;
-font-weight:800;
+font-size:clamp(60px,10vw,110px);
 margin-bottom:20px;
+font-weight:800;
 }
 
 .hero p{
+font-size:18px;
 opacity:.8;
 line-height:1.8;
-font-size:18px;
-margin-bottom:30px;
+max-width:600px;
+margin-bottom:35px;
 }
 
-.buttons{
-display:flex;
-gap:20px;
-}
+.watch-btn{
 
-.play{
 background:white;
 color:black;
+
+padding:18px 42px;
+
 border:none;
-padding:18px 40px;
+
 border-radius:50px;
+
+font-size:16px;
+
 font-weight:700;
+
 cursor:pointer;
+
+transition:.3s;
+
 }
 
-.info{
-background:rgba(255,255,255,.1);
-backdrop-filter:blur(30px);
-border:none;
-color:white;
-padding:18px 40px;
-border-radius:50px;
-cursor:pointer;
+.watch-btn:hover{
+transform:scale(1.05);
 }
 
 section{
-padding:70px;
+padding:80px 6%;
 }
 
-.title{
-font-size:28px;
-margin-bottom:30px;
+.section-title{
+font-size:30px;
+margin-bottom:35px;
 }
 
 .row{
 display:flex;
-gap:25px;
 overflow-x:auto;
+gap:30px;
 padding-bottom:20px;
 }
 
@@ -149,17 +152,28 @@ display:none;
 }
 
 .card{
+
 min-width:260px;
 height:390px;
-border-radius:25px;
+
+border-radius:28px;
+
 overflow:hidden;
+
 position:relative;
+
 cursor:pointer;
-transition:.5s;
+
+transition:.4s;
+
 }
 
 .card:hover{
-transform:translateY(-10px) scale(1.05);
+
+transform:
+translateY(-10px)
+scale(1.03);
+
 }
 
 .card img{
@@ -169,73 +183,71 @@ object-fit:cover;
 }
 
 .overlay{
+
 position:absolute;
 inset:0;
+
+background:
+linear-gradient(
+to top,
+black,
+transparent
+);
+
 display:flex;
+
 align-items:flex-end;
+
 padding:25px;
-background:linear-gradient(to top,black,transparent);
+
 }
 
 .overlay h2{
-font-size:22px;
-}
-
-.searchBox{
-display:flex;
-justify-content:center;
-padding-top:130px;
-}
-
-.search{
-width:700px;
-padding:20px;
-border:none;
-outline:none;
-border-radius:50px;
-background:#121212;
-color:white;
-font-size:18px;
-}
-
-.playerModal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.96);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:5000;
-}
-
-.playerBox{
-width:90%;
-max-width:1500px;
-}
-
-.close{
-position:absolute;
-top:30px;
-right:50px;
-font-size:45px;
-cursor:pointer;
+font-size:24px;
 }
 
 footer{
-padding:100px;
-opacity:.4;
+padding:80px;
 text-align:center;
+opacity:.35;
 }
 
 .glow{
 position:fixed;
 width:500px;
 height:500px;
-background:#0084ff;
+background:#005eff;
+border-radius:50%;
 filter:blur(200px);
 opacity:.15;
-border-radius:50%;
 pointer-events:none;
+}
+
+@media(max-width:768px){
+
+.menu{
+display:none;
+}
+
+.hero{
+padding-bottom:80px;
+}
+
+.hero p{
+font-size:15px;
+}
+
+.section-title{
+font-size:24px;
+}
+
+.card{
+
+min-width:180px;
+height:270px;
+
+}
+
 }
 
 </style>
@@ -248,123 +260,77 @@ pointer-events:none;
 <nav>
 
 <div class="logo">
+
 STREAMVERSE+
+
 </div>
 
-<div class="links">
-<a href="">Home</a>
-<a href="">Movies</a>
-<a href="">Trending</a>
-<a href="">Anime</a>
-<a href="">Series</a>
+<div class="menu">
+
+<a href="#">Home</a>
+<a href="#">Movies</a>
+<a href="#">Trending</a>
+<a href="#">Library</a>
+
 </div>
 
 </nav>
 
-<div class="searchBox">
 
-<input
-class="search"
-placeholder="Search movies...">
-
-</div>
 
 <div class="hero">
 
 <div class="hero-content">
 
-<h1>OBSESSION</h1>
+<h1>
+
+OBSESSION
+
+</h1>
 
 <p>
-Enjoy a premium Apple TV+ inspired experience with smooth playback and ultra quality.
+
+A premium cinematic experience inspired by Apple TV+ and Netflix. Stream beautifully without distractions.
+
 </p>
 
-<div class="buttons">
-
 <button
-class="play"
-onclick="openPlayer()">
+class="watch-btn"
+onclick="location.href='Obsession.html'">
 
 ▶ Watch Now
 
 </button>
 
-<button class="info">
-
-More Info
-
-</button>
-
 </div>
 
 </div>
 
-</div>
+
 
 
 <section>
 
-<h1 class="title">
+<h1 class="section-title">
+
 Trending Now
+
 </h1>
 
 <div class="row">
 
-<div class="card">
+<div class="card"
+onclick="location.href='Obsession.html'">
 
-<img src="https://picsum.photos/400/600?1">
-
-<div class="overlay">
-
-<h2>Obsession</h2>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/400/600?2">
+<img src="https://drive.google.com/u/0/drive-viewer/AKGpihaHinYFXl1kvXR--MiUbn08q8LV0U68zn-TQlHmUkMQfxQ-GzRYvdMbj36qk8SGOsDXNM2r8Q3Subr2hdTR5mEVFBPgJ4omfwI=s1600-rw-v1?auditContext=forDisplay">
 
 <div class="overlay">
 
-<h2>Movie 2</h2>
+<h2>
 
-</div>
+Obsession
 
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/400/600?3">
-
-<div class="overlay">
-
-<h2>Movie 3</h2>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/400/600?4">
-
-<div class="overlay">
-
-<h2>Movie 4</h2>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/400/600?5">
-
-<div class="overlay">
-
-<h2>Movie 5</h2>
+</h2>
 
 </div>
 
@@ -373,58 +339,32 @@ Trending Now
 </div>
 
 </section>
+
+
+
 
 <section>
 
-<h1 class="title">
-Recommended
+<h1 class="section-title">
+
+Recently Added
+
 </h1>
 
 <div class="row">
 
-<div class="card">
+<div class="card"
+onclick="location.href='Obsession.html'">
 
-<img src="https://picsum.photos/400/600?11">
-
-<div class="overlay">
-
-<h2>Action</h2>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/400/600?12">
+<img src="https://drive.google.com/u/0/drive-viewer/AKGpihaHinYFXl1kvXR--MiUbn08q8LV0U68zn-TQlHmUkMQfxQ-GzRYvdMbj36qk8SGOsDXNM2r8Q3Subr2hdTR5mEVFBPgJ4omfwI=s1600-rw-v1?auditContext=forDisplay">
 
 <div class="overlay">
 
-<h2>Thriller</h2>
+<h2>
 
-</div>
+Obsession
 
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/400/600?13">
-
-<div class="overlay">
-
-<h2>Anime</h2>
-
-</div>
-
-</div>
-
-<div class="card">
-
-<img src="https://picsum.photos/400/600?14">
-
-<div class="overlay">
-
-<h2>Sci-Fi</h2>
+</h2>
 
 </div>
 
@@ -433,96 +373,24 @@ Recommended
 </div>
 
 </section>
-
-
-<div class="playerModal"
-id="playerModal">
-
-<div class="close"
-onclick="closePlayer()">
-
-✕
-
-</div>
-
-<div class="playerBox">
-
-<video
-id="player"
-playsinline
-controls>
-
-<source
-src="YOUR_GOOGLE_DRIVE_DIRECT_LINK"
-type="video/mp4">
-
-</video>
-
-</div>
-
-</div>
 
 
 <footer>
 
-STREAMVERSE+ © 2026
+StreamVerse+ © 2026
 
 </footer>
 
 
-<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-
 <script>
-
-const player = new Plyr('#player',{
-
-controls:[
-'play-large',
-'rewind',
-'play',
-'fast-forward',
-'progress',
-'current-time',
-'duration',
-'mute',
-'volume',
-'settings',
-'pip',
-'airplay',
-'fullscreen'
-]
-
-});
-
-function openPlayer(){
-
-document.getElementById(
-'playerModal'
-).style.display='flex';
-
-}
-
-function closePlayer(){
-
-document.getElementById(
-'playerModal'
-).style.display='none';
-
-player.pause();
-
-}
 
 document.addEventListener(
 'mousemove',
 e=>{
 
-document.querySelector(
-'.glow'
-).style.left=e.clientX-250+'px';
+document.querySelector('.glow').style.left=e.clientX-250+'px';
 
-document.querySelector(
-'.glow'
-).style.top=e.clientY-250+'px';
+document.querySelector('.glow').style.top=e.clientY-250+'px';
 
 });
 
