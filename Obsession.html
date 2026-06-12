@@ -1,1 +1,339 @@
+```html id="3yhm5k"
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<title>Obsession | StreamVerse+</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdn.plyr.io/3.7.8/plyr.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
+
+body{
+background:#070707;
+color:white;
+overflow-x:hidden;
+}
+
+nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:80px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding:0 6%;
+background:rgba(0,0,0,.3);
+backdrop-filter:blur(25px);
+z-index:1000;
+}
+
+.logo{
+font-size:28px;
+font-weight:800;
+}
+
+.back{
+
+padding:15px 30px;
+
+background:rgba(255,255,255,.1);
+
+border-radius:50px;
+
+cursor:pointer;
+
+}
+
+.hero{
+
+height:70vh;
+
+background:
+
+linear-gradient(to top,#070707,transparent),
+
+url("https://drive.google.com/thumbnail?id=1p4guxX0j8QTRQVW1f3ECXi-O3IwO4tm1&sz=w2000");
+
+background-size:cover;
+
+background-position:center;
+
+display:flex;
+
+align-items:flex-end;
+
+padding:0 6% 80px;
+
+}
+
+.hero-content{
+
+max-width:700px;
+
+}
+
+.hero h1{
+
+font-size:clamp(55px,10vw,100px);
+
+margin-bottom:15px;
+
+}
+
+.hero p{
+
+line-height:1.8;
+
+opacity:.8;
+
+margin-bottom:25px;
+
+}
+
+.badges{
+
+display:flex;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+}
+
+.badges span{
+
+background:rgba(255,255,255,.1);
+
+padding:10px 20px;
+
+border-radius:40px;
+
+}
+
+.player-section{
+
+padding:80px 6%;
+
+}
+
+.player-box{
+
+max-width:1400px;
+
+margin:auto;
+
+border-radius:30px;
+
+overflow:hidden;
+
+box-shadow:
+
+0 20px 80px rgba(0,0,0,.6);
+
+}
+
+.description{
+
+max-width:900px;
+
+margin:auto;
+
+padding:50px 6%;
+
+line-height:2;
+
+opacity:.8;
+
+}
+
+footer{
+
+padding:80px;
+
+text-align:center;
+
+opacity:.4;
+
+}
+
+@media(max-width:768px){
+
+.hero{
+
+height:60vh;
+
+padding-bottom:50px;
+
+}
+
+.player-section{
+
+padding:40px 3%;
+
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<nav>
+
+<div class="logo">
+
+STREAMVERSE+
+
+</div>
+
+<div
+class="back"
+onclick="location.href='index.html'">
+
+← Home
+
+</div>
+
+</nav>
+
+
+<div class="hero">
+
+<div class="hero-content">
+
+<h1>
+
+OBSESSION
+
+</h1>
+
+<p>
+
+A premium cinematic experience. Watch in full quality with smooth playback and no distractions.
+
+</p>
+
+<div class="badges">
+
+<span>2026</span>
+
+<span>Thriller</span>
+
+<span>Mystery</span>
+
+<span>HD</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+
+<section class="player-section">
+
+<div class="player-box">
+
+<video
+id="player"
+playsinline
+controls>
+
+<source
+src="https://drive.google.com/uc?export=download&id=1p4guxX0j8QTRQVW1f3ECXi-O3IwO4tm1"
+type="video/mp4">
+
+</video>
+
+</div>
+
+</section>
+
+
+
+<div class="description">
+
+<h2 style="margin-bottom:25px;">
+
+Synopsis
+
+</h2>
+
+Obsession follows a gripping and mysterious story filled with suspense, emotion and unexpected twists. Enjoy the movie with a premium viewing experience inspired by Apple TV+ and Netflix.
+
+</div>
+
+
+
+<footer>
+
+StreamVerse+ © 2026
+
+</footer>
+
+
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+
+<script>
+
+const player = new Plyr('#player',{
+
+controls:[
+
+'play-large',
+
+'rewind',
+
+'play',
+
+'fast-forward',
+
+'progress',
+
+'current-time',
+
+'duration',
+
+'mute',
+
+'volume',
+
+'settings',
+
+'pip',
+
+'airplay',
+
+'fullscreen'
+
+],
+
+keyboard:{focused:true,global:true}
+
+});
+
+</script>
+
+</body>
+</html>
+```
