@@ -1,423 +1,533 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>VPS Control Center · 45.155.125.240</title>
+<title>StreamVerse+</title>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdn.plyr.io/3.7.8/plyr.css">
+
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-  :root {
-    --bg: #0a0e1a;
-    --surface: #111827;
-    --surface2: #1a2236;
-    --border: rgba(99,179,237,0.12);
-    --border-glow: rgba(99,179,237,0.3);
-    --text-primary: #e2e8f0;
-    --text-muted: #7a8ba0;
-    --accent-blue: #63b3ed;
-    --accent-cyan: #4fd1c5;
-    --accent-green: #68d391;
-    --radius: 16px;
-    --radius-sm: 10px;
-  }
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Inter',sans-serif;
+}
 
-  html { scroll-behavior: smooth; }
+body{
+background:#050505;
+color:white;
+overflow-x:hidden;
+}
 
-  body {
-    background: var(--bg);
-    font-family: 'DM Sans', sans-serif;
-    color: var(--text-primary);
-    min-height: 100vh;
-    padding: 0;
-  }
+body::-webkit-scrollbar{
+width:7px;
+}
 
-  /* Background grid pattern */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(99,179,237,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(99,179,237,0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
-    pointer-events: none;
-    z-index: 0;
-  }
+body::-webkit-scrollbar-thumb{
+background:#222;
+border-radius:20px;
+}
 
-  @keyframes fadeSlideUp  { from { opacity:0; transform:translateY(22px); } to { opacity:1; transform:translateY(0); } }
-  @keyframes pulse-ring   { 0%{ box-shadow:0 0 0 0 rgba(99,179,237,.25); } 70%{ box-shadow:0 0 0 10px rgba(99,179,237,0); } 100%{ box-shadow:0 0 0 0 rgba(99,179,237,0); } }
-  @keyframes blink        { 0%,100%{ opacity:1 } 50%{ opacity:.3 } }
-  @keyframes float        { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-5px); } }
-  @keyframes scanline     { 0%{ transform:translateY(-100%); } 100%{ transform:translateY(100vh); } }
+nav{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:80px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:0 70px;
+background:rgba(0,0,0,.4);
+backdrop-filter:blur(30px);
+z-index:1000;
+}
 
-  /* Scanline effect */
-  .scanline {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(transparent, rgba(99,179,237,0.05), transparent);
-    animation: scanline 6s linear infinite;
-    pointer-events: none;
-    z-index: 1;
-  }
+.logo{
+font-size:30px;
+font-weight:800;
+letter-spacing:2px;
+}
 
-  .dashboard {
-    position: relative;
-    z-index: 2;
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 24px 16px 48px;
-  }
+.links{
+display:flex;
+gap:40px;
+}
 
-  /* ── HEADER ── */
-  .header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 14px;
-    margin-bottom: 28px;
-    animation: fadeSlideUp .5s ease both;
-  }
-  .header-left { display: flex; align-items: center; gap: 14px; }
-  .server-icon {
-    width: 50px; height: 50px;
-    background: linear-gradient(135deg, #1e3a5f, #1a2236);
-    border: 1px solid var(--border-glow);
-    border-radius: 14px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 24px;
-    animation: pulse-ring 2.5s infinite;
-    flex-shrink: 0;
-  }
-  .server-title { font-family:'Space Mono',monospace; font-size:18px; font-weight:700; color:var(--accent-blue); letter-spacing:-.3px; }
-  .server-sub   { font-size:12px; color:var(--text-muted); margin-top:3px; }
+.links a{
+color:white;
+text-decoration:none;
+opacity:.7;
+transition:.3s;
+}
 
-  .status-pill {
-    display:flex; align-items:center; gap:7px;
-    background:rgba(104,211,145,.1);
-    border:1px solid rgba(104,211,145,.25);
-    border-radius:20px;
-    padding:7px 16px;
-    font-size:12px; font-weight:500; color:var(--accent-green);
-    font-family:'Space Mono',monospace;
-    white-space:nowrap;
-  }
-  .status-dot { width:7px; height:7px; background:var(--accent-green); border-radius:50%; animation:blink 1.8s ease-in-out infinite; }
+.links a:hover{
+opacity:1;
+}
 
-  /* ── IP BANNER ── */
-  .ip-banner {
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:14px 20px;
-    display:flex; align-items:center; gap:14px;
-    flex-wrap:wrap;
-    margin-bottom:24px;
-    animation:fadeSlideUp .5s ease .1s both;
-  }
-  .ip-label { font-size:11px; color:var(--text-muted); font-family:'Space Mono',monospace; white-space:nowrap; text-transform:uppercase; letter-spacing:.5px; }
-  .ip-value {
-    font-family:'Space Mono',monospace; font-size:14px; font-weight:700; color:var(--accent-cyan);
-    background:rgba(79,209,197,.08); border:1px solid rgba(79,209,197,.2); border-radius:6px; padding:3px 10px;
-  }
-  .ip-divider { width:1px; height:20px; background:var(--border); flex-shrink:0; }
+.hero{
+height:100vh;
+display:flex;
+align-items:flex-end;
+padding:100px;
+background:
+linear-gradient(to top,#050505,transparent),
+url("https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1800")
+center/cover;
+}
 
-  /* ── GRID ── */
-  .tools-grid {
-    display:grid;
-    grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
-    gap:18px;
-  }
+.hero-content{
+max-width:700px;
+}
 
-  /* ── TOOL CARD ── */
-  .tool-card {
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:var(--radius);
-    padding:24px 22px 20px;
-    position:relative;
-    overflow:hidden;
-    cursor:pointer;
-    transition:transform .25s ease, border-color .25s ease, box-shadow .25s ease;
-    text-decoration:none;
-    display:block;
-    animation:fadeSlideUp .5s ease both;
-  }
-  .tool-card:hover {
-    transform:translateY(-5px);
-    border-color:var(--card-accent);
-    box-shadow:0 16px 48px rgba(0,0,0,.45), 0 0 0 1px rgba(255,255,255,.04);
-  }
-  .tool-card::before {
-    content:'';
-    position:absolute;
-    top:0; left:0; right:0; height:2px;
-    background:linear-gradient(90deg, transparent, var(--card-accent), transparent);
-    opacity:0; transition:opacity .3s;
-  }
-  .tool-card:hover::before { opacity:1; }
+.hero h1{
+font-size:85px;
+font-weight:800;
+margin-bottom:20px;
+}
 
-  .card-glow {
-    position:absolute; top:-40px; right:-40px;
-    width:140px; height:140px; border-radius:50%;
-    background:var(--card-accent);
-    opacity:.05; filter:blur(35px);
-    pointer-events:none; transition:opacity .3s;
-  }
-  .tool-card:hover .card-glow { opacity:.14; }
+.hero p{
+opacity:.8;
+line-height:1.8;
+font-size:18px;
+margin-bottom:30px;
+}
 
-  .card-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:16px; }
+.buttons{
+display:flex;
+gap:20px;
+}
 
-  .card-icon-wrap {
-    width:48px; height:48px; border-radius:13px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:22px;
-    background:rgba(255,255,255,.04);
-    border:1px solid rgba(255,255,255,.08);
-    flex-shrink:0;
-    transition:transform .25s;
-  }
-  .tool-card:hover .card-icon-wrap { animation:float 2s ease-in-out infinite; }
+.play{
+background:white;
+color:black;
+border:none;
+padding:18px 40px;
+border-radius:50px;
+font-weight:700;
+cursor:pointer;
+}
 
-  .open-arrow {
-    width:30px; height:30px;
-    border:1px solid var(--border);
-    border-radius:50%;
-    display:flex; align-items:center; justify-content:center;
-    color:var(--text-muted); font-size:14px;
-    transition:background .2s, color .2s, border-color .2s, transform .2s;
-    flex-shrink:0;
-  }
-  .tool-card:hover .open-arrow {
-    background:var(--card-accent); border-color:var(--card-accent); color:#000; transform:rotate(45deg);
-  }
+.info{
+background:rgba(255,255,255,.1);
+backdrop-filter:blur(30px);
+border:none;
+color:white;
+padding:18px 40px;
+border-radius:50px;
+cursor:pointer;
+}
 
-  .card-title { font-size:17px; font-weight:600; color:var(--text-primary); margin-bottom:5px; }
-  .card-desc  { font-size:13px; color:var(--text-muted); line-height:1.55; margin-bottom:16px; }
+section{
+padding:70px;
+}
 
-  .card-url-row {
-    display:flex; align-items:center; gap:8px;
-    background:rgba(255,255,255,.03);
-    border:1px solid var(--border);
-    border-radius:var(--radius-sm);
-    padding:9px 13px;
-  }
-  .url-dot { width:6px; height:6px; border-radius:50%; background:var(--card-accent); flex-shrink:0; }
-  .url-text {
-    font-family:'Space Mono',monospace; font-size:11px; color:var(--text-muted);
-    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; flex:1;
-  }
-  .copy-btn {
-    background:none; border:none; cursor:pointer;
-    color:var(--text-muted); font-size:13px;
-    padding:2px 5px; border-radius:4px;
-    transition:color .2s, background .2s; flex-shrink:0;
-  }
-  .copy-btn:hover { color:var(--text-primary); background:rgba(255,255,255,.07); }
+.title{
+font-size:28px;
+margin-bottom:30px;
+}
 
-  .card-tags { display:flex; gap:6px; margin-top:13px; flex-wrap:wrap; }
-  .tag {
-    font-size:10px; font-weight:500;
-    padding:3px 9px; border-radius:20px;
-    border:1px solid; font-family:'Space Mono',monospace;
-    text-transform:uppercase; letter-spacing:.4px;
-  }
-  .port-badge {
-    display:inline-flex; align-items:center; gap:4px;
-    font-family:'Space Mono',monospace; font-size:10px; font-weight:700;
-    color:var(--card-accent);
-    background:rgba(255,255,255,.03);
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:6px; padding:3px 9px; margin-top:13px;
-  }
+.row{
+display:flex;
+gap:25px;
+overflow-x:auto;
+padding-bottom:20px;
+}
 
-  /* Toast */
-  #toast {
-    position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(60px);
-    background:#1a2236; border:1px solid rgba(79,209,197,.3); border-radius:10px;
-    padding:10px 20px; font-size:13px; color:var(--accent-cyan);
-    font-family:'Space Mono',monospace;
-    transition:transform .3s ease, opacity .3s ease;
-    opacity:0; pointer-events:none; z-index:999; white-space:nowrap;
-  }
-  #toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
+.row::-webkit-scrollbar{
+display:none;
+}
 
-  /* ── FOOTER ── */
-  .footer {
-    margin-top:32px; text-align:center;
-    font-size:11px; color:var(--text-muted);
-    font-family:'Space Mono',monospace;
-    animation:fadeSlideUp .5s ease .6s both;
-  }
+.card{
+min-width:260px;
+height:390px;
+border-radius:25px;
+overflow:hidden;
+position:relative;
+cursor:pointer;
+transition:.5s;
+}
 
-  /* ── RESPONSIVE ── */
-  @media (max-width: 480px) {
-    .dashboard { padding:16px 12px 40px; }
-    .server-title { font-size:15px; }
-    .header-left { gap:10px; }
-    .server-icon { width:42px; height:42px; font-size:20px; }
-    .ip-divider  { display:none; }
-    .tools-grid  { grid-template-columns:1fr; gap:14px; }
-    .tool-card   { padding:18px 16px 16px; }
-  }
+.card:hover{
+transform:translateY(-10px) scale(1.05);
+}
+
+.card img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.overlay{
+position:absolute;
+inset:0;
+display:flex;
+align-items:flex-end;
+padding:25px;
+background:linear-gradient(to top,black,transparent);
+}
+
+.overlay h2{
+font-size:22px;
+}
+
+.searchBox{
+display:flex;
+justify-content:center;
+padding-top:130px;
+}
+
+.search{
+width:700px;
+padding:20px;
+border:none;
+outline:none;
+border-radius:50px;
+background:#121212;
+color:white;
+font-size:18px;
+}
+
+.playerModal{
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.96);
+display:none;
+justify-content:center;
+align-items:center;
+z-index:5000;
+}
+
+.playerBox{
+width:90%;
+max-width:1500px;
+}
+
+.close{
+position:absolute;
+top:30px;
+right:50px;
+font-size:45px;
+cursor:pointer;
+}
+
+footer{
+padding:100px;
+opacity:.4;
+text-align:center;
+}
+
+.glow{
+position:fixed;
+width:500px;
+height:500px;
+background:#0084ff;
+filter:blur(200px);
+opacity:.15;
+border-radius:50%;
+pointer-events:none;
+}
+
 </style>
 </head>
+
 <body>
 
-<div class="scanline"></div>
+<div class="glow"></div>
 
-<div class="dashboard">
+<nav>
 
-  <div class="header">
-    <div class="header-left">
-      <div class="server-icon">🖥</div>
-      <div>
-        <div class="server-title">VPS CONTROL CENTER</div>
-        <div class="server-sub">Ubuntu Server 24.04 LTS &nbsp;·&nbsp; Self-Hosted Tools</div>
-      </div>
-    </div>
-    <div class="status-pill">
-      <div class="status-dot"></div>
-      ALL SERVICES ONLINE
-    </div>
-  </div>
+<div class="logo">
+STREAMVERSE+
+</div>
 
-  <div class="ip-banner">
-    <span class="ip-label">Host</span>
-    <span class="ip-value">45.155.125.240</span>
-    <div class="ip-divider"></div>
-    <span class="ip-label">Platform</span>
-    <span style="font-size:13px;color:var(--text-muted);">Ubuntu 24.04 LTS</span>
-    <div class="ip-divider"></div>
-    <span class="ip-label">Active Services</span>
-    <span style="font-size:13px;color:var(--accent-green);font-weight:600;">4</span>
-    <div class="ip-divider"></div>
-    <span class="ip-label">Network</span>
-    <span style="font-size:13px;color:var(--accent-cyan);">Public IPv4</span>
-  </div>
+<div class="links">
+<a href="">Home</a>
+<a href="">Movies</a>
+<a href="">Trending</a>
+<a href="">Anime</a>
+<a href="">Series</a>
+</div>
 
-  <div class="tools-grid">
+</nav>
 
-    <!-- Stirling PDF -->
-    <a class="tool-card" href="http://45.155.125.240:8080" target="_blank" rel="noopener"
-       style="--card-accent:#f6ad55; animation-delay:.15s">
-      <div class="card-glow"></div>
-      <div class="card-header">
-        <div class="card-icon-wrap">📄</div>
-        <div class="open-arrow">↗</div>
-      </div>
-      <div class="card-title">Stirling PDF</div>
-      <div class="card-desc">All-in-one PDF toolkit — merge, split, compress, convert, watermark, OCR and more. Runs entirely on your server, no data leaves your VPS.</div>
-      <div class="card-url-row">
-        <div class="url-dot"></div>
-        <span class="url-text">45.155.125.240:8080</span>
-        <button class="copy-btn" onclick="copyURL(event,'http://45.155.125.240:8080')" title="Copy URL">⧉</button>
-      </div>
-      <div class="card-tags">
-        <span class="tag" style="color:#f6ad55;border-color:rgba(246,173,85,.25);background:rgba(246,173,85,.07)">PDF</span>
-        <span class="tag" style="color:#f6ad55;border-color:rgba(246,173,85,.2);background:rgba(246,173,85,.05)">OCR</span>
-        <span class="tag" style="color:#f6ad55;border-color:rgba(246,173,85,.2);background:rgba(246,173,85,.05)">Convert</span>
-        <span class="tag" style="color:#f6ad55;border-color:rgba(246,173,85,.2);background:rgba(246,173,85,.05)">Merge</span>
-      </div>
-      <div class="port-badge">PORT 8080</div>
-    </a>
+<div class="searchBox">
 
-    <!-- IT-Tools -->
-    <a class="tool-card" href="http://45.155.125.240:8081" target="_blank" rel="noopener"
-       style="--card-accent:#63b3ed; animation-delay:.25s">
-      <div class="card-glow"></div>
-      <div class="card-header">
-        <div class="card-icon-wrap">🔧</div>
-        <div class="open-arrow">↗</div>
-      </div>
-      <div class="card-title">IT-Tools</div>
-      <div class="card-desc">Developer & sysadmin toolbox — encode/decode, hash generators, JSON formatter, network utilities, crypto tools and 100+ more.</div>
-      <div class="card-url-row">
-        <div class="url-dot"></div>
-        <span class="url-text">45.155.125.240:8081</span>
-        <button class="copy-btn" onclick="copyURL(event,'http://45.155.125.240:8081')" title="Copy URL">⧉</button>
-      </div>
-      <div class="card-tags">
-        <span class="tag" style="color:#63b3ed;border-color:rgba(99,179,237,.25);background:rgba(99,179,237,.07)">Dev</span>
-        <span class="tag" style="color:#63b3ed;border-color:rgba(99,179,237,.2);background:rgba(99,179,237,.05)">Network</span>
-        <span class="tag" style="color:#63b3ed;border-color:rgba(99,179,237,.2);background:rgba(99,179,237,.05)">Crypto</span>
-        <span class="tag" style="color:#63b3ed;border-color:rgba(99,179,237,.2);background:rgba(99,179,237,.05)">Encode</span>
-      </div>
-      <div class="port-badge">PORT 8081</div>
-    </a>
-
-    <!-- AList -->
-    <a class="tool-card" href="http://45.155.125.240:5244" target="_blank" rel="noopener"
-       style="--card-accent:#68d391; animation-delay:.35s">
-      <div class="card-glow"></div>
-      <div class="card-header">
-        <div class="card-icon-wrap">📁</div>
-        <div class="open-arrow">↗</div>
-      </div>
-      <div class="card-title">AList</div>
-      <div class="card-desc">Web-based file manager for your VPS. Browse, upload, download, rename and manage files & directories from any browser.</div>
-      <div class="card-url-row">
-        <div class="url-dot"></div>
-        <span class="url-text">45.155.125.240:8082</span>
-        <button class="copy-btn" onclick="copyURL(event,'http://45.155.125.240:8082')" title="Copy URL">⧉</button>
-      </div>
-      <div class="card-tags">
-        <span class="tag" style="color:#68d391;border-color:rgba(104,211,145,.25);background:rgba(104,211,145,.07)">Files</span>
-        <span class="tag" style="color:#68d391;border-color:rgba(104,211,145,.2);background:rgba(104,211,145,.05)">Upload</span>
-        <span class="tag" style="color:#68d391;border-color:rgba(104,211,145,.2);background:rgba(104,211,145,.05)">Manage</span>
-        <span class="tag" style="color:#68d391;border-color:rgba(104,211,145,.2);background:rgba(104,211,145,.05)">Browse</span>
-      </div>
-      <div class="port-badge">PORT 8082</div>
-    </a>
-
-    <!-- Excalidraw -->
-    <a class="tool-card" href="http://45.155.125.240:8084" target="_blank" rel="noopener"
-       style="--card-accent:#b794f4; animation-delay:.45s">
-      <div class="card-glow"></div>
-      <div class="card-header">
-        <div class="card-icon-wrap">🎨</div>
-        <div class="open-arrow">↗</div>
-      </div>
-      <div class="card-title">Excalidraw</div>
-      <div class="card-desc">Virtual whiteboard & diagramming tool. Create hand-drawn style sketches, flowcharts and collaborative diagrams with your team.</div>
-      <div class="card-url-row">
-        <div class="url-dot"></div>
-        <span class="url-text">45.155.125.240:8084</span>
-        <button class="copy-btn" onclick="copyURL(event,'http://45.155.125.240:8084')" title="Copy URL">⧉</button>
-      </div>
-      <div class="card-tags">
-        <span class="tag" style="color:#b794f4;border-color:rgba(183,148,244,.25);background:rgba(183,148,244,.07)">Draw</span>
-        <span class="tag" style="color:#b794f4;border-color:rgba(183,148,244,.2);background:rgba(183,148,244,.05)">Diagrams</span>
-        <span class="tag" style="color:#b794f4;border-color:rgba(183,148,244,.2);background:rgba(183,148,244,.05)">Collab</span>
-        <span class="tag" style="color:#b794f4;border-color:rgba(183,148,244,.2);background:rgba(183,148,244,.05)">Whiteboard</span>
-      </div>
-      <div class="port-badge">PORT 8084</div>
-    </a>
-
-  </div>
-
-  <div class="footer">
-    ⚡ Self-hosted &nbsp;·&nbsp; 45.155.125.240 &nbsp;·&nbsp; Ubuntu 24.04 LTS &nbsp;·&nbsp; Click any card to open the tool
-  </div>
+<input
+class="search"
+placeholder="Search movies...">
 
 </div>
 
-<div id="toast">📋 URL copied!</div>
+<div class="hero">
+
+<div class="hero-content">
+
+<h1>OBSESSION</h1>
+
+<p>
+Enjoy a premium Apple TV+ inspired experience with smooth playback and ultra quality.
+</p>
+
+<div class="buttons">
+
+<button
+class="play"
+onclick="openPlayer()">
+
+▶ Watch Now
+
+</button>
+
+<button class="info">
+
+More Info
+
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+
+<section>
+
+<h1 class="title">
+Trending Now
+</h1>
+
+<div class="row">
+
+<div class="card">
+
+<img src="https://picsum.photos/400/600?1">
+
+<div class="overlay">
+
+<h2>Obsession</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/400/600?2">
+
+<div class="overlay">
+
+<h2>Movie 2</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/400/600?3">
+
+<div class="overlay">
+
+<h2>Movie 3</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/400/600?4">
+
+<div class="overlay">
+
+<h2>Movie 4</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/400/600?5">
+
+<div class="overlay">
+
+<h2>Movie 5</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section>
+
+<h1 class="title">
+Recommended
+</h1>
+
+<div class="row">
+
+<div class="card">
+
+<img src="https://picsum.photos/400/600?11">
+
+<div class="overlay">
+
+<h2>Action</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/400/600?12">
+
+<div class="overlay">
+
+<h2>Thriller</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/400/600?13">
+
+<div class="overlay">
+
+<h2>Anime</h2>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://picsum.photos/400/600?14">
+
+<div class="overlay">
+
+<h2>Sci-Fi</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<div class="playerModal"
+id="playerModal">
+
+<div class="close"
+onclick="closePlayer()">
+
+✕
+
+</div>
+
+<div class="playerBox">
+
+<video
+id="player"
+playsinline
+controls>
+
+<source
+src="YOUR_GOOGLE_DRIVE_DIRECT_LINK"
+type="video/mp4">
+
+</video>
+
+</div>
+
+</div>
+
+
+<footer>
+
+STREAMVERSE+ © 2026
+
+</footer>
+
+
+<script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
 
 <script>
-function copyURL(e, url) {
-  e.preventDefault();
-  e.stopPropagation();
-  navigator.clipboard.writeText(url).then(() => {
-    const t = document.getElementById('toast');
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 2000);
-  });
+
+const player = new Plyr('#player',{
+
+controls:[
+'play-large',
+'rewind',
+'play',
+'fast-forward',
+'progress',
+'current-time',
+'duration',
+'mute',
+'volume',
+'settings',
+'pip',
+'airplay',
+'fullscreen'
+]
+
+});
+
+function openPlayer(){
+
+document.getElementById(
+'playerModal'
+).style.display='flex';
+
 }
+
+function closePlayer(){
+
+document.getElementById(
+'playerModal'
+).style.display='none';
+
+player.pause();
+
+}
+
+document.addEventListener(
+'mousemove',
+e=>{
+
+document.querySelector(
+'.glow'
+).style.left=e.clientX-250+'px';
+
+document.querySelector(
+'.glow'
+).style.top=e.clientY-250+'px';
+
+});
+
 </script>
+
 </body>
 </html>
+```
