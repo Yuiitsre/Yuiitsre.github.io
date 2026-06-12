@@ -1,288 +1,5 @@
 ```html
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Obsession | StreamVerse+</title>
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css"/>
-
-<style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
-}
-
-body{
-background:#070707;
-color:white;
-overflow-x:hidden;
-}
-
-body::-webkit-scrollbar{
-width:8px;
-}
-
-body::-webkit-scrollbar-thumb{
-background:#222;
-border-radius:50px;
-}
-
-nav{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:80px;
-padding:0 6%;
-display:flex;
-justify-content:space-between;
-align-items:center;
-background:rgba(0,0,0,.4);
-backdrop-filter:blur(25px);
-z-index:1000;
-}
-
-.logo{
-font-size:30px;
-font-weight:800;
-letter-spacing:2px;
-}
-
-.home-btn{
-padding:14px 28px;
-background:rgba(255,255,255,.08);
-border-radius:50px;
-cursor:pointer;
-transition:.3s;
-}
-
-.home-btn:hover{
-background:rgba(255,255,255,.15);
-}
-
-.hero{
-height:65vh;
-
-background:
-linear-gradient(to top,#070707 0%,rgba(0,0,0,.2) 50%,transparent),
-url("https://drive.google.com/thumbnail?id=1GwayuCa0BvWWoqReXjR4En04yFgjeIfG&sz=w2000");
-
-background-size:cover;
-background-position:center;
-
-display:flex;
-align-items:flex-end;
-
-padding:0 6% 70px;
-}
-
-.hero-content{
-max-width:800px;
-}
-
-.hero h1{
-font-size:clamp(55px,8vw,100px);
-font-weight:800;
-margin-bottom:20px;
-}
-
-.hero p{
-opacity:.85;
-line-height:1.8;
-font-size:18px;
-margin-bottom:25px;
-}
-
-.tags{
-display:flex;
-gap:15px;
-flex-wrap:wrap;
-}
-
-.tags span{
-background:rgba(255,255,255,.1);
-padding:10px 20px;
-border-radius:40px;
-}
-
-.player-section{
-padding:70px 5%;
-}
-
-.player-container{
-max-width:1400px;
-margin:auto;
-border-radius:30px;
-overflow:hidden;
-box-shadow:0 20px 80px rgba(0,0,0,.7);
-}
-
-iframe{
-width:100%;
-aspect-ratio:16/9;
-border:none;
-background:black;
-}
-
-.info{
-max-width:1000px;
-margin:auto;
-padding:50px 6%;
-}
-
-.info h2{
-font-size:35px;
-margin-bottom:25px;
-}
-
-.info p{
-opacity:.8;
-line-height:2;
-}
-
-.buttons{
-display:flex;
-gap:20px;
-margin-top:35px;
-flex-wrap:wrap;
-}
-
-.btn{
-
-padding:18px 35px;
-
-border-radius:50px;
-
-font-weight:700;
-
-cursor:pointer;
-
-border:none;
-
-font-size:16px;
-
-}
-
-.watch{
-background:white;
-color:black;
-}
-
-.download{
-background:#151515;
-color:white;
-}
-
-footer{
-padding:80px;
-text-align:center;
-opacity:.4;
-}
-
-.glow{
-position:fixed;
-width:500px;
-height:500px;
-background:#005eff;
-border-radius:50%;
-filter:blur(200px);
-opacity:.12;
-pointer-events:none;
-}
-
-@media(max-width:768px){
-
-.hero{
-height:55vh;
-padding-bottom:40px;
-}
-
-.hero p{
-font-size:15px;
-}
-
-.info h2{
-font-size:28px;
-}
-
-.logo{
-font-size:24px;
-}
-
-.home-btn{
-padding:12px 20px;
-}
-
-}
-
-</style>
-</head>
-
-<body>
-
-<div class="glow"></div>
-
-<nav>
-
-<div class="logo">
-
-STREAMVERSE+
-
-</div>
-
-<div
-class="home-btn"
-onclick="location.href='index.html'">
-
-← Home
-
-</div>
-
-</nav>
-
-
-
-<div class="hero">
-
-<div class="hero-content">
-
-<h1>
-
-OBSESSION
-
-</h1>
-
-<p>
-
-A gripping thriller filled with suspense, mystery and unexpected twists. Experience the movie in a premium Apple TV+ inspired interface.
-
-</p>
-
-<div class="tags">
-
-<span>2026</span>
-<span>Thriller</span>
-<span>Mystery</span>
-<span>1080p</span>
-
-</div>
-
-</div>
-
-</div>
-
-
+<!-- Replace the player section and everything below it with this -->
 
 <section class="player-section">
 
@@ -291,16 +8,73 @@ A gripping thriller filled with suspense, mystery and unexpected twists. Experie
 <iframe
 allowfullscreen
 src="https://drive.google.com/file/d/1p4guxX0j8QTRQVW1f3ECXi-O3IwO4tm1/preview">
-
 </iframe>
 
 </div>
 
-</section>
+
+<div class="video-info">
+
+<h1>
+
+Obsession
+
+</h1>
+
+<div class="meta">
+
+★ 8.7 IMDb
+
+<span>•</span>
+
+2026
+
+<span>•</span>
+
+Thriller
+
+<span>•</span>
+
+Mystery
+
+<span>•</span>
+
+1080p
+
+</div>
 
 
+<div class="action-buttons">
 
-<section class="info">
+<button>
+
+👍 Like
+
+</button>
+
+<button
+onclick="window.open('https://drive.google.com/file/d/1p4guxX0j8QTRQVW1f3ECXi-O3IwO4tm1/view')">
+
+📥 Download
+
+</button>
+
+<button>
+
+🔗 Share
+
+</button>
+
+<button>
+
+➕ My List
+
+</button>
+
+</div>
+
+
+<div class="description-box">
 
 <h2>
 
@@ -308,53 +82,175 @@ Synopsis
 
 </h2>
 
-<p>
+<br>
 
-Obsession follows a dark and mysterious journey filled with intrigue and unexpected turns. Enjoy a smooth and distraction-free viewing experience designed for both desktop and mobile devices.
+Obsession follows a dark and mysterious journey filled with suspense and unexpected twists. Enjoy a distraction-free cinematic experience inspired by Apple TV+, while maintaining the familiar structure and ease of use found on YouTube.
 
-</p>
-
-<div class="buttons">
-
-<button
-class="btn watch">
-
-★ IMDb 8.7
-
-</button>
-
-<button
-class="btn download"
-onclick="window.open('https://drive.google.com/file/d/1p4guxX0j8QTRQVW1f3ECXi-O3IwO4tm1/view')">
-
-Download
-
-</button>
+</div>
 
 </div>
 
 </section>
 
 
+<section class="recommend-section">
 
-<footer>
+<h2>
 
-StreamVerse+ © 2026
+More Like This
 
-</footer>
+</h2>
 
-<script>
+<div class="recommend-row">
 
-document.addEventListener('mousemove',e=>{
+<div class="movie-card">
 
-document.querySelector('.glow').style.left=e.clientX-250+'px';
+<img
+src="https://drive.google.com/thumbnail?id=1GwayuCa0BvWWoqReXjR4En04yFgjeIfG&sz=w1000">
 
-document.querySelector('.glow').style.top=e.clientY-250+'px';
+<div class="movie-name">
 
-});
+Obsession
 
-</script>
+</div>
 
-</body>
-</html>
+</div>
+
+</div>
+
+</section>
+```
+
+Add this CSS:
+
+```css
+.player-section{
+padding:40px 6%;
+}
+
+.player-container{
+max-width:1600px;
+margin:auto;
+overflow:hidden;
+border-radius:25px;
+background:#111;
+box-shadow:0 20px 80px rgba(0,0,0,.8);
+}
+
+.player-container iframe{
+width:100%;
+aspect-ratio:16/9;
+border:none;
+}
+
+.video-info{
+max-width:1400px;
+margin:auto;
+padding-top:25px;
+}
+
+.video-info h1{
+font-size:40px;
+font-weight:800;
+}
+
+.meta{
+margin-top:15px;
+opacity:.7;
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+}
+
+.action-buttons{
+display:flex;
+gap:15px;
+flex-wrap:wrap;
+margin-top:25px;
+}
+
+.action-buttons button{
+background:#181818;
+border:none;
+color:white;
+padding:15px 24px;
+border-radius:50px;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+}
+
+.action-buttons button:hover{
+background:#252525;
+}
+
+.description-box{
+margin-top:35px;
+background:#141414;
+padding:30px;
+border-radius:25px;
+line-height:2;
+opacity:.9;
+}
+
+.recommend-section{
+padding:0 6% 80px;
+}
+
+.recommend-row{
+display:flex;
+gap:25px;
+overflow-x:auto;
+padding-top:25px;
+}
+
+.recommend-row::-webkit-scrollbar{
+display:none;
+}
+
+.movie-card{
+min-width:220px;
+height:330px;
+border-radius:25px;
+overflow:hidden;
+position:relative;
+cursor:pointer;
+transition:.4s;
+}
+
+.movie-card:hover{
+transform:translateY(-10px);
+}
+
+.movie-card img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
+
+.movie-name{
+position:absolute;
+bottom:20px;
+left:20px;
+font-size:24px;
+font-weight:700;
+}
+
+@media(max-width:768px){
+
+.video-info h1{
+font-size:30px;
+}
+
+.action-buttons{
+overflow-x:auto;
+flex-wrap:nowrap;
+}
+
+.movie-card{
+min-width:160px;
+height:240px;
+}
+
+}
 ```
