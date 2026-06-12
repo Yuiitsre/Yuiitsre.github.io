@@ -1,4 +1,4 @@
-```html id="pnk4j9"
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,7 +21,7 @@ font-family:'Inter',sans-serif;
 }
 
 body{
-background:#050505;
+background:#070707;
 color:white;
 overflow-x:hidden;
 }
@@ -32,7 +32,7 @@ width:8px;
 
 body::-webkit-scrollbar-thumb{
 background:#222;
-border-radius:20px;
+border-radius:30px;
 }
 
 nav{
@@ -40,18 +40,18 @@ position:fixed;
 top:0;
 left:0;
 width:100%;
-height:80px;
+height:75px;
 display:flex;
 justify-content:space-between;
 align-items:center;
 padding:0 6%;
-background:rgba(0,0,0,.35);
+background:rgba(0,0,0,.45);
 backdrop-filter:blur(30px);
 z-index:1000;
 }
 
 .logo{
-font-size:30px;
+font-size:32px;
 font-weight:800;
 letter-spacing:2px;
 }
@@ -73,10 +73,11 @@ opacity:1;
 }
 
 .hero{
-height:100vh;
+
+height:85vh;
 
 background:
-linear-gradient(to top,#050505 0%,rgba(0,0,0,.1) 50%,transparent),
+linear-gradient(to top,#070707 5%,rgba(0,0,0,.2) 50%,transparent),
 url("https://drive.google.com/thumbnail?id=1GwayuCa0BvWWoqReXjR4En04yFgjeIfG&sz=w2000");
 
 background-size:cover;
@@ -85,40 +86,52 @@ background-position:center;
 display:flex;
 align-items:flex-end;
 
-padding:0 6% 120px;
+padding:0 6% 100px;
+
 }
 
 .hero-content{
+
 max-width:700px;
+
 }
 
 .hero h1{
-font-size:clamp(60px,9vw,110px);
-font-weight:800;
+
+font-size:clamp(55px,9vw,110px);
+
 margin-bottom:20px;
+
+font-weight:800;
+
 }
 
 .hero p{
+
 font-size:18px;
+
 line-height:1.8;
-opacity:.85;
+
+opacity:.8;
+
 margin-bottom:35px;
+
 }
 
-.watch-btn{
+.watch{
 
 background:white;
 color:black;
 
 border:none;
 
-padding:18px 40px;
-
-border-radius:50px;
+padding:18px 42px;
 
 font-size:16px;
 
 font-weight:700;
+
+border-radius:50px;
 
 cursor:pointer;
 
@@ -126,7 +139,7 @@ transition:.3s;
 
 }
 
-.watch-btn:hover{
+.watch:hover{
 
 transform:scale(1.05);
 
@@ -134,44 +147,38 @@ transform:scale(1.05);
 
 section{
 
-padding:70px 6%;
+padding:60px 6%;
 
 }
 
-.section-title{
+.title{
 
-font-size:32px;
+font-size:30px;
 
 margin-bottom:30px;
 
 }
 
-.row{
+.grid{
 
-display:flex;
+display:grid;
 
-gap:30px;
+grid-template-columns:
+repeat(auto-fill,minmax(220px,1fr));
 
-overflow-x:auto;
+gap:25px;
 
-padding-bottom:20px;
-
-}
-
-.row::-webkit-scrollbar{
-display:none;
 }
 
 .card{
 
-min-width:260px;
-height:390px;
+position:relative;
 
-border-radius:30px;
+height:340px;
+
+border-radius:25px;
 
 overflow:hidden;
-
-position:relative;
 
 cursor:pointer;
 
@@ -193,6 +200,7 @@ scale(1.03);
 
 width:100%;
 height:100%;
+
 object-fit:cover;
 
 }
@@ -203,6 +211,12 @@ position:absolute;
 
 inset:0;
 
+display:flex;
+
+align-items:flex-end;
+
+padding:20px;
+
 background:
 
 linear-gradient(
@@ -211,17 +225,11 @@ black,
 transparent
 );
 
-display:flex;
-
-align-items:flex-end;
-
-padding:25px;
-
 }
 
 .overlay h2{
 
-font-size:26px;
+font-size:25px;
 
 }
 
@@ -244,41 +252,76 @@ height:500px;
 
 background:#005eff;
 
-filter:blur(200px);
-
-opacity:.12;
-
 border-radius:50%;
 
+filter:blur(200px);
+
+opacity:.15;
+
 pointer-events:none;
+
+}
+
+.mobile-menu{
+
+display:none;
+
+font-size:30px;
 
 }
 
 @media(max-width:768px){
 
 .menu{
+
 display:none;
+
+}
+
+.mobile-menu{
+
+display:block;
+
 }
 
 .hero{
-height:80vh;
-padding-bottom:80px;
+
+height:70vh;
+
+padding-bottom:60px;
+
 }
 
 .hero p{
+
 font-size:15px;
+
+}
+
+.grid{
+
+grid-template-columns:
+repeat(2,1fr);
+
+gap:15px;
+
 }
 
 .card{
 
-min-width:180px;
-height:270px;
+height:260px;
 
 }
 
-.section-title{
+.title{
 
-font-size:25px;
+font-size:24px;
+
+}
+
+.logo{
+
+font-size:24px;
 
 }
 
@@ -307,6 +350,12 @@ STREAMVERSE+
 
 </div>
 
+<div class="mobile-menu">
+
+☰
+
+</div>
+
 </nav>
 
 
@@ -323,12 +372,12 @@ OBSESSION
 
 <p>
 
-Experience movies beautifully with a premium Apple TV+ inspired interface.
+A premium cinematic experience inspired by Apple TV+ and Netflix.
 
 </p>
 
 <button
-class="watch-btn"
+class="watch"
 onclick="location.href='Obsession.html'">
 
 ▶ Watch Now
@@ -343,15 +392,16 @@ onclick="location.href='Obsession.html'">
 
 <section>
 
-<h1 class="section-title">
+<h1 class="title">
 
 Trending Now
 
 </h1>
 
-<div class="row">
+<div class="grid">
 
-<div class="card"
+<div
+class="card"
 onclick="location.href='Obsession.html'">
 
 <img
@@ -378,15 +428,16 @@ Obsession
 
 <section>
 
-<h1 class="section-title">
+<h1 class="title">
 
 Recently Added
 
 </h1>
 
-<div class="row">
+<div class="grid">
 
-<div class="card"
+<div
+class="card"
 onclick="location.href='Obsession.html'">
 
 <img
@@ -419,19 +470,13 @@ StreamVerse+ © 2026
 
 <script>
 
-document.addEventListener(
-
-'mousemove',
-
-e=>{
+document.addEventListener('mousemove',e=>{
 
 document.querySelector('.glow').style.left=e.clientX-250+'px';
 
 document.querySelector('.glow').style.top=e.clientY-250+'px';
 
-}
-
-);
+});
 
 </script>
 
