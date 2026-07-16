@@ -1,485 +1,244 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StreamVerse+</title>
+<title>Video Player</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-
 *{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Inter',sans-serif;
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
 body{
-background:#070707;
-color:white;
-overflow-x:hidden;
+    font-family:'Poppins',sans-serif;
+    background:#0d1117;
+    color:white;
 }
 
-body::-webkit-scrollbar{
-width:8px;
+header{
+    background:#161b22;
+    padding:18px;
+    text-align:center;
+    font-size:28px;
+    font-weight:700;
+    letter-spacing:1px;
+    box-shadow:0 3px 15px rgba(0,0,0,.4);
 }
 
-body::-webkit-scrollbar-thumb{
-background:#222;
-border-radius:30px;
+.container{
+    width:95%;
+    max-width:1200px;
+    margin:35px auto;
 }
 
-nav{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:75px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:0 6%;
-background:rgba(0,0,0,.45);
-backdrop-filter:blur(30px);
-z-index:1000;
+.player{
+    position:relative;
+    width:100%;
+    aspect-ratio:16/9;
+    border-radius:18px;
+    overflow:hidden;
+    background:#000;
+    box-shadow:0 20px 50px rgba(0,0,0,.5);
 }
 
-.logo{
-font-size:32px;
-font-weight:800;
-letter-spacing:2px;
+.player iframe{
+    width:100%;
+    height:100%;
+    border:none;
 }
 
-.menu{
-display:flex;
-gap:40px;
+.loading{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    background:#000;
+    z-index:2;
+    transition:.5s;
 }
 
-.menu a{
-color:white;
-text-decoration:none;
-opacity:.8;
-transition:.3s;
+.spinner{
+    width:70px;
+    height:70px;
+    border:7px solid rgba(255,255,255,.2);
+    border-top:7px solid #00d4ff;
+    border-radius:50%;
+    animation:spin 1s linear infinite;
 }
 
-.menu a:hover{
-opacity:1;
+.loading p{
+    margin-top:20px;
+    font-size:18px;
 }
 
-.hero{
-
-height:85vh;
-
-background:
-linear-gradient(to top,#070707 5%,rgba(0,0,0,.2) 50%,transparent),
-url("https://drive.google.com/thumbnail?id=1GwayuCa0BvWWoqReXjR4En04yFgjeIfG&sz=w2000");
-
-background-size:cover;
-background-position:center;
-
-display:flex;
-align-items:flex-end;
-
-padding:0 6% 100px;
-
+@keyframes spin{
+    to{
+        transform:rotate(360deg);
+    }
 }
 
-.hero-content{
-
-max-width:700px;
-
+.info{
+    margin-top:25px;
+    background:#161b22;
+    padding:25px;
+    border-radius:15px;
 }
 
-.hero h1{
-
-font-size:clamp(55px,9vw,110px);
-
-margin-bottom:20px;
-
-font-weight:800;
-
+.info h2{
+    margin-bottom:12px;
 }
 
-.hero p{
+.info p{
+    color:#c9d1d9;
+    line-height:1.7;
+}
 
-font-size:18px;
+.buttons{
+    display:flex;
+    gap:15px;
+    margin-top:20px;
+    flex-wrap:wrap;
+}
 
-line-height:1.8;
-
-opacity:.8;
-
-margin-bottom:35px;
-
+button{
+    padding:14px 22px;
+    border:none;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:15px;
+    font-weight:600;
+    transition:.25s;
 }
 
 .watch{
-
-background:white;
-color:black;
-
-border:none;
-
-padding:18px 42px;
-
-font-size:16px;
-
-font-weight:700;
-
-border-radius:50px;
-
-cursor:pointer;
-
-transition:.3s;
-
+    background:#00bfff;
+    color:#fff;
 }
 
 .watch:hover{
-
-transform:scale(1.05);
-
+    transform:translateY(-2px);
 }
 
-section{
-
-padding:60px 6%;
-
+.full{
+    background:#2ea043;
+    color:white;
 }
 
-.title{
-
-font-size:30px;
-
-margin-bottom:30px;
-
-}
-
-.grid{
-
-display:grid;
-
-grid-template-columns:
-repeat(auto-fill,minmax(220px,1fr));
-
-gap:25px;
-
-}
-
-.card{
-
-position:relative;
-
-height:340px;
-
-border-radius:25px;
-
-overflow:hidden;
-
-cursor:pointer;
-
-transition:.4s;
-
-background:#111;
-
-}
-
-.card:hover{
-
-transform:
-translateY(-10px)
-scale(1.03);
-
-}
-
-.card img{
-
-width:100%;
-height:100%;
-
-object-fit:cover;
-
-}
-
-.overlay{
-
-position:absolute;
-
-inset:0;
-
-display:flex;
-
-align-items:flex-end;
-
-padding:20px;
-
-background:
-
-linear-gradient(
-to top,
-black,
-transparent
-);
-
-}
-
-.overlay h2{
-
-font-size:25px;
-
+.full:hover{
+    transform:translateY(-2px);
 }
 
 footer{
-
-padding:80px;
-
-text-align:center;
-
-opacity:.4;
-
+    text-align:center;
+    color:#888;
+    padding:35px;
 }
 
-.glow{
+@media(max-width:700px){
 
-position:fixed;
-
-width:500px;
-height:500px;
-
-background:#005eff;
-
-border-radius:50%;
-
-filter:blur(200px);
-
-opacity:.15;
-
-pointer-events:none;
-
+header{
+    font-size:22px;
 }
 
-.mobile-menu{
-
-display:none;
-
-font-size:30px;
-
-}
-
-@media(max-width:768px){
-
-.menu{
-
-display:none;
-
-}
-
-.mobile-menu{
-
-display:block;
-
-}
-
-.hero{
-
-height:70vh;
-
-padding-bottom:60px;
-
-}
-
-.hero p{
-
-font-size:15px;
-
-}
-
-.grid{
-
-grid-template-columns:
-repeat(2,1fr);
-
-gap:15px;
-
-}
-
-.card{
-
-height:260px;
-
-}
-
-.title{
-
-font-size:24px;
-
-}
-
-.logo{
-
-font-size:24px;
-
+.info{
+    padding:18px;
 }
 
 }
-
 </style>
+
 </head>
 <body>
 
-<div class="glow"></div>
+<header>
+🎬 Video Player
+</header>
 
-<nav>
+<div class="container">
 
-<div class="logo">
+<div class="player">
 
-STREAMVERSE+
+<div class="loading" id="loading">
+<div class="spinner"></div>
+<p>Loading video...</p>
+</div>
+
+<iframe
+id="videoFrame"
+src="https://drive.google.com/file/d/1L4f2YgKkZobQbZSr6KVzHOk_ukAopJDy/preview"
+allow="autoplay; fullscreen"
+allowfullscreen>
+</iframe>
 
 </div>
 
-<div class="menu">
+<div class="info">
 
-<a href="#">Home</a>
-<a href="#">Movies</a>
-<a href="#">Trending</a>
-<a href="#">Library</a>
-
-</div>
-
-<div class="mobile-menu">
-
-☰
-
-</div>
-
-</nav>
-
-
-
-<div class="hero">
-
-<div class="hero-content">
-
-<h1>
-
-OBSESSION
-
-</h1>
+<h2>Now Playing</h2>
 
 <p>
-
-A premium cinematic experience inspired by Apple TV+ and Netflix.
-
+Enjoy watching the video directly from Google Drive. The player is fully responsive and works on desktop, laptop, tablet, and mobile browsers.
 </p>
 
-<button
-class="watch"
-onclick="location.href='Obsession.html'">
+<div class="buttons">
 
-▶ Watch Now
+<button class="watch" onclick="reloadVideo()">
+Reload Video
+</button>
 
+<button class="full" onclick="fullscreenPlayer()">
+Fullscreen
 </button>
 
 </div>
 
 </div>
 
-
-
-<section>
-
-<h1 class="title">
-
-Trending Now
-
-</h1>
-
-<div class="grid">
-
-<div
-class="card"
-onclick="location.href='Obsession.html'">
-
-<img
-loading="lazy"
-src="https://drive.google.com/thumbnail?id=1GwayuCa0BvWWoqReXjR4En04yFgjeIfG&sz=w1000">
-
-<div class="overlay">
-
-<h2>
-
-Obsession
-
-</h2>
-
 </div>
-
-</div>
-
-</div>
-
-</section>
-
-
-
-<section>
-
-<h1 class="title">
-
-Recently Added
-
-</h1>
-
-<div class="grid">
-
-<div
-class="card"
-onclick="location.href='Obsession.html'">
-
-<img
-loading="lazy"
-src="https://drive.google.com/thumbnail?id=1GwayuCa0BvWWoqReXjR4En04yFgjeIfG&sz=w1000">
-
-<div class="overlay">
-
-<h2>
-
-Obsession
-
-</h2>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
 
 <footer>
-
-StreamVerse+ © 2026
-
+Made with ❤️
 </footer>
 
 <script>
 
-document.addEventListener('mousemove',e=>{
+const frame=document.getElementById("videoFrame");
 
-document.querySelector('.glow').style.left=e.clientX-250+'px';
+frame.onload=function(){
+document.getElementById("loading").style.opacity="0";
+setTimeout(()=>{
+document.getElementById("loading").style.display="none";
+},500);
+};
 
-document.querySelector('.glow').style.top=e.clientY-250+'px';
+function reloadVideo(){
+frame.src=frame.src;
+document.getElementById("loading").style.display="flex";
+document.getElementById("loading").style.opacity="1";
+}
 
-});
+function fullscreenPlayer(){
+const player=document.querySelector(".player");
+
+if(player.requestFullscreen){
+player.requestFullscreen();
+}
+else if(player.webkitRequestFullscreen){
+player.webkitRequestFullscreen();
+}
+else if(player.msRequestFullscreen){
+player.msRequestFullscreen();
+}
+}
 
 </script>
 
 </body>
 </html>
-```
